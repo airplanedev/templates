@@ -8,6 +8,8 @@ import {
   Markdown,
   useComponentState,
   Button,
+  Select,
+  TextInput,
 } from "@airplane/views";
 
 // Put the main logic of the view here.
@@ -23,6 +25,17 @@ const TicketingDashboard = () => {
   ];
   const openConversationsState = useComponentState("openConversations");
   const selectedConvo = openConversationsState.selectedRow;
+
+  const linearTeamState = useComponentState("linearTeam");
+  const selectedLinearTeam = linearTeamState.value;
+
+  const linearAssigneeState = useComponentState("linearAssignee");
+  const selectedLinearAssignee = linearAssigneeState.value;
+
+  const linearIssueTitle = useComponentState("linearIssueTitle").value;
+
+  console.log(linearAssigneeState);
+  console.log(linearTeamState);
 
   return (
     <Stack>
@@ -47,6 +60,52 @@ const TicketingDashboard = () => {
           );
         }}
       />
+      {selectedConvo && (
+        <>
+          <Title>Assign a linear issue</Title>
+          <TextInput
+            id="linearIssueTitle"
+            label="Linear issue title"
+            defaultValue={`Linear issue created from intercom conversation ${selectedConvo?.id}`}
+          />
+          <Select
+            id="linearTeam"
+            label="Linear team"
+            task="demo_list_linear_teams"
+            outputTransform={(teams) =>
+              teams.map((t) => ({
+                value: t.id,
+                label: t.name,
+              }))
+            }
+          />
+          <Select
+            id="linearAssignee"
+            label="Linear assignee"
+            task="demo_list_linear_users"
+            outputTransform={(users) =>
+              users.map((u) => ({
+                value: u.id,
+                label: u.name,
+              }))
+            }
+          />
+          {selectedLinearTeam && selectedLinearAssignee && (
+            <Button
+              task={{
+                slug: "demo_create_linear_issue",
+                params: {
+                  title: linearIssueTitle,
+                  team_id: selectedLinearTeam,
+                  assignee_id: selectedLinearAssignee,
+                },
+              }}
+            >
+              Create issue
+            </Button>
+          )}
+        </>
+      )}
     </Stack>
   );
 };
