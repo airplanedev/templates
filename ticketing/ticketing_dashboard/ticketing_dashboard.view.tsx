@@ -43,6 +43,7 @@ const TicketingDashboard = () => {
       team_id: linearIssueFormValues.team,
       assignee_id: linearIssueFormValues.assignee,
       priority: parseInt(linearIssueFormValues.priority),
+      description: linearIssueFormValues.description,
     },
     onSuccess: (output) => {
       alert(`Created Linear issue ${output[0].issueID}`);
@@ -61,9 +62,6 @@ const TicketingDashboard = () => {
         `
         Intercom conversation ID: ${selectedConvo.id}
         Conversation title: ${selectedConvo.title}
-        Conversation has been waiting for a response since: ${
-          selectedConvo.waitingSince
-        }
         Conversation has been waiting for a response since: ${
           selectedConvo.waitingSince
         }
