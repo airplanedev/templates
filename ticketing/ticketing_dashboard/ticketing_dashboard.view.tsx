@@ -13,7 +13,9 @@ import {
 } from "@airplane/views";
 import { useEffect } from "react";
 
-// Put the main logic of the view here.
+// const INTERCOM_APP_ID = "we6lj1ka";
+const INTERCOM_APP_ID = "";
+
 // Views documentation: https://docs.airplane.dev/views/getting-started
 const TicketingDashboard = () => {
   const openConversationsCols: Column[] = [
@@ -27,10 +29,12 @@ const TicketingDashboard = () => {
   const openConversationsState = useComponentState("openConversations");
   const selectedConvo = openConversationsState.selectedRow;
 
-  const defaultTitle = selectedConvo?.id
-    ? `Linear issue created from intercom conversation ${selectedConvo?.id}`
-    : "";
-  const linearIssueFormValues = useComponentState("linearIssueForm").values;
+  const { values: linearIssueFormValues } =
+    useComponentState("linearIssueForm");
+
+  const { setValue: setLinearIssueTitle } = useComponentState("title");
+  const { setValue: setLinearIssueDescription } =
+    useComponentState("description");
 
   const { mutate: createLinearIssue } = useTaskMutation({
     slug: "demo_create_linear_issue",
@@ -38,12 +42,43 @@ const TicketingDashboard = () => {
       title: linearIssueFormValues.title,
       team_id: linearIssueFormValues.team,
       assignee_id: linearIssueFormValues.assignee,
-      priority: linearIssueFormValues.priority,
+      priority: parseInt(linearIssueFormValues.priority),
     },
     onSuccess: (output) => {
-      alert(`Created linear issue ${output[0].issueID}`);
+      alert(`Created Linear issue ${output[0].issueID}`);
+    },
+    onError: (error) => {
+      alert(`Failed creating Linear issue with error: ${error.message}`);
     },
   });
+
+  useEffect(() => {
+    if (selectedConvo) {
+      setLinearIssueTitle(
+        `Issue created from Intercom conversation ${selectedConvo.id}`
+      );
+      setLinearIssueDescription(
+        `
+        Intercom conversation ID: ${selectedConvo.id}
+        Conversation title: ${selectedConvo.title}
+        Conversation has been waiting for a response since: ${
+          selectedConvo.waitingSince
+        }
+        Conversation has been waiting for a response since: ${
+          selectedConvo.waitingSince
+        }
+        Contact name: ${selectedConvo.contactName}
+        Contact email: ${selectedConvo.contactEmail}
+        Open in intercom: ${openInIntercomLink(selectedConvo.id)}
+      `
+      );
+    }
+  }, [selectedConvo]);
+
+  const openInIntercomLink = (convoID: string) =>
+    INTERCOM_APP_ID
+      ? `https://app.intercom.com/a/apps/${INTERCOM_APP_ID}/inbox/inbox/all/conversations/${convoID}`
+      : "https://www.intercom.com/";
 
   return (
     <Stack>
@@ -61,7 +96,7 @@ const TicketingDashboard = () => {
               preset="secondary"
               compact
               size="sm"
-              href={`https://app.intercom.com/a/apps/we6lj1ka/inbox/inbox/all/conversations/${row.id}`}
+              href={openInIntercomLink(row.id as string)}
             >
               Open in Intercom
             </Button>
@@ -69,19 +104,16 @@ const TicketingDashboard = () => {
         }}
       />
 
-      <Title order={5}>Assign a linear issue</Title>
+      <Title order={5}>Assign an issue</Title>
       <Form
         id="linearIssueForm"
         onSubmit={() => {
           createLinearIssue();
+          openConversationsState.clearSelection();
         }}
         resetOnSubmit={true}
       >
-        <TextInput
-          id="title"
-          label="Linear issue title"
-          defaultValue={defaultTitle}
-        />
+        <TextInput id="title" label="Linear issue title" />
         <Select
           id="team"
           label="Linear team"
@@ -92,6 +124,7 @@ const TicketingDashboard = () => {
               label: t.name,
             }))
           }
+          required
         />
         <Select
           id="assignee"
@@ -103,19 +136,21 @@ const TicketingDashboard = () => {
               label: u.name,
             }))
           }
+          required
         />
         <Select
           id="priority"
           label="Issue priority"
           data={[
-            { value: 0, label: "None" },
-            { value: 1, label: "Urgent" },
-            { value: 2, label: "High" },
-            { value: 3, label: "Medium" },
-            { value: 4, label: "Low" },
+            { value: "0", label: "None" },
+            { value: "1", label: "Urgent" },
+            { value: "2", label: "High" },
+            { value: "3", label: "Medium" },
+            { value: "4", label: "Low" },
           ]}
         />
-        {/* <Textarea id="description" label="Description" /> */}
+        {/* TODO: replace with textarea component */}
+        <TextInput id="description" label="Description" />
       </Form>
     </Stack>
   );
