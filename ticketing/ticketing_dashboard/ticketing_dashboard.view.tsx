@@ -2,15 +2,16 @@ import {
   Column,
   Stack,
   Table,
-  Text,
   Title,
-  Card,
-  Markdown,
   useComponentState,
   Button,
   Select,
   TextInput,
+  Form,
+  // Textarea,
+  useTaskMutation,
 } from "@airplane/views";
+import { useEffect } from "react";
 
 // Put the main logic of the view here.
 // Views documentation: https://docs.airplane.dev/views/getting-started
@@ -26,16 +27,23 @@ const TicketingDashboard = () => {
   const openConversationsState = useComponentState("openConversations");
   const selectedConvo = openConversationsState.selectedRow;
 
-  const linearTeamState = useComponentState("linearTeam");
-  const selectedLinearTeam = linearTeamState.value;
+  const defaultTitle = selectedConvo?.id
+    ? `Linear issue created from intercom conversation ${selectedConvo?.id}`
+    : "";
+  const linearIssueFormValues = useComponentState("linearIssueForm").values;
 
-  const linearAssigneeState = useComponentState("linearAssignee");
-  const selectedLinearAssignee = linearAssigneeState.value;
-
-  const linearIssueTitle = useComponentState("linearIssueTitle").value;
-
-  console.log(linearAssigneeState);
-  console.log(linearTeamState);
+  const { mutate: createLinearIssue } = useTaskMutation({
+    slug: "demo_create_linear_issue",
+    params: {
+      title: linearIssueFormValues.title,
+      team_id: linearIssueFormValues.team,
+      assignee_id: linearIssueFormValues.assignee,
+      priority: linearIssueFormValues.priority,
+    },
+    onSuccess: (output) => {
+      alert(`Created linear issue ${output[0].issueID}`);
+    },
+  });
 
   return (
     <Stack>
@@ -60,52 +68,55 @@ const TicketingDashboard = () => {
           );
         }}
       />
-      {selectedConvo && (
-        <>
-          <Title>Assign a linear issue</Title>
-          <TextInput
-            id="linearIssueTitle"
-            label="Linear issue title"
-            defaultValue={`Linear issue created from intercom conversation ${selectedConvo?.id}`}
-          />
-          <Select
-            id="linearTeam"
-            label="Linear team"
-            task="demo_list_linear_teams"
-            outputTransform={(teams) =>
-              teams.map((t) => ({
-                value: t.id,
-                label: t.name,
-              }))
-            }
-          />
-          <Select
-            id="linearAssignee"
-            label="Linear assignee"
-            task="demo_list_linear_users"
-            outputTransform={(users) =>
-              users.map((u) => ({
-                value: u.id,
-                label: u.name,
-              }))
-            }
-          />
-          {selectedLinearTeam && selectedLinearAssignee && (
-            <Button
-              task={{
-                slug: "demo_create_linear_issue",
-                params: {
-                  title: linearIssueTitle,
-                  team_id: selectedLinearTeam,
-                  assignee_id: selectedLinearAssignee,
-                },
-              }}
-            >
-              Create issue
-            </Button>
-          )}
-        </>
-      )}
+
+      <Title order={5}>Assign a linear issue</Title>
+      <Form
+        id="linearIssueForm"
+        onSubmit={() => {
+          createLinearIssue();
+        }}
+        resetOnSubmit={true}
+      >
+        <TextInput
+          id="title"
+          label="Linear issue title"
+          defaultValue={defaultTitle}
+        />
+        <Select
+          id="team"
+          label="Linear team"
+          task="demo_list_linear_teams"
+          outputTransform={(teams) =>
+            teams.map((t) => ({
+              value: t.id,
+              label: t.name,
+            }))
+          }
+        />
+        <Select
+          id="assignee"
+          label="Linear assignee"
+          task="demo_list_linear_users"
+          outputTransform={(users) =>
+            users.map((u) => ({
+              value: u.id,
+              label: u.name,
+            }))
+          }
+        />
+        <Select
+          id="priority"
+          label="Issue priority"
+          data={[
+            { value: 0, label: "None" },
+            { value: 1, label: "Urgent" },
+            { value: 2, label: "High" },
+            { value: 3, label: "Medium" },
+            { value: 4, label: "Low" },
+          ]}
+        />
+        {/* <Textarea id="description" label="Description" /> */}
+      </Form>
     </Stack>
   );
 };
