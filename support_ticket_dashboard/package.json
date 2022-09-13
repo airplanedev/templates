@@ -1,11 +1,11 @@
 {
-  "name": "ticketing",
+  "name": "support_ticket_dashboard",
   "version": "1.0.0",
   "license": "MIT",
   "dependencies": {
     "@airplane/views": "^1.3.0",
-    "@linear/sdk": "^1.22.0",
-    "intercom-client": "^3.1.5",
+    "@linear/sdk": "1.22.0",
+    "intercom-client": "3.1.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
