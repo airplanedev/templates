@@ -44,6 +44,9 @@ parameters:
 node:
   entrypoint: create_linear_issue.ts
   nodeVersion: "18"
-  envVars:
-    LINEAR_API_KEY:
-      config: LINEAR_API_KEY
+  # Uncomment if you want to use your own Linear API key from a config variable
+  # Get your Linear API key here after logging in: https://linear.app/airplane/settings/api
+  # How to use config variables in Airplane: https://docs.airplane.dev/platform/configs
+  # envVars:
+  #   LINEAR_API_KEY:
+  #     config: LINEAR_API_KEY

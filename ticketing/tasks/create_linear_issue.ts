@@ -11,6 +11,18 @@ type Params = {
 export default async function (params: Params) {
   const apiKey = process.env.LINEAR_API_KEY ?? "";
 
+  // Return mock data if LINEAR_API_KEY is not set.
+  // Delete this once you create an config variable for LINEAR_API_KEY and set the environment variable.
+  if (apiKey === "") {
+    return [
+      {
+        success: true,
+        issueID: "1",
+      },
+    ];
+  }
+  // End of mock data
+
   const client = new LinearClient({
     apiKey: apiKey,
   });

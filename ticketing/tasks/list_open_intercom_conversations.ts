@@ -3,6 +3,59 @@ import { Client, Operators, ConversationObject } from "intercom-client";
 export default async function () {
   const token = process.env.INTERCOM_AUTH_TOKEN ?? "";
 
+  // Return mock data if INTERCOM_AUTH_TOKEN is not set.
+  // Delete this once you create an config variable for INTERCOM_AUTH_TOKEN and set the environment variable.
+  if (token === "") {
+    return [
+      {
+        id: "1",
+        title: "Help with locating past order",
+        waitingSince: "9/12/2022, 7:44:14 AM",
+        adminAssignee: "John Smith",
+        teamAssignee: "Customer Support",
+        contactName: "Carolyn Garcia",
+        contactEmail: "Golf Partners",
+      },
+      {
+        id: "2",
+        title: "Bug in CLI",
+        waitingSince: "8/15/2022, 2:51:01 PM",
+        adminAssignee: "Jane Doe",
+        teamAssignee: "Eng",
+        contactName: "Roy Hernandez",
+        contactEmail: "Blue Sky Corp",
+      },
+      {
+        id: "3",
+        title: "Assistance with return",
+        waitingSince: "Not waiting",
+        adminAssignee: "John Smith",
+        teamAssignee: "Customer Support",
+        contactName: "Steven Williams",
+        contactEmail: "Blue Sky Corp",
+      },
+      {
+        id: "4",
+        title: "Checking in on status of order",
+        waitingSince: "Not waiting",
+        adminAssignee: "John Smith",
+        teamAssignee: "Customer Support",
+        contactName: "Harold Martin",
+        contactEmail: "Amalgamated Chair Partners",
+      },
+      {
+        id: "5",
+        title: "API key is not working",
+        waitingSince: "8/24/2022, 9:34:03 PM",
+        adminAssignee: "Jane Doe",
+        teamAssignee: "Eng",
+        contactName: "Carolyn Garcia",
+        contactEmail: "Golf Partners",
+      },
+    ];
+  }
+  // End of mock data
+
   const client = new Client({
     tokenAuth: {
       token: token,
