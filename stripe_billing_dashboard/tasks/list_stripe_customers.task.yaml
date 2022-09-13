@@ -5,12 +5,11 @@ slug: demo_list_stripe_customers
 name: List Stripe Customers
 description: "Calls Stripe API and fetches all customers whose email matches the search keyword."
 parameters:
--
-  slug: search_keyword
-  name: Search Keyword
-  type: shorttext
-  description: The search string
-  required: false
+  - slug: search_keyword
+    name: Search Keyword
+    type: shorttext
+    description: The search string
+    required: false
 node:
   entrypoint: list_stripe_customers.ts
   nodeVersion: "18"

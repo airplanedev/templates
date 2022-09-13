@@ -1,4 +1,11 @@
-import { Column, Stack, Table, Text, Title, TextInput, useComponentState } from "@airplane/views";
+import {
+  Stack,
+  Table,
+  Text,
+  Title,
+  TextInput,
+  useComponentState,
+} from "@airplane/views";
 
 const Dashboard = () => {
   const searchKeyword = useComponentState("searchKeyword");
@@ -8,104 +15,116 @@ const Dashboard = () => {
   return (
     <Stack>
       <Title>Stripe billing dashboard</Title>
-      <Text>Lookup customers by their name or email, view all charges for that customer, and refund a charge if needed.</Text>
+      <Text>
+        Lookup customers by their name or email, view all charges for that
+        customer, and refund a charge if needed.
+      </Text>
       <TextInput id="searchKeyword" label="Search for a customer" />
-      {searchKeyword.value &&
+      {searchKeyword.value && (
         <Table
           id="stripeCustomers"
-          title="Search Results"
-          task={{ slug: "demo_list_stripe_customers", params: { search_keyword: searchKeyword.value } }}
+          title="Search results"
+          task={{
+            slug: "demo_list_stripe_customers",
+            params: { search_keyword: searchKeyword.value },
+          }}
           rowSelection="single"
           showFilter={false}
           hiddenColumns={["id"]}
           columns={[
             {
               label: "Email",
-              accessor: "email"
+              accessor: "email",
             },
             {
               label: "Name",
-              accessor: "name"
-            }
+              accessor: "name",
+            },
           ]}
         />
-      }
-      {selectedCustomer &&
+      )}
+      {selectedCustomer && (
         <Stack>
           <Table
             id="customerDetails"
-            title="Customer Details"
-            task={{ slug: "demo_lookup_stripe_customer", params: { customer_id: selectedCustomer.id } }}
+            title="Customer details"
+            task={{
+              slug: "demo_lookup_stripe_customer",
+              params: { customer_id: selectedCustomer.id },
+            }}
             showFilter={false}
             columns={[
               {
                 label: "Customer ID",
-                accessor: "id"
+                accessor: "id",
               },
               {
                 label: "Email",
-                accessor: "email"
+                accessor: "email",
               },
               {
                 label: "Currency",
-                accessor: "currency"
+                accessor: "currency",
               },
               {
-                label: "Next Invoice Sequence",
+                label: "Next invoice sequence",
                 accessor: "next_invoice_sequence",
-                type: "number"
+                type: "number",
               },
               {
                 label: "Name",
-                accessor: "name"
-              }
+                accessor: "name",
+              },
             ]}
           />
-          <Table 
+          <Table
             id="customerCharges"
-            title="Charges for This Customer"
-            task={{ slug: "demo_lookup_charges_for_stripe_customer", params: { customer_id: selectedCustomer.id } }}
+            title="Charges for this customer"
+            task={{
+              slug: "demo_lookup_charges_for_stripe_customer",
+              params: { customer_id: selectedCustomer.id },
+            }}
             hiddenColumns={["currency", "description"]}
             columns={[
               {
-                label: "Charge Date",
+                label: "Charge date",
                 accessor: "created_at",
-                type: "date"
+                type: "date",
               },
               {
                 label: "Charge ID",
-                accessor: "id"
+                accessor: "id",
               },
               {
                 label: "Amount",
                 accessor: "amount",
-                type: "number"
+                type: "number",
               },
               {
-                label: "Amount Refunded",
+                label: "Amount refunded",
                 accessor: "amount_refunded",
-                type: "number"
+                type: "number",
               },
               {
                 label: "Paid",
                 accessor: "paid",
-                type: "boolean"
+                type: "boolean",
               },
               {
                 label: "Status",
-                accessor: "status"
-              }
+                accessor: "status",
+              },
             ]}
             rowActions={[
               {
                 slug: "demo_refund_stripe_charge",
                 label: "Refund",
-                rowTransform: (r) => ({charge_id: r.id})
-              }
+                rowTransform: (r) => ({ charge_id: r.id }),
+              },
             ]}
           />
         </Stack>
-      }
+      )}
     </Stack>
   );
 };

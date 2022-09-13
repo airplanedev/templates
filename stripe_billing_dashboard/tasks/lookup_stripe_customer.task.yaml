@@ -5,12 +5,11 @@ slug: demo_lookup_stripe_customer
 name: Lookup Stripe Customer
 description: "Looks up Stripe metadata for a given customer."
 parameters:
--
-  slug: customer_id
-  name: Customer ID
-  type: shorttext
-  description: The Stripe ID for this customer
-  required: false
+  - slug: customer_id
+    name: Customer ID
+    type: shorttext
+    description: The Stripe ID for this customer
+    required: false
 node:
   entrypoint: lookup_stripe_customer.ts
   nodeVersion: "18"

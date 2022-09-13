@@ -1,4 +1,6 @@
-# Next steps for Views getting started
+# Template: Views getting started
+
+## Next steps
 
 1. Navigate to the getting_started directory: `cd views_getting_started`
 2. Deploy tasks: `airplane deploy tasks --yes`

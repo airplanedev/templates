@@ -1,5 +1,5 @@
 {
-  "name": "stripe_dashboard",
+  "name": "stripe_billing_dashboard",
   "version": "1.0.0",
   "license": "MIT",
   "dependencies": {
@@ -9,6 +9,7 @@
     "stripe": "^10.2.0"
   },
   "devDependencies": {
+    "@types/node": "^18.7.16",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
     "typescript": "^4.7.4"

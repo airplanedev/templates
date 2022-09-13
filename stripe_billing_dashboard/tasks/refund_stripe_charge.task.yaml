@@ -5,12 +5,11 @@ slug: demo_refund_stripe_charge
 name: Refund Stripe Charge
 description: "Refunds a charge in Stripe."
 parameters:
--
-  slug: charge_id
-  name: Charge ID
-  type: shorttext
-  description: The Stripe ID for the charge to refund
-  required: false
+  - slug: charge_id
+    name: Charge ID
+    type: shorttext
+    description: The Stripe ID for the charge to refund
+    required: false
 node:
   entrypoint: refund_stripe_charge.ts
   nodeVersion: "18"

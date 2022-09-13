@@ -1,7 +1,7 @@
 # Full reference: https://docs.airplane.dev/tasks/task-definition
 
 slug: demo_list_account_users
-name: List Users
+name: "[DEMO] List Account Users"
 description: List users for an account
 
 parameters:
@@ -11,6 +11,6 @@ parameters:
 
 sql:
   resource: "[Demo DB]"
-  entrypoint: list_users.sql
+  entrypoint: list_account_users.sql
   queryArgs:
     account_id: "{{params.account_id}}"

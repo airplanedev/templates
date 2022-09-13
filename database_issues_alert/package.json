@@ -1,0 +1,10 @@
+{
+  "name": "database_issues_alert",
+  "version": "1.0.0",
+  "description": "Alert on database issues",
+  "main": "alert_on_database_issues.ts",
+  "license": "MIT",
+  "dependencies": {
+    "airplane": "^0.2.0-35"
+  }
+}
