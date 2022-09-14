@@ -1,5 +1,4 @@
 import {
-  Column,
   Stack,
   Table,
   Title,
@@ -8,24 +7,25 @@ import {
   Select,
   TextInput,
   Form,
-  // Textarea,
+  Textarea,
   useTaskMutation,
 } from "@airplane/views";
 import { useEffect } from "react";
 
-// const INTERCOM_APP_ID = "we6lj1ka";
+// Replace with your Intercom App ID, which can be found from the URL of an Intercom conversation
 const INTERCOM_APP_ID = "";
+
+const openConversationsCols = [
+  { label: "Title", accessor: "title" },
+  { label: "Waiting since", accessor: "waitingSince" },
+  { label: "Admin assignee", accessor: "adminAssignee" },
+  { label: "Team assignee", accessor: "teamAssignee" },
+  { label: "Contact name", accessor: "contactName" },
+  { label: "Contact email", accessor: "contactEmail" },
+];
 
 // Views documentation: https://docs.airplane.dev/views/getting-started
 const TicketingDashboard = () => {
-  const openConversationsCols: Column[] = [
-    { label: "Title", accessor: "title" },
-    { label: "Waiting since", accessor: "waitingSince" },
-    { label: "Admin assignee", accessor: "adminAssignee" },
-    { label: "Team assignee", accessor: "teamAssignee" },
-    { label: "Contact name", accessor: "contactName" },
-    { label: "Contact email", accessor: "contactEmail" },
-  ];
   const openConversationsState = useComponentState("openConversations");
   const selectedConvo = openConversationsState.selectedRow;
 
@@ -39,11 +39,7 @@ const TicketingDashboard = () => {
   const { mutate: createLinearIssue } = useTaskMutation({
     slug: "demo_create_linear_issue",
     params: {
-      title: linearIssueFormValues.title,
-      team_id: linearIssueFormValues.team,
-      assignee_id: linearIssueFormValues.assignee,
-      priority: parseInt(linearIssueFormValues.priority),
-      description: linearIssueFormValues.description,
+      ...linearIssueFormValues,
     },
     onSuccess: (output) => {
       alert(`Created Linear issue ${output[0].issueID}`);
@@ -58,18 +54,15 @@ const TicketingDashboard = () => {
       setLinearIssueTitle(
         `Issue created from Intercom conversation ${selectedConvo.id}`
       );
-      setLinearIssueDescription(
-        `
-        Intercom conversation ID: ${selectedConvo.id}
-        Conversation title: ${selectedConvo.title}
-        Conversation has been waiting for a response since: ${
-          selectedConvo.waitingSince
-        }
-        Contact name: ${selectedConvo.contactName}
-        Contact email: ${selectedConvo.contactEmail}
-        Open in intercom: ${openInIntercomLink(selectedConvo.id)}
-      `
-      );
+      setLinearIssueDescription(`Intercom conversation ID: ${selectedConvo.id}
+Conversation title: ${selectedConvo.title}
+Conversation has been waiting for a response since: ${
+        selectedConvo.waitingSince
+      }
+Contact name: ${selectedConvo.contactName}
+Contact email: ${selectedConvo.contactEmail}
+Open in Intercom: ${openInIntercomLink(selectedConvo.id)}
+      `);
     }
   }, [selectedConvo]);
 
@@ -109,9 +102,9 @@ const TicketingDashboard = () => {
           createLinearIssue();
           openConversationsState.clearSelection();
         }}
-        resetOnSubmit={true}
+        resetOnSubmit
       >
-        <TextInput id="title" label="Linear issue title" />
+        <TextInput id="title" label="Linear issue title" required />
         <Select
           id="team"
           label="Linear team"
@@ -140,15 +133,14 @@ const TicketingDashboard = () => {
           id="priority"
           label="Issue priority"
           data={[
-            { value: "0", label: "None" },
+            { value: "0", label: "No priority" },
             { value: "1", label: "Urgent" },
             { value: "2", label: "High" },
             { value: "3", label: "Medium" },
             { value: "4", label: "Low" },
           ]}
         />
-        {/* TODO: replace with textarea component */}
-        <TextInput id="description" label="Description" />
+        <Textarea id="description" label="Description" />
       </Form>
     </Stack>
   );

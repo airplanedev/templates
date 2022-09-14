@@ -4,7 +4,7 @@ export default async function () {
   const token = process.env.INTERCOM_AUTH_TOKEN ?? "";
 
   // Return mock data if INTERCOM_AUTH_TOKEN is not set.
-  // Delete this once you create an config variable for INTERCOM_AUTH_TOKEN and set the environment variable.
+  // Delete this once you create a config variable for INTERCOM_AUTH_TOKEN and set the environment variable.
   if (token === "") {
     return [
       {
@@ -40,8 +40,8 @@ export default async function () {
         waitingSince: "Not waiting",
         adminAssignee: "John Smith",
         teamAssignee: "Customer Support",
-        contactName: "Harold Martin",
-        contactEmail: "Amalgamated Chair Partners",
+        contactName: "Elijah Anderson",
+        contactEmail: "Indigo Sky Ltd",
       },
       {
         id: "5",

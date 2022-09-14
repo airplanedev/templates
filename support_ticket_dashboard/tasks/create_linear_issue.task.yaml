@@ -1,7 +1,7 @@
 # Full reference: https://docs.airplane.dev/tasks/task-definition
 
 slug: demo_create_linear_issue
-name: Create Linear Issue
+name: Create linear issue
 
 parameters:
   - slug: title
@@ -26,20 +26,20 @@ parameters:
     required: false
   - slug: priority
     name: Priority
-    type: integer
+    type: shorttext
     description: The priority of the linear issue
     required: false
     options:
-      - label: No Priority
-        value: 0
+      - label: No priority
+        value: "0"
       - label: Urgent
-        value: 1
+        value: "1"
       - label: High
-        value: 2
+        value: "2"
       - label: Medium
-        value: 3
+        value: "3"
       - label: Low
-        value: 4
+        value: "4"
 
 node:
   entrypoint: create_linear_issue.ts

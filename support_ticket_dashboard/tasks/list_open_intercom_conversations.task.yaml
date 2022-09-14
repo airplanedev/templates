@@ -1,7 +1,7 @@
 # Full reference: https://docs.airplane.dev/tasks/task-definition
 
 slug: demo_list_open_intercom_conversations
-name: List Open Intercom Conversations
+name: List open intercom conversations
 
 node:
   entrypoint: list_open_intercom_conversations.ts

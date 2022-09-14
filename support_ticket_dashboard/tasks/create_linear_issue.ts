@@ -5,14 +5,14 @@ type Params = {
   team_id: string;
   assignee_id: string;
   description: string;
-  priority: number;
+  priority: string;
 };
 
 export default async function (params: Params) {
   const apiKey = process.env.LINEAR_API_KEY ?? "";
 
   // Return mock data if LINEAR_API_KEY is not set.
-  // Delete this once you create an config variable for LINEAR_API_KEY and set the environment variable.
+  // Delete this once you create a config variable for LINEAR_API_KEY and set the environment variable.
   if (apiKey === "") {
     return [
       {
@@ -32,8 +32,8 @@ export default async function (params: Params) {
     teamId: params.team_id,
     assigneeId: params.assignee_id,
     description: params.description,
-    priority: params.priority,
+    priority: parseInt(params.priority),
   });
-
-  return [{ success: resp.success, issueID: (await resp.issue)?.id }];
+  const issue = await resp.issue;
+  return [{ success: resp.success, issueID: issue?.id }];
 }
