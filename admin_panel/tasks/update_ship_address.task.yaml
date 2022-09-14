@@ -1,0 +1,24 @@
+# Full reference: https://docs.airplane.dev/tasks/task-definition
+
+# Used by Airplane to identify your task. Do not change.
+slug: demo_update_ship_address
+name: Update Ship Address for Order
+description: "SQL task that updates a contact name for a customer."
+parameters:
+  -
+    slug: order_id
+    name: Order ID
+    type: integer
+    required: true
+  -
+    slug: ship_address
+    name: New Ship Address
+    type: shorttext
+    required: true
+# Configuration for a SQL task.
+sql:
+  resource: "[Demo DB]"
+  entrypoint: update_ship_address.sql
+  queryArgs:
+    order_id: "{{params.order_id}}"
+    ship_address: "{{params.ship_address}}"
