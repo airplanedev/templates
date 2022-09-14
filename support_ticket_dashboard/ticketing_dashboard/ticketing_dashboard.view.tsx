@@ -106,7 +106,7 @@ Open in Intercom: ${openInIntercomLink(selectedConvo.id)}
       >
         <TextInput id="title" label="Linear issue title" required />
         <Select
-          id="team"
+          id="team_id"
           label="Linear team"
           task="demo_list_linear_teams"
           outputTransform={(teams) =>
@@ -118,7 +118,7 @@ Open in Intercom: ${openInIntercomLink(selectedConvo.id)}
           required
         />
         <Select
-          id="assignee"
+          id="assignee_id"
           label="Linear assignee"
           task="demo_list_linear_users"
           outputTransform={(users) =>
