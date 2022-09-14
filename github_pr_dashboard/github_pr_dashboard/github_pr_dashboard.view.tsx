@@ -31,7 +31,11 @@ const GitHubPRDashboard = () => {
           placeholder="Type a GitHub username"
           error={error?.message}
         />
-        <Button onClick={() => mutate()} loading={loading}>
+        <Button
+          onClick={() => mutate()}
+          loading={loading}
+          disabled={!userName.value}
+        >
           Search
         </Button>
       </Stack>

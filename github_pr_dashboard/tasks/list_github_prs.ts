@@ -30,8 +30,6 @@ export default async function (params: Params) {
     approvedPullRequests,
   ]);
 
-  if (approvedPullRequestsResponse.status)
-
   const approved =
     approvedPullRequestsResponse.data.items.map(getPullRequestResult);
   const authored = createdPullRequestsResponse.data.items
