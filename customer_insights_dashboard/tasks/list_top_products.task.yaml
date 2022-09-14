@@ -1,0 +1,18 @@
+# Full reference: https://docs.airplane.dev/tasks/task-definition
+
+slug: demo_list_top_products
+name: List top products
+description: List the products with the most orders
+parameters:
+- slug: customer_id
+  name: Customer ID
+  type: shorttext
+  required: false
+
+# Replace [Demo DB] below with your own database resource
+sql:
+  resource: "[Demo DB]"
+  entrypoint: list_top_products.sql
+
+  queryArgs:
+    customer_id: "{{params.customer_id}}"
