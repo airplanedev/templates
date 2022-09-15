@@ -1,4 +1,5 @@
-slug: search_users
+# Full reference: https://docs.airplane.dev/tasks/task-definition
+slug: demo_search_users
 name: Search users
 description: "Search for users in prod based on team and user info"
 parameters:

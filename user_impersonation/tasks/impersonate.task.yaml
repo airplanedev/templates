@@ -1,14 +1,11 @@
-# Used by Airplane to identify your task. Do not change.
+# Full reference: https://docs.airplane.dev/tasks/task-definition
+
 slug: impersonate
-
-# A human-readable name for your task.
 name: Impersonate
-
 parameters:
-  - slug: user_email
+  - slug: demo_user_email
     name: User Email
     type: shorttext
-
 node:
   entrypoint: impersonate.js
   nodeVersion: "18"
