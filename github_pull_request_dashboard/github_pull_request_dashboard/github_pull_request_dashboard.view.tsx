@@ -8,16 +8,15 @@ import {
   TextInput,
   Title,
   useComponentState,
-  useTaskMutation,
 } from "@airplane/views";
 
 // Views documentation: https://docs.airplane.dev/views/getting-started
 const GitHubPRDashboard = () => {
   const userName = useComponentState();
-  const { output, loading, error, mutate } = useTaskMutation({
-    slug: "demo_list_github_pull_requests",
-    params: { user: userName.value },
-  });
+  const search = useComponentState();
+
+  const output = search.result?.output;
+  const error = search.result?.error
 
   return (
     <Stack spacing="xl">
@@ -27,11 +26,13 @@ const GitHubPRDashboard = () => {
           id={userName.id}
           label="Username"
           placeholder="Type a GitHub username"
-          error={error?.message}
         />
         <Button
-          onClick={() => mutate()}
-          loading={loading}
+          id={search.id}
+          task={{
+            slug: "demo_list_github_pull_requests",
+            params: { user: userName.value },
+          }}
           disabled={!userName.value}
         >
           Search
@@ -41,7 +42,11 @@ const GitHubPRDashboard = () => {
       {output && !error && (
         <Stack direction="row" spacing="lg">
           <Stack.Item width={{ xs: "100%", lg: "50%" }}>
-            <Card radius="xs" shadow="xs"  sx={{ height: 500, overflow: "auto" }}>
+            <Card
+              radius="xs"
+              shadow="xs"
+              sx={{ height: 500, overflow: "auto" }}
+            >
               <Stack>
                 <Title order={3}>‍💻 Open PRs</Title>
                 {output.authored.map((pr) => (
@@ -53,7 +58,11 @@ const GitHubPRDashboard = () => {
           </Stack.Item>
 
           <Stack.Item width={{ xs: "100%", lg: "50%" }}>
-            <Card radius="xs" shadow="xs" sx={{ height: 500, overflow: "auto" }}>
+            <Card
+              radius="xs"
+              shadow="xs"
+              sx={{ height: 500, overflow: "auto" }}
+            >
               <Stack>
                 <Title order={3}>✅ Approved PRs</Title>
                 {output.approved.map((pr) => (
@@ -65,7 +74,11 @@ const GitHubPRDashboard = () => {
           </Stack.Item>
 
           <Stack.Item width={{ xs: "100%", lg: "50%" }}>
-            <Card radius="xs" shadow="xs"  sx={{ height: 500, overflow: "auto" }}>
+            <Card
+              radius="xs"
+              shadow="xs"
+              sx={{ height: 500, overflow: "auto" }}
+            >
               <Stack>
                 <Title order={3}>✏️ To Review</Title>
                 {output.toReview.map((pr) => (
