@@ -7,7 +7,7 @@ parameters:
     name: User Email
     type: shorttext
 node:
-  entrypoint: impersonate.js
+  entrypoint: impersonate.ts
   nodeVersion: "18"
   envVars:
     WORKOS_API_KEY:
