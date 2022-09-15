@@ -1,5 +1,5 @@
 {
-  "name": "user_impersonation",
+  "name": "user_impersonation_tool",
   "version": "1.0.0",
   "license": "MIT",
   "dependencies": {
