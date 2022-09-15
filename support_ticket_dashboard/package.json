@@ -1,12 +1,13 @@
 {
-  "name": "stripe_billing_dashboard",
+  "name": "support_ticket_dashboard",
   "version": "1.0.0",
   "license": "MIT",
   "dependencies": {
-    "@airplane/views": "^1.0.5",
+    "@airplane/views": "^1.4.3",
+    "@linear/sdk": "1.22.0",
+    "intercom-client": "3.1.5",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "stripe": "10.8.0"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@types/node": "^18.7.16",

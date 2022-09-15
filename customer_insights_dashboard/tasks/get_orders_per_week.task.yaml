@@ -1,0 +1,18 @@
+# Full reference: https://docs.airplane.dev/tasks/task-definition
+
+slug: demo_get_orders_per_week
+name: Get orders per week
+description: Get the number of orders in each week
+parameters:
+- slug: customer_id
+  name: Customer ID
+  type: shorttext
+  required: false
+
+# Replace [Demo DB] below with your own database resource
+sql:
+  resource: "[Demo DB]"
+  entrypoint: get_orders_per_week.sql
+
+  queryArgs:
+    customer_id: "{{params.customer_id}}"

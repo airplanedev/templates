@@ -1,7 +1,7 @@
 # Full reference: https://docs.airplane.dev/tasks/task-definition
 
 slug: demo_list_account_users
-name: [DEMO] List Account Users
+name: "[DEMO] List Account Users"
 description: List users for an account
 
 parameters:

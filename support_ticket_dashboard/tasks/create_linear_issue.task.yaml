@@ -1,0 +1,52 @@
+# Full reference: https://docs.airplane.dev/tasks/task-definition
+
+slug: demo_create_linear_issue
+name: Create Linear issue
+
+parameters:
+  - slug: title
+    name: Title
+    type: shorttext
+    description: The title of the Linear issue
+    required: true
+  - slug: team_id
+    name: Team ID
+    type: shorttext
+    description: The team ID for the Linear issue
+    required: true
+  - slug: assignee_id
+    name: Assignee ID
+    type: shorttext
+    description: The ID of the assignee for the Linear issue
+    required: true
+  - slug: description
+    name: Description
+    type: longtext
+    description: The description for the Linear issue
+    required: false
+  - slug: priority
+    name: Priority
+    type: shorttext
+    description: The priority of the Linear issue
+    required: false
+    options:
+      - label: No priority
+        value: "0"
+      - label: Urgent
+        value: "1"
+      - label: High
+        value: "2"
+      - label: Medium
+        value: "3"
+      - label: Low
+        value: "4"
+
+node:
+  entrypoint: create_linear_issue.ts
+  nodeVersion: "18"
+  # Uncomment if you want to use your own Linear API key from a config variable
+  # Get your Linear API key here after logging in: https://linear.app/airplane/settings/api
+  # How to use config variables in Airplane: https://docs.airplane.dev/platform/configs
+  # envVars:
+  #   LINEAR_API_KEY:
+  #     config: LINEAR_API_KEY

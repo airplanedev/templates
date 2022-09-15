@@ -1,0 +1,10 @@
+# Full reference: https://docs.airplane.dev/tasks/task-definition
+
+slug: demo_get_customers_per_week
+name: Get customers per week
+description: Get the number of unique customers in each week
+
+# Replace [Demo DB] below with your own database resource
+sql:
+  resource: "[Demo DB]"
+  entrypoint: get_customers_per_week.sql

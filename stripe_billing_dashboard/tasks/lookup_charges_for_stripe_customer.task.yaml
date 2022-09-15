@@ -2,15 +2,14 @@
 
 # Used by Airplane to identify your task. Do not change.
 slug: demo_lookup_charges_for_stripe_customer
-name: Lookup Charges for Stripe Customer
+name: Lookup charges for Stripe customer
 description: "Looks up all historical Stripe charges for a customer given their ID"
 parameters:
--
-  slug: customer_id
-  name: Customer ID
-  type: shorttext
-  description: The Stripe ID for this customer
-  required: false
+  - slug: customer_id
+    name: Customer ID
+    type: shorttext
+    description: The Stripe ID for this customer
+    required: false
 node:
   entrypoint: lookup_charges_for_stripe_customer.ts
   nodeVersion: "18"
