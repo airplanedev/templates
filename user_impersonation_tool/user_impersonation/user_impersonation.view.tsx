@@ -29,7 +29,7 @@ const UserImpersonation = () => {
       <Table
         id="users"
         title="Users"
-        task={{ slug: "search_users", params: { query: queryState.value } }}
+        task={{ slug: "demo_search_users", params: { query: queryState.value } }}
         rowSelection="single"
         showFilter={false}
       />
@@ -46,7 +46,7 @@ const UserImpersonation = () => {
             <Button
               disabled={!reasonState.value}
               task={{
-                slug: "impersonate",
+                slug: "demo_impersonate",
                 params: { user_email: user.email, reason: reasonState.value },
                 onSuccess: (o) => {
                   setLink(o.link);
