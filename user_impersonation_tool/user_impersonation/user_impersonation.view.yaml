@@ -1,5 +1,5 @@
 # Used by Airplane to identify your view. Do not change.
-slug: user_impersonation
+slug: demo_user_impersonation
 
 # A human-readable name for your view.
 name: User impersonation
