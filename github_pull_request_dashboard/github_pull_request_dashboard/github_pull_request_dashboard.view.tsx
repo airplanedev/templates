@@ -8,16 +8,14 @@ import {
   TextInput,
   Title,
   useComponentState,
-  useTaskQuery,
   useTaskMutation,
 } from "@airplane/views";
 
-// Put the main logic of the view here.
 // Views documentation: https://docs.airplane.dev/views/getting-started
 const GitHubPRDashboard = () => {
   const userName = useComponentState();
   const { output, loading, error, mutate } = useTaskMutation({
-    slug: "demo_list_github_prs",
+    slug: "demo_list_github_pull_requests",
     params: { user: userName.value },
   });
 
@@ -45,7 +43,7 @@ const GitHubPRDashboard = () => {
           <Stack.Item width={{ xs: "100%", lg: "50%" }}>
             <Card sx={{ height: 500, overflow: "auto" }}>
               <Stack>
-                <Title>Open PRs</Title>
+                <Title order={3}>Open PRs</Title>
                 {output.authored.map((pr) => (
                   <PR pr={pr} />
                 ))}
@@ -57,7 +55,7 @@ const GitHubPRDashboard = () => {
           <Stack.Item width={{ xs: "100%", lg: "50%" }}>
             <Card sx={{ height: 500, overflow: "auto" }}>
               <Stack>
-                <Title>Approved PRs</Title>
+                <Title order={3}>Approved PRs</Title>
                 {output.approved.map((pr) => (
                   <PR pr={pr} />
                 ))}
@@ -69,7 +67,7 @@ const GitHubPRDashboard = () => {
           <Stack.Item width={{ xs: "100%", lg: "50%" }}>
             <Card sx={{ height: 500, overflow: "auto" }}>
               <Stack>
-                <Title>To Review</Title>
+                <Title order={3}>To Review</Title>
                 {output.toReview.map((pr) => (
                   <PR pr={pr} />
                 ))}
