@@ -1,6 +1,5 @@
 # Full reference: https://docs.airplane.dev/tasks/task-definition
-
-slug: impersonate
+slug: demo_impersonate
 name: Impersonate
 parameters:
   - slug: demo_user_email
