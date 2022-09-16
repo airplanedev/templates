@@ -31,16 +31,7 @@ const Dashboard = () => {
           rowSelection="single"
           showFilter={false}
           hiddenColumns={["id"]}
-          columns={[
-            {
-              label: "Email",
-              accessor: "email",
-            },
-            {
-              label: "Name",
-              accessor: "name",
-            },
-          ]}
+          columns={stripeCustomersCols}
         />
       )}
       {selectedCustomer && (
@@ -53,29 +44,7 @@ const Dashboard = () => {
               params: { customer_id: selectedCustomer.id },
             }}
             showFilter={false}
-            columns={[
-              {
-                label: "Customer ID",
-                accessor: "id",
-              },
-              {
-                label: "Email",
-                accessor: "email",
-              },
-              {
-                label: "Currency",
-                accessor: "currency",
-              },
-              {
-                label: "Next invoice sequence",
-                accessor: "next_invoice_sequence",
-                type: "number",
-              },
-              {
-                label: "Name",
-                accessor: "name",
-              },
-            ]}
+            columns={customerDetailsCols}
           />
           <Table
             id="customerCharges"
@@ -85,36 +54,7 @@ const Dashboard = () => {
               params: { customer_id: selectedCustomer.id },
             }}
             hiddenColumns={["currency", "description"]}
-            columns={[
-              {
-                label: "Charge date",
-                accessor: "created_at",
-                type: "date",
-              },
-              {
-                label: "Charge ID",
-                accessor: "id",
-              },
-              {
-                label: "Amount",
-                accessor: "amount",
-                type: "number",
-              },
-              {
-                label: "Amount refunded",
-                accessor: "amount_refunded",
-                type: "number",
-              },
-              {
-                label: "Paid",
-                accessor: "paid",
-                type: "boolean",
-              },
-              {
-                label: "Status",
-                accessor: "status",
-              },
-            ]}
+            columns={customerChargesCols}
             rowActions={[
               {
                 slug: "demo_refund_stripe_charge",
@@ -128,5 +68,71 @@ const Dashboard = () => {
     </Stack>
   );
 };
+
+const stripeCustomersCols = [
+  {
+    label: "Email",
+    accessor: "email",
+  },
+  {
+    label: "Name",
+    accessor: "name",
+  },
+];
+
+const customerDetailsCols = [
+  {
+    label: "Customer ID",
+    accessor: "id",
+  },
+  {
+    label: "Email",
+    accessor: "email",
+  },
+  {
+    label: "Currency",
+    accessor: "currency",
+  },
+  {
+    label: "Next invoice sequence",
+    accessor: "next_invoice_sequence",
+    type: "number",
+  },
+  {
+    label: "Name",
+    accessor: "name",
+  },
+];
+
+const customerChargesCols = [
+  {
+    label: "Charge date",
+    accessor: "created_at",
+    type: "date",
+  },
+  {
+    label: "Charge ID",
+    accessor: "id",
+  },
+  {
+    label: "Amount",
+    accessor: "amount",
+    type: "number",
+  },
+  {
+    label: "Amount refunded",
+    accessor: "amount_refunded",
+    type: "number",
+  },
+  {
+    label: "Paid",
+    accessor: "paid",
+    type: "boolean",
+  },
+  {
+    label: "Status",
+    accessor: "status",
+  },
+];
 
 export default Dashboard;

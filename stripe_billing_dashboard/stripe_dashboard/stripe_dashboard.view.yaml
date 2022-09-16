@@ -1,6 +1,6 @@
 # Used by Airplane to identify your view. Do not change.
 slug: demo_stripe_dashboard
-name: Stripe Dashboard
+name: Stripe dashboard
 description: "Stripe billing dashboard for looking up customers and refunding charges."
 
 # The path to the .view.tsx file containing the logic for this view. This

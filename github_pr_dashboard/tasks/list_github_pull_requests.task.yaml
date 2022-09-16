@@ -1,0 +1,20 @@
+# Full reference: https://docs.airplane.dev/tasks/task-definition
+
+slug: demo_list_github_pull_requests
+name: List GitHub pull requests
+description: Calls the GitHub API to list PRs for a GitHub user.
+parameters:
+  - slug: user
+    name: User
+    type: shorttext
+    description: The GitHub user to list PRs for.
+    required: true
+node:
+  entrypoint: list_github_pull_requests.ts
+  nodeVersion: "18"
+  # Uncomment if you want to use your own GitHub API key from a config variable. This will greatly increase rate limiting and allow you to view private repositories.
+  # Get your GitHub API keys here: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
+  # How to use config variables in Airplane: https://docs.airplane.dev/platform/configs
+  # envVars:
+  #   GITHUB_API_KEY:
+  #     config: GITHUB_API_KEY

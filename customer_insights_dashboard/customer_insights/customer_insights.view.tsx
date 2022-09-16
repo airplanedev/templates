@@ -18,37 +18,24 @@ const TeamDashboard = () => {
         <Table
           title="Unique customers per week"
           task="demo_get_customers_per_week"
-          columns={[
-            { accessor: "cnt", label: "Count" },
-            { accessor: "week", type: "date", label: "Week" },
-          ]}
+          columns={countPerWeekCols}
         />
         <Table
           title="Unique products per week"
           task="demo_get_products_per_week"
-          columns={[
-            { accessor: "cnt", label: "Count" },
-            { accessor: "week", type: "date", label: "Week" },
-          ]}
+          columns={countPerWeekCols}
         />
       </Stack>
       <Stack direction="row" spacing="xl" grow>
         <Table
           title="Top products"
           task="demo_list_top_products"
-          columns={[
-            { accessor: "product_id", label: "Product id" },
-            { accessor: "product_name", label: "Product name" },
-            { accessor: "cnt", label: "Number of orders" },
-          ]}
+          columns={topProductsCols}
         />
         <Table
           title="Orders per week"
           task="demo_get_orders_per_week"
-          columns={[
-            { accessor: "cnt", label: "Count" },
-            { accessor: "week", type: "date", label: "Week" },
-          ]}
+          columns={countPerWeekCols}
         />
       </Stack>
 
@@ -73,11 +60,7 @@ const TeamDashboard = () => {
               slug: "demo_list_top_products",
               params: { customer_id: selection },
             }}
-            columns={[
-              { accessor: "product_id", label: "Product id" },
-              { accessor: "product_name", label: "Product name" },
-              { accessor: "cnt", label: "Number of orders" },
-            ]}
+            columns={topProductsCols}
           />
           <Table
             title="Orders per week"
@@ -85,15 +68,23 @@ const TeamDashboard = () => {
               slug: "demo_get_orders_per_week",
               params: { customer_id: selection },
             }}
-            columns={[
-              { accessor: "cnt", label: "Count" },
-              { accessor: "week", type: "date", label: "Week" },
-            ]}
+            columns={countPerWeekCols}
           />
         </Stack>
       )}
     </Stack>
   );
 };
+
+const countPerWeekCols = [
+  { accessor: "cnt", label: "Count" },
+  { accessor: "week", type: "date", label: "Week" },
+];
+
+const topProductsCols = [
+  { accessor: "product_id", label: "Product ID" },
+  { accessor: "product_name", label: "Product name" },
+  { accessor: "cnt", label: "Number of orders" },
+];
 
 export default TeamDashboard;

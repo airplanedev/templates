@@ -1,0 +1,14 @@
+# Full reference: https://docs.airplane.dev/tasks/task-definition
+
+slug: demo_list_open_intercom_conversations
+name: List open Intercom conversations
+
+node:
+  entrypoint: list_open_intercom_conversations.ts
+  nodeVersion: "18"
+  # Uncomment if you want to use your own Intercom auth token from a config variable
+  # Get your Intercom auth token here: https://developers.intercom.com/building-apps/docs/authentication-types
+  # How to use config variables in Airplane: https://docs.airplane.dev/platform/configs
+  # envVars:
+  #   INTERCOM_AUTH_TOKEN:
+  #     config: INTERCOM_AUTH_TOKEN
