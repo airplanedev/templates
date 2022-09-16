@@ -49,7 +49,7 @@ const CreateAccount = () => {
       }}
       resetOnSubmit
     >
-      <TextInput id="company_name" label="Account Name" />
+      <TextInput id="company_name" label="Account name" />
     </Form>
   );
 };
@@ -83,7 +83,6 @@ const OnboardCompany = () => {
         rowSelection="single"
         hiddenColumns={["country"]}
       />
-  
       {selectedAccount?.id && (
         <Stack>
           <Form
@@ -93,7 +92,6 @@ const OnboardCompany = () => {
             }}
           >
             <Title order={3}>Add user to company</Title>
-            <div>
               <TextInput
                 label="Account ID"
                 value={selectedAccount?.id}
@@ -105,7 +103,6 @@ const OnboardCompany = () => {
               <TextInput id="title" label="Title" required />
               <TextInput id="role" label="Role" required />
               <TextInput id="email" label="Email" required />
-            </div>
           </Form>
           <UpdateRegion accountId={selectedAccount?.id as string} />
         </Stack>
