@@ -29,12 +29,11 @@ const UserImpersonation = () => {
       <Table
         id="users"
         title="Users"
-        task={{ slug: "demo_search_users", params: { query: queryState.value } }}
-        columns={[
-          {label: "Name", accessor: "name"},
-          {label: "Email", accessor: "email"},
-          {label: "Role", accessor: "role"},
-        ]}
+        task={{
+          slug: "demo_search_users",
+          params: { query: queryState.value },
+        }}
+        columns={userCols}
         hiddenColumns={["id"]}
         rowSelection="single"
         showFilter={false}
@@ -76,5 +75,11 @@ const UserImpersonation = () => {
     </Stack>
   );
 };
+
+const userCols = [
+  { label: "Name", accessor: "name" },
+  { label: "Email", accessor: "email" },
+  { label: "Role", accessor: "role" },
+];
 
 export default UserImpersonation;
