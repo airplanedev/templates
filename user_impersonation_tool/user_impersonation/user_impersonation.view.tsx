@@ -86,6 +86,7 @@ const UserImpersonationDetails = ({ user }: { user: User }) => {
             onSuccess: (o) => {
               setLink(o.link);
               reasonState.reset();
+              reasonState.setDisabled(true);
             },
           }}
         >
