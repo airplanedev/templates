@@ -1,18 +1,16 @@
 # Full reference: https://docs.airplane.dev/tasks/task-definition
 
-# Used by Airplane to identify your task. Do not change.
 slug: demo_search_customers
-name: Search Customers
+name: Search customers
 description: "SQL task that shows all customers that match a search keyword."
 parameters:
--
-  slug: search_keyword
-  name: Search Keyword
-  type: shorttext
-  description: The search string
-  required: false
-# Configuration for a SQL task.
+  - slug: search_keyword
+    name: Search keyword
+    type: shorttext
+    description: The search string
+    required: false
 sql:
+  # Replace with your own DB name
   resource: "[Demo DB]"
   entrypoint: search_customers.sql
   queryArgs:
