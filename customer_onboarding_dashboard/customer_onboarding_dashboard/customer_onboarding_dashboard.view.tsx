@@ -28,7 +28,7 @@ const CreateAccount = () => {
     useComponentState("createAccountForm");
 
   const { mutate: createAccount } = useTaskMutation({
-    slug: "demo_create_account_test",
+    slug: "demo_create_account",
     params: {
       ...createAccountValues,
     },
@@ -60,7 +60,7 @@ const OnboardCompany = () => {
   const accountsState = useComponentState("accounts");
   const selectedAccount = accountsState.selectedRow;
   const { mutate: createUser } = useTaskMutation({
-    slug: "demo_create_user_1",
+    slug: "demo_create_user",
     params: {
       ...createUserValues,
       account_id: selectedAccount?.id,
@@ -77,10 +77,9 @@ const OnboardCompany = () => {
     <Stack>
       <Title order={3}>New accounts</Title>
       <Text size="lg">These accounts do not have users or regions. Select an account to finish onboarding.</Text>
-
       <Table
         id="accounts"
-        task="demo_list_account_filter"
+        task="demo_list_account"
         rowSelection="single"
         hiddenColumns={["country"]}
       />
@@ -90,7 +89,6 @@ const OnboardCompany = () => {
           <Form
             id="createUserForm"
             onSubmit={() => {
-              console.log(createUserValues, selectedAccount.id);
               createUser();
             }}
           >
@@ -121,7 +119,7 @@ const UpdateRegion = (props: { accountId: string }) => {
   const { values: updateRegionValues } = useComponentState("updateRegionForm");
 
   const { mutate: updateRegion } = useTaskMutation({
-    slug: "demo_update_region_1",
+    slug: "demo_update_region",
     params: {
       ...updateRegionValues,
       account_id: accountId,
