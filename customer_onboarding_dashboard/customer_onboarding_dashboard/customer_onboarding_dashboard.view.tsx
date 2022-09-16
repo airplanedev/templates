@@ -124,11 +124,11 @@ const UpdateRegion = (props: { accountId: string }) => {
       ...updateRegionValues,
       account_id: accountId,
     },
-    onSuccess: (output) => {
-      alert(`Added user to account! ${JSON.stringify(output)}`);
+    onSuccess: () => {
+      alert(`Added updating account region! Successfully onboarded account ${accountId}.`);
     },
     onError: (error) => {
-      alert(`Failed adding user with error:  ${JSON.stringify(error)}`);
+      alert(`Failed updating account region: ${error}`);
     },
   });
 

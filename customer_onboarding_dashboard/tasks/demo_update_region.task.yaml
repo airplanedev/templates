@@ -3,7 +3,7 @@ slug: demo_update_region
 parameters:
 - name: account_id
   slug: account_id
-  type: shorttext
+  type: integer
 - name: region
   slug: region
   type: shorttext
