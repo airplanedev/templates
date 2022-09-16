@@ -2,7 +2,7 @@
 slug: demo_impersonate
 name: Impersonate
 parameters:
-  - slug: demo_user_email
+  - slug: user_email
     name: User Email
     type: shorttext
 node:
