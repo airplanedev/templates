@@ -9,7 +9,7 @@ import {
   Title,
   useComponentState,
 } from "@airplane/views";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const UserImpersonation = () => {
   const [link, setLink] = useState("");
@@ -17,6 +17,10 @@ const UserImpersonation = () => {
   const tableState = useComponentState();
   const user = tableState.selectedRow;
   const reasonState = useComponentState("reason");
+
+  useEffect(() => {
+    setLink("");
+  }, [user]);
   return (
     <Stack>
       <Title>Impersonate a user</Title>
