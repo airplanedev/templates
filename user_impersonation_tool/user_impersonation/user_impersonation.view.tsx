@@ -58,13 +58,13 @@ const UserImpersonation = () => {
         ]}
       />
       <Dialog id={dialogState.id} title="Confirm impersonation">
-        {user && <UserImpersonationDetails user={user} />}
+        {user && <ImpersonationDialogPane user={user} />}
       </Dialog>
     </Stack>
   );
 };
 
-const UserImpersonationDetails = ({ user }: { user: User }) => {
+const ImpersonationDialogPane = ({ user }: { user: User }) => {
   const [link, setLink] = useState("");
   const reasonState = useComponentState();
   return (
