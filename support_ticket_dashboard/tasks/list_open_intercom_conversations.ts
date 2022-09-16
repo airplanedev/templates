@@ -4,7 +4,8 @@ export default async function () {
   const token = process.env.INTERCOM_AUTH_TOKEN ?? "";
 
   // Return mock data if INTERCOM_AUTH_TOKEN is not set.
-  // Delete this once you create a config variable for INTERCOM_AUTH_TOKEN and set the environment variable.
+  // Delete this once you create a config variable for INTERCOM_AUTH_TOKEN and
+  // set the environment variable.
   if (token === "") {
     return [
       {

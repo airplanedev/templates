@@ -12,7 +12,8 @@ import {
 } from "@airplane/views";
 import { useEffect } from "react";
 
-// Replace with your Intercom App ID, which can be found from the URL of an Intercom conversation
+// Replace with your Intercom App ID, which can be found from the URL of an
+// Intercom conversation
 const INTERCOM_APP_ID = "";
 
 // Views documentation: https://docs.airplane.dev/views/getting-started
@@ -59,7 +60,8 @@ Open in Intercom: ${openInIntercomLink(selectedConvo.id)}
 
   const openInIntercomLink = (convoID: string) =>
     INTERCOM_APP_ID
-      ? `https://app.intercom.com/a/apps/${INTERCOM_APP_ID}/inbox/inbox/all/conversations/${convoID}`
+      ? `https://app.intercom.com/a/apps/${INTERCOM_APP_ID}` +
+        `/inbox/inbox/all/conversations/${convoID}`
       : "https://www.intercom.com/";
 
   return (

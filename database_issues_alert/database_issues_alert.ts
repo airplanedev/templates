@@ -4,9 +4,11 @@ type Params = {
   slack_channel?: string;
 };
 
-export default async function(params: Params) {
+export default async function (params: Params) {
   const wraparoundThresholdPercent = 60;
-  const transactionIDWraparound = await airplane.sql.query("db", `
+  const transactionIDWraparound = await airplane.sql.query(
+    "db",
+    `
     WITH max_age AS (
         SELECT 2000000000 as max_old_xid
             , setting AS autovacuum_freeze_max_age
@@ -24,12 +26,14 @@ export default async function(params: Params) {
         , max(ROUND(100*(oldest_current_xid/max_old_xid::float))) AS percent_towards_wraparound
         , max(ROUND(100*(oldest_current_xid/autovacuum_freeze_max_age::float))) AS percent_towards_emergency_autovac
     FROM per_database_stats;
-  `);
-  const percentTowardsWraparound = transactionIDWraparound.output.Q1.percent_towards_wraparound;
+  `
+  );
+  const percentTowardsWraparound =
+    transactionIDWraparound.output.Q1.percent_towards_wraparound;
   if (percentTowardsWraparound > wraparoundThresholdPercent) {
     const warningMessage = `Warning: we are ${percentTowardsWraparound}% on the way to transaction ID wraparound!`;
     if (params.slack_channel != null) {
-      await airplane.slack.message(params.slack_channel, warningMessage)
+      await airplane.slack.message(params.slack_channel, warningMessage);
     } else {
       console.log(warningMessage);
     }
