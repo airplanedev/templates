@@ -9,6 +9,7 @@ import {
   Title,
   useComponentState,
 } from "@airplane/views";
+import { EyeIcon } from "@airplane/views/icons";
 import { useState } from "react";
 
 type User = {
@@ -49,13 +50,14 @@ const UserImpersonation = () => {
                 setUser(row);
                 dialogState.open();
               }}
+              leftIcon={<EyeIcon />}
             >
               Impersonate
             </Button>
           ),
         ]}
       />
-      <Dialog id={dialogState.id} title="Impersonate user">
+      <Dialog id={dialogState.id} title="Confirm impersonation">
         {user && <UserImpersonationDetails user={user} />}
       </Dialog>
     </Stack>
@@ -87,7 +89,7 @@ const UserImpersonationDetails = ({ user }: { user: User }) => {
             },
           }}
         >
-          Generate link
+          Generate impersonation link
         </Button>
         {link && (
           <>
