@@ -1,6 +1,5 @@
 # Full reference: https://docs.airplane.dev/tasks/task-definition
 
-# Used by Airplane to identify your task. Do not change.
 slug: demo_lookup_charges_for_stripe_customer
 name: Lookup charges for Stripe customer
 description: "Looks up all historical Stripe charges for a customer given their ID"

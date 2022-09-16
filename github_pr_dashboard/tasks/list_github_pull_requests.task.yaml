@@ -1,6 +1,5 @@
 # Full reference: https://docs.airplane.dev/tasks/task-definition
 
-# Used by Airplane to identify your task. Do not change.
 slug: demo_list_github_pull_requests
 name: List GitHub pull requests
 description: Calls the GitHub API to list PRs for a GitHub user.
