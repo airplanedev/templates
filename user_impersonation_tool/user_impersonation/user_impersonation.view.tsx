@@ -13,8 +13,8 @@ import { useState } from "react";
 
 const UserImpersonation = () => {
   const [link, setLink] = useState("");
-  const queryState = useComponentState("search");
-  const tableState = useComponentState("users");
+  const queryState = useComponentState();
+  const tableState = useComponentState();
   const user = tableState.selectedRow;
   const reasonState = useComponentState("reason");
   return (
@@ -25,9 +25,9 @@ const UserImpersonation = () => {
         account can lead to noticeable, irreversible changes! All impersonation
         attempts are audited.
       </Text>
-      <TextInput id="search" label="Search by ID, email, or team" />
+      <TextInput id={queryState.id} label="Search by ID, email, or team" />
       <Table
-        id="users"
+        id={tableState.id}
         title="Users"
         task={{
           slug: "demo_search_users",
@@ -47,7 +47,7 @@ const UserImpersonation = () => {
 - ID: ${user.id}
 - Email: ${user.email}
           `}</Markdown>
-            <TextInput id="reason" label="Reason (e.g. Intercom URL)" />
+            <TextInput id={reasonState.id} label="Reason (e.g. Intercom URL)" />
             <Button
               disabled={!reasonState.value}
               task={{
@@ -55,7 +55,7 @@ const UserImpersonation = () => {
                 params: { user_email: user.email, reason: reasonState.value },
                 onSuccess: (o) => {
                   setLink(o.link);
-                  reasonState.setValue("");
+                  reasonState.reset();
                 },
               }}
             >
@@ -64,7 +64,7 @@ const UserImpersonation = () => {
           </Stack>
         </Card>
       )}
-      {link && (
+      {user && link && (
         <Stack direction="row">
           <Button variant="outline" href={link}>
             Sign in as {user.email}
