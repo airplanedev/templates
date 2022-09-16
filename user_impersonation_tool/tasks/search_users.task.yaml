@@ -8,8 +8,7 @@ parameters:
     type: shorttext
     default: ""
 sql:
-  resource: "DB"
+  resource: "[Demo DB]"
   entrypoint: search_users.sql
-
   queryArgs:
     search: "%{{params.query}}%"

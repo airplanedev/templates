@@ -30,6 +30,12 @@ const UserImpersonation = () => {
         id="users"
         title="Users"
         task={{ slug: "demo_search_users", params: { query: queryState.value } }}
+        columns={[
+          {label: "Name", accessor: "name"},
+          {label: "Email", accessor: "email"},
+          {label: "Role", accessor: "role"},
+        ]}
+        hiddenColumns={["id"]}
         rowSelection="single"
         showFilter={false}
       />
