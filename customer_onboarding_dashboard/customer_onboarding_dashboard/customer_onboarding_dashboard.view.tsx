@@ -44,7 +44,6 @@ const CreateAccount = () => {
     <Form
       id="createAccountForm"
       onSubmit={() => {
-        console.log("submitted");
         createAccount();
       }}
       resetOnSubmit
@@ -90,6 +89,7 @@ const OnboardCompany = () => {
             onSubmit={() => {
               createUser();
             }}
+            resetOnSubmit
           >
             <Title order={3}>Add user to company</Title>
               <TextInput
@@ -136,6 +136,7 @@ const UpdateRegion = (props: { accountId: string }) => {
         onSubmit={(values) => {
           updateRegion();
         }}
+        resetOnSubmit
       >
         <Title order={3}>Choose deploy region</Title>
         <TextInput
