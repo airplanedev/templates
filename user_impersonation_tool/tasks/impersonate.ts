@@ -28,5 +28,5 @@ type Params = {
 };
 
 export default async function (params: Params) {
-  await generateSignInLink(params.user_email);
+  return await generateSignInLink(params.user_email);
 }
