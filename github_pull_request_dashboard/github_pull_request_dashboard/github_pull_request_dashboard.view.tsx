@@ -80,7 +80,7 @@ const GitHubPRDashboard = () => {
               sx={{ height: 500, overflow: "auto" }}
             >
               <Stack>
-                <Title order={3}>✏️ To Review</Title>
+                <Title order={3}>✏️ PRs to review</Title>
                 {output.toReview.map((pr) => (
                   <PR pr={pr} />
                 ))}
