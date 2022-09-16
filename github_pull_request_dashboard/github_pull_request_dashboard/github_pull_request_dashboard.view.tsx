@@ -20,7 +20,7 @@ const GitHubPRDashboard = () => {
 
   return (
     <Stack spacing="xl">
-      <Title>GitHub Pull Request Dashboard</Title>
+      <Title>GitHub pull request dashboard</Title>
       <Stack direction="row" align="end">
         <TextInput
           id={userName.id}
