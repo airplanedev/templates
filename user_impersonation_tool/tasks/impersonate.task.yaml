@@ -8,6 +8,8 @@ parameters:
 node:
   entrypoint: impersonate.ts
   nodeVersion: "18"
-  envVars:
-    WORKOS_API_KEY:
-      config: WORKOS_API_KEY
+  # Uncomment if you want to use your own WorkOS key from a config variable
+  # How to use config variables in Airplane: https://docs.airplane.dev/platform/configs
+  # envVars:
+  #   WORKOS_API_KEY:
+  #     config: WORKOS_API_KEY
