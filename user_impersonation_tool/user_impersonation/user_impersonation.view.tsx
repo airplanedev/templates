@@ -1,6 +1,6 @@
 import {
   Button,
-  Card,
+  Dialog,
   Markdown,
   Stack,
   Table,
@@ -9,18 +9,20 @@ import {
   Title,
   useComponentState,
 } from "@airplane/views";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+
+type User = {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  title: string;
+};
 
 const UserImpersonation = () => {
-  const [link, setLink] = useState("");
+  const [user, setUser] = useState<User | undefined>();
   const queryState = useComponentState();
-  const tableState = useComponentState();
-  const user = tableState.selectedRow;
-  const reasonState = useComponentState("reason");
-
-  useEffect(() => {
-    setLink("");
-  }, [user]);
+  const dialogState = useComponentState();
   return (
     <Stack>
       <Title>Impersonate a user</Title>
@@ -30,8 +32,7 @@ const UserImpersonation = () => {
         attempts are audited.
       </Text>
       <TextInput id={queryState.id} label="Search by ID, email, or team" />
-      <Table
-        id={tableState.id}
+      <Table<User>
         title="Users"
         task={{
           slug: "demo_search_users",
@@ -39,44 +40,67 @@ const UserImpersonation = () => {
         }}
         columns={userCols}
         hiddenColumns={["id"]}
-        rowSelection="single"
         showFilter={false}
-      />
-      {user && (
-        <Card>
-          <Stack>
-            <Markdown>{`
-## ${user.name}
-
-- ID: ${user.id}
-- Email: ${user.email}
-          `}</Markdown>
-            <TextInput id={reasonState.id} label="Reason (e.g. Intercom URL)" />
+        rowActions={[
+          (row) => (
             <Button
-              disabled={!reasonState.value}
-              task={{
-                slug: "demo_impersonate",
-                params: { user_email: user.email, reason: reasonState.value },
-                onSuccess: (o) => {
-                  setLink(o.link);
-                  reasonState.reset();
-                },
+              preset="secondary"
+              onClick={() => {
+                setUser(row);
+                dialogState.open();
               }}
             >
-              Generate link
+              Impersonate
             </Button>
-          </Stack>
-        </Card>
-      )}
-      {user && link && (
-        <Stack direction="row">
-          <Button variant="outline" href={link}>
-            Sign in as {user.email}
-          </Button>
-          (Hint: right click and open in incognito!)
-        </Stack>
-      )}
+          ),
+        ]}
+      />
+      <Dialog id={dialogState.id} title="Impersonate user">
+        {user && <UserImpersonationDetails user={user} />}
+      </Dialog>
     </Stack>
+  );
+};
+
+const UserImpersonationDetails = ({ user }: { user: User }) => {
+  const [link, setLink] = useState("");
+  const reasonState = useComponentState();
+  return (
+    <>
+      <Markdown>{`
+### ${user.name}
+- **Email**: ${user.email}
+- **Role**: ${user.role}
+- **Title**: ${user.title}
+- **ID**: ${user.id}
+          `}</Markdown>
+      <Stack>
+        <TextInput id={reasonState.id} label="Reason (e.g. Intercom URL)" />
+        <Button
+          disabled={!reasonState.value}
+          task={{
+            slug: "demo_impersonate",
+            params: { user_email: user.email, reason: reasonState.value },
+            onSuccess: (o) => {
+              setLink(o.link);
+              reasonState.reset();
+            },
+          }}
+        >
+          Generate link
+        </Button>
+        {link && (
+          <>
+            <Button variant="outline" href={link}>
+              Sign in as {user.name}
+            </Button>
+            <Text italic color="gray">
+              Hint: right-click and open in incognito mode
+            </Text>
+          </>
+        )}
+      </Stack>
+    </>
   );
 };
 
@@ -84,6 +108,7 @@ const userCols = [
   { label: "Name", accessor: "name" },
   { label: "Email", accessor: "email" },
   { label: "Role", accessor: "role" },
+  { label: "Title", accessor: "title" },
 ];
 
 export default UserImpersonation;
