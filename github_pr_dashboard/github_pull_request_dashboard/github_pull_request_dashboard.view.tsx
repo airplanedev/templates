@@ -16,7 +16,7 @@ const GitHubPRDashboard = () => {
   const search = useComponentState();
 
   const output = search.result?.output;
-  const error = search.result?.error
+  const error = search.result?.error;
 
   return (
     <Stack spacing="xl">
@@ -41,53 +41,47 @@ const GitHubPRDashboard = () => {
 
       {output && !error && (
         <Stack direction="row" spacing="lg">
-          <Stack.Item width={{ xs: "100%", lg: "50%" }}>
-            <Card
-              radius="xs"
-              shadow="xs"
-              sx={{ height: 500, overflow: "auto" }}
-            >
-              <Stack>
-                <Title order={3}>‍💻 Open PRs</Title>
-                {output.authored.map((pr) => (
-                  <PR pr={pr} />
-                ))}
-                {!output.authored.length && <Text size="xl">None</Text>}
-              </Stack>
-            </Card>
-          </Stack.Item>
+          <Card
+            radius="xs"
+            sx={{ height: 500, overflow: "auto" }}
+            width={{ xs: "100%", lg: "50%" }}
+          >
+            <Stack>
+              <Title order={3}>‍💻 Open PRs</Title>
+              {output.authored.map((pr) => (
+                <PR pr={pr} />
+              ))}
+              {!output.authored.length && <Text size="xl">None</Text>}
+            </Stack>
+          </Card>
 
-          <Stack.Item width={{ xs: "100%", lg: "50%" }}>
-            <Card
-              radius="xs"
-              shadow="xs"
-              sx={{ height: 500, overflow: "auto" }}
-            >
-              <Stack>
-                <Title order={3}>✅ Approved PRs</Title>
-                {output.approved.map((pr) => (
-                  <PR pr={pr} />
-                ))}
-                {!output.approved.length && <Text size="xl">None</Text>}
-              </Stack>
-            </Card>
-          </Stack.Item>
+          <Card
+            radius="xs"
+            width={{ xs: "100%", lg: "50%" }}
+            sx={{ height: 500, overflow: "auto" }}
+          >
+            <Stack>
+              <Title order={3}>✅ Approved PRs</Title>
+              {output.approved.map((pr) => (
+                <PR pr={pr} />
+              ))}
+              {!output.approved.length && <Text size="xl">None</Text>}
+            </Stack>
+          </Card>
 
-          <Stack.Item width={{ xs: "100%", lg: "50%" }}>
-            <Card
-              radius="xs"
-              shadow="xs"
-              sx={{ height: 500, overflow: "auto" }}
-            >
-              <Stack>
-                <Title order={3}>✏️ PRs to review</Title>
-                {output.toReview.map((pr) => (
-                  <PR pr={pr} />
-                ))}
-                {!output.toReview.length && <Text size="xl">None</Text>}
-              </Stack>
-            </Card>
-          </Stack.Item>
+          <Card
+            radius="xs"
+            width={{ xs: "100%", lg: "50%" }}
+            sx={{ height: 500, overflow: "auto" }}
+          >
+            <Stack>
+              <Title order={3}>✏️ PRs to review</Title>
+              {output.toReview.map((pr) => (
+                <PR pr={pr} />
+              ))}
+              {!output.toReview.length && <Text size="xl">None</Text>}
+            </Stack>
+          </Card>
         </Stack>
       )}
     </Stack>
