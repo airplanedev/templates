@@ -19,13 +19,13 @@ const TeamDashboard = () => {
           title="Unique customers per week"
           task="demo_get_customers_per_week"
           columns={countPerWeekCols}
-          width={{ xs: "100%", lg: "50%" }}
+          width={{ xs: "100%", lg: "auto" }}
         />
         <Table
           title="Unique products per week"
           task="demo_get_products_per_week"
           columns={countPerWeekCols}
-          width={{ xs: "100%", lg: "50%" }}
+          width={{ xs: "100%", lg: "auto" }}
         />
       </Stack>
       <Stack direction="row" spacing="xl">
@@ -33,13 +33,13 @@ const TeamDashboard = () => {
           title="Top products"
           task="demo_list_top_products"
           columns={topProductsCols}
-          width={{ xs: "100%", lg: "50%" }}
+          width={{ xs: "100%", lg: "auto" }}
         />
         <Table
           title="Orders per week"
           task="demo_get_orders_per_week"
           columns={countPerWeekCols}
-          width={{ xs: "100%", lg: "50%" }}
+          width={{ xs: "100%", lg: "auto" }}
         />
       </Stack>
 
@@ -68,7 +68,7 @@ const TeamDashboard = () => {
               params: { customer_id: selection },
             }}
             columns={topProductsCols}
-            width={{ xs: "100%", lg: "50%" }}
+            width={{ xs: "100%", lg: "auto" }}
           />
           <Table
             title="Orders per week"
@@ -77,7 +77,7 @@ const TeamDashboard = () => {
               params: { customer_id: selection },
             }}
             columns={countPerWeekCols}
-            width={{ xs: "100%", lg: "50%" }}
+            width={{ xs: "100%", lg: "auto" }}
           />
         </Stack>
       )}
