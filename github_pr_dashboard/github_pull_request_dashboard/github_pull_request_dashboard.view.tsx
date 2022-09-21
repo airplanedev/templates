@@ -44,7 +44,7 @@ const GitHubPRDashboard = () => {
           <Card
             radius="xs"
             sx={{ height: 500, overflow: "auto" }}
-            width={{ xs: "100%", lg: "50%" }}
+            width={{ xs: "100%", md: "50%" }}
           >
             <Stack>
               <Title order={3}>‍💻 Open PRs</Title>
@@ -57,7 +57,7 @@ const GitHubPRDashboard = () => {
 
           <Card
             radius="xs"
-            width={{ xs: "100%", lg: "50%" }}
+            width={{ xs: "100%", md: "50%" }}
             sx={{ height: 500, overflow: "auto" }}
           >
             <Stack>
@@ -71,7 +71,7 @@ const GitHubPRDashboard = () => {
 
           <Card
             radius="xs"
-            width={{ xs: "100%", lg: "50%" }}
+            width={{ xs: "100%", md: "50%" }}
             sx={{ height: 500, overflow: "auto" }}
           >
             <Stack>
@@ -97,9 +97,7 @@ const PR = ({ pr }) => {
         </Link>
         <Text color="gray.5">{`Comments: ${pr.numComments}`}</Text>
       </Stack>
-      <Text sx={{ maxWidth: 600 }}>{`${pr.body.substring(0, 200)}${
-        pr.body.length > 100 ? "..." : ""
-      }`}</Text>
+      {pr.body && <Text lineClamp={4}>{pr.body}</Text>}
       <Stack direction="row" align="center" spacing="sm">
         {pr.avatar && <Image width={16} src={pr.avatar} />}
         <Text size="sm">{pr.author}</Text>
