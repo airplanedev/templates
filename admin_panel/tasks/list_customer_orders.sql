@@ -4,5 +4,6 @@ SELECT
 FROM
   orders
 WHERE
-  customer_id = :customer_id;
-
+  customer_id = :customer_id
+ORDER BY
+  order_id;

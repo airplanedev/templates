@@ -97,6 +97,9 @@ const CustomerCard = ({ selectedCustomer, searchKeyword }) => {
             id="contactNameInput"
             placeholder="Contact name"
             defaultValue={selectedCustomer.contact_name}
+            // Re-render this component whenever selectedCustomer.customer_id changes so that
+            // the defaultValue re-computes.
+            key={selectedCustomer.customer_id}
           />
           <Button
             task={{
