@@ -144,7 +144,7 @@ const UpdateRegion = (props: { accountId: string }) => {
           value={accountId}
           disabled
           required
-        />{" "}
+        />
         <Select id="region" label="Region" data={["USA", "EU", "CA"]} />
       </Form>
     </Stack>

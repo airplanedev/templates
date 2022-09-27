@@ -9,4 +9,4 @@ name: Customer onboarding dashboard
 
 # The path to the .view.tsx file containing the logic for this view. This
 # can be absolute or relative to the location of the definition file.
-entrypoint: customer_onboarding_dashboard.view.tsx
+entrypoint: customer_onboarding.view.tsx
