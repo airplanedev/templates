@@ -43,7 +43,7 @@ const UserImpersonation = () => {
         hiddenColumns={["id"]}
         showFilter={false}
         rowActions={[
-          (row) => (
+          ({ row }) => (
             <Button
               preset="secondary"
               onClick={() => {
@@ -70,7 +70,7 @@ const ImpersonationDialogPane = ({ user }: { user: User }) => {
   return (
     <>
       <Markdown>{`
-### ${user.name}
+#### ${user.name}
 - **Email**: ${user.email}
 - **Role**: ${user.role}
 - **Title**: ${user.title}
