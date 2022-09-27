@@ -1,4 +1,4 @@
-name: "[Demo] Create Account"
+name: "Create account"
 slug: demo_create_account
 parameters:
 - name: company name

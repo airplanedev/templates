@@ -1,4 +1,4 @@
-name: "[Demo] Create User"
+name: "Create user"
 slug: demo_create_user
 parameters:
 - name: user id

@@ -1,4 +1,4 @@
-name: "[Demo] Update Region"
+name: "Update region"
 slug: demo_update_region
 parameters:
 - name: account_id

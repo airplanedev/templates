@@ -1,4 +1,4 @@
-name: "[Demo] List account"
+name: "List account"
 slug: demo_list_account
 sql:
   resource: "demo_db"
