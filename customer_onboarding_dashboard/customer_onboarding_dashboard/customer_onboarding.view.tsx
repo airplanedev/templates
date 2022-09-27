@@ -8,6 +8,7 @@ import {
   useComponentState,
   useTaskMutation,
   Text,
+  Card,
 } from "@airplane/views";
 
 const CustomerDashboard = () => {
@@ -75,7 +76,10 @@ const OnboardCompany = () => {
   return (
     <Stack>
       <Title order={3}>New accounts</Title>
-      <Text size="lg">These accounts do not have users or regions. Select an account to finish onboarding.</Text>
+      <Text size="lg">
+        These accounts do not have users or regions. Select an account to finish
+        onboarding.
+      </Text>
       <Table
         id="accounts"
         task="demo_list_account"
@@ -84,14 +88,16 @@ const OnboardCompany = () => {
       />
       {selectedAccount?.id && (
         <Stack>
-          <Form
-            id="createUserForm"
-            onSubmit={() => {
-              createUser();
-            }}
-            resetOnSubmit
-          >
-            <Title order={3}>Add user to company</Title>
+          <Title order={3}>Finish onboarding</Title>
+          <Stack direction="row" grow={true}>
+            <Form
+              id="createUserForm"
+              onSubmit={() => {
+                createUser();
+              }}
+              resetOnSubmit
+            >
+              <Title order={3}>Add user to company</Title>
               <TextInput
                 label="Account ID"
                 value={selectedAccount?.id}
@@ -103,16 +109,17 @@ const OnboardCompany = () => {
               <TextInput id="title" label="Title" required />
               <TextInput id="role" label="Role" required />
               <TextInput id="email" label="Email" required />
-          </Form>
-          <UpdateRegion accountId={selectedAccount?.id as string} />
+            </Form>
+
+            <UpdateRegion accountId={selectedAccount?.id as string} />
+          </Stack>
         </Stack>
       )}
     </Stack>
   );
 };
 
-const UpdateRegion = (props: { accountId: string }) => {
-  const { accountId } = props;
+const UpdateRegion = ({ accountId }) => {
   const { values: updateRegionValues } = useComponentState("updateRegionForm");
 
   const { mutate: updateRegion } = useTaskMutation({
@@ -122,7 +129,9 @@ const UpdateRegion = (props: { accountId: string }) => {
       account_id: accountId,
     },
     onSuccess: () => {
-      alert(`Added updating account region! Successfully onboarded account ${accountId}.`);
+      alert(
+        `Added updating account region! Successfully onboarded account ${accountId}.`
+      );
     },
     onError: (error) => {
       alert(`Failed updating account region: ${error}`);
@@ -139,12 +148,7 @@ const UpdateRegion = (props: { accountId: string }) => {
         resetOnSubmit
       >
         <Title order={3}>Choose deploy region</Title>
-        <TextInput
-          label="Account ID"
-          value={accountId}
-          disabled
-          required
-        />
+        <TextInput label="Account ID" value={accountId} disabled required />
         <Select id="region" label="Region" data={["USA", "EU", "CA"]} />
       </Form>
     </Stack>
