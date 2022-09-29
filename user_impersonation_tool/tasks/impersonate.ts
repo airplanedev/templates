@@ -7,7 +7,7 @@ import WorkOS from "@workos-inc/node";
  * choice.
  */
 const generateSignInLink = async (userEmail: string) => {
-  const apiKey = process.env.WORKOS_API_KEY;
+  const apiKey = process.env.WORKOS_API_KEY ?? "";
 
   // Return mock data if WORKOS_API_KEY is not set.
   // Delete this once you create a config variable for WORKOS_API_KEY and set the environment variable.
