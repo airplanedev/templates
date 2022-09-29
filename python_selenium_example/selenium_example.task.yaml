@@ -1,0 +1,7 @@
+# Full reference: https://docs.airplane.dev/tasks/task-definition
+
+slug: demo_python_selenium_example
+name: Python selenium example
+description: Starts up Firefox with selenium and requests a webpage.
+python:
+  entrypoint: selenium_example.py

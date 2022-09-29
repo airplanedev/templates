@@ -77,7 +77,7 @@ Open in Intercom: ${openInIntercomLink(selectedConvo.id)}
         rowActions={(row) => {
           return (
             <Button
-              preset="secondary"
+              variant="subtle"
               compact
               size="sm"
               href={openInIntercomLink(row.id as string)}
