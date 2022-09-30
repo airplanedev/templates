@@ -18,7 +18,7 @@ parameters:
   type: shorttext
 sql:
   resource: "demo_db"
-  entrypoint: demo_create_user.sql
+  entrypoint: create_user.sql
   queryArgs:
     account_id: "{{params.account_id}}"
     email: "{{params.email}}"

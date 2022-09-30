@@ -6,6 +6,6 @@ parameters:
   type: shorttext
 sql:
   resource: "demo_db"
-  entrypoint: demo_create_account.sql
+  entrypoint: create_account.sql
   queryArgs:
     company_name: "{{params.company_name}}"
