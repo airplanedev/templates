@@ -100,7 +100,7 @@ const UpdateAccounts = ({ selectedAccountId }) => {
   return (
     <Stack>
       <Title order={3}>Finish onboarding</Title>
-      <Stack direction="row">
+      <Stack direction="row" grow>
         <Form
           id="createUserForm"
           onSubmit={() => {
@@ -117,7 +117,9 @@ const UpdateAccounts = ({ selectedAccountId }) => {
             </Text>
           )}
           {userCount == 0 && (
-            <Text>This company has no users. Add one to get started.</Text>
+            <Text>
+              This company has no users. Add one to get started.
+              </Text>
           )}
 
           <TextInput
