@@ -8,7 +8,7 @@ import {
   useComponentState,
   useTaskMutation,
   Text,
-  Card,
+  useTaskQuery,
 } from "@airplane/views";
 
 const CustomerDashboard = () => {
@@ -17,9 +17,8 @@ const CustomerDashboard = () => {
       <Title order={1}>Customer onboarding dashboard</Title>
       <Title order={2}>Create new account</Title>
       <CreateAccount />
-
       <Title order={2}>Onboard accounts</Title>
-      <OnboardCompany />
+      <ExistingAccounts />
     </Stack>
   );
 };
@@ -54,25 +53,9 @@ const CreateAccount = () => {
   );
 };
 
-const OnboardCompany = () => {
-  const { values: createUserValues } = useComponentState("createUserForm");
-
+const ExistingAccounts = () => {
   const accountsState = useComponentState("accounts");
   const selectedAccount = accountsState.selectedRow;
-  const { mutate: createUser } = useTaskMutation({
-    slug: "demo_create_user",
-    params: {
-      ...createUserValues,
-      account_id: selectedAccount?.id,
-    },
-    onSuccess: (output) => {
-      alert(`Added user to account! ${JSON.stringify(output)}`);
-    },
-    onError: (error) => {
-      alert(`Failed adding user with error:  ${JSON.stringify(error)}`);
-    },
-  });
-
   return (
     <Stack>
       <Title order={3}>New accounts</Title>
@@ -84,37 +67,72 @@ const OnboardCompany = () => {
         id="accounts"
         task="demo_list_account"
         rowSelection="single"
-        hiddenColumns={["country"]}
+        hiddenColumns={["country", "user_id"]}
       />
       {selectedAccount?.id && (
-        <Stack>
-          <Title order={3}>Finish onboarding</Title>
-          <Stack direction="row" grow={true}>
-            <Form
-              id="createUserForm"
-              onSubmit={() => {
-                createUser();
-              }}
-              resetOnSubmit
-            >
-              <Title order={3}>Add user to company</Title>
-              <TextInput
-                label="Account ID"
-                value={selectedAccount?.id}
-                disabled
-                required
-              />
-              <TextInput id="user_id" label="User ID" required />
-              <TextInput id="name" label="Name" required />
-              <TextInput id="title" label="Title" required />
-              <TextInput id="role" label="Role" required />
-              <TextInput id="email" label="Email" required />
-            </Form>
-
-            <UpdateRegion accountId={selectedAccount?.id as string} />
-          </Stack>
-        </Stack>
+        <UpdateAccounts selectedAccountId={selectedAccount.id} />
       )}
+    </Stack>
+  );
+};
+
+const UpdateAccounts = ({ selectedAccountId }) => {
+  const { values: createUserValues } = useComponentState("createUserForm");
+  const { mutate: createUser } = useTaskMutation({
+    slug: "demo_create_user",
+    params: {
+      ...createUserValues,
+      account_id: selectedAccountId,
+    },
+    onSuccess: (output) => {
+      alert(`Added user to account! ${JSON.stringify(output)}`);
+    },
+    onError: (error) => {
+      alert(`Failed adding user with error:  ${JSON.stringify(error)}`);
+    },
+  });
+
+  const { output } = useTaskQuery({ slug: "demo_list_account" });
+  const userCount = output?.Q1.filter(
+    (x) => x.id == selectedAccountId && x.user_id
+  ).length;
+
+  return (
+    <Stack>
+      <Title order={3}>Finish onboarding</Title>
+      <Stack direction="row">
+        <Form
+          id="createUserForm"
+          onSubmit={() => {
+            createUser();
+          }}
+          width="1/2"
+          resetOnSubmit
+        >
+          <Title order={3}>Add users to company</Title>
+          {userCount > 0 && (
+            <Text>
+              Found {userCount} existing user(s). Add more users, or add a
+              deployment region to finish onboarding.
+            </Text>
+          )}
+          {userCount == 0 && (
+            <Text>This company has no users. Add one to get started.</Text>
+          )}
+
+          <TextInput
+            label="Account ID"
+            value={selectedAccountId}
+            disabled
+            required
+          />
+          <TextInput id="name" label="Name" required />
+          <TextInput id="title" label="Title" required />
+          <TextInput id="role" label="Role" required />
+          <TextInput id="email" label="Email" required />
+        </Form>
+        <UpdateRegion accountId={selectedAccountId as string} />
+      </Stack>
     </Stack>
   );
 };
@@ -139,19 +157,18 @@ const UpdateRegion = ({ accountId }) => {
   });
 
   return (
-    <Stack>
-      <Form
-        id="updateRegionForm"
-        onSubmit={(values) => {
-          updateRegion();
-        }}
-        resetOnSubmit
-      >
-        <Title order={3}>Choose deploy region</Title>
-        <TextInput label="Account ID" value={accountId} disabled required />
-        <Select id="region" label="Region" data={["USA", "EU", "CA"]} />
-      </Form>
-    </Stack>
+    <Form
+      id="updateRegionForm"
+      onSubmit={() => {
+        updateRegion();
+      }}
+      width="1/2"
+      resetOnSubmit
+    >
+      <Title order={3}>Choose deployment region</Title>
+      <TextInput label="Account ID" value={accountId} disabled required />
+      <Select id="region" label="Region" data={["USA", "EU", "CA"]} />
+    </Form>
   );
 };
 

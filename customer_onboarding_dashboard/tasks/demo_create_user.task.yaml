@@ -1,9 +1,6 @@
 name: "Create user"
 slug: demo_create_user
 parameters:
-- name: user id
-  slug: user_id
-  type: shorttext
 - name: account_id
   slug: account_id
   type: integer
@@ -28,4 +25,3 @@ sql:
     name: "{{params.name}}"
     role: "{{params.role}}"
     title: "{{params.title}}"
-    user_id: "{{params.user_id}}"
