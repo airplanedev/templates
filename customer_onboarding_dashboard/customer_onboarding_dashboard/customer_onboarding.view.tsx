@@ -65,8 +65,10 @@ const ExistingAccounts = () => {
       </Text>
       <Table
         id="accounts"
+        showFilter={false}
         task="demo_list_account"
         rowSelection="single"
+        columns={newAccountsCols}
         hiddenColumns={["country", "user_id"]}
       />
       {selectedAccount?.id && (
@@ -77,12 +79,24 @@ const ExistingAccounts = () => {
 };
 
 const UpdateAccounts = ({ selectedAccountId }) => {
+  return (
+    <Stack>
+      <Title order={3}>Finish onboarding</Title>
+      <Stack direction="row" grow>
+        <CreateUser accountId={selectedAccountId as string} />
+        <UpdateRegion accountId={selectedAccountId as string} />
+      </Stack>
+    </Stack>
+  );
+};
+
+const CreateUser = ({ accountId }) => {
   const { values: createUserValues } = useComponentState("createUserForm");
   const { mutate: createUser } = useTaskMutation({
     slug: "demo_create_user",
     params: {
       ...createUserValues,
-      account_id: selectedAccountId,
+      account_id: accountId,
     },
     onSuccess: (output) => {
       alert(`Added user to account! ${JSON.stringify(output)}`);
@@ -94,48 +108,32 @@ const UpdateAccounts = ({ selectedAccountId }) => {
 
   const { output } = useTaskQuery({ slug: "demo_list_account" });
   const userCount = output?.Q1.filter(
-    (x) => x.id == selectedAccountId && x.user_id
+    (x) => x.id == accountId && x.user_id
   ).length;
-
   return (
-    <Stack>
-      <Title order={3}>Finish onboarding</Title>
-      <Stack direction="row" grow>
-        <Form
-          id="createUserForm"
-          onSubmit={() => {
-            createUser();
-          }}
-          width="1/2"
-          resetOnSubmit
-        >
-          <Title order={3}>Add users to company</Title>
-          {userCount > 0 && (
-            <Text>
-              Found {userCount} existing user(s). Add more users, or add a
-              deployment region to finish onboarding.
-            </Text>
-          )}
-          {userCount == 0 && (
-            <Text>
-              This company has no users. Add one to get started.
-              </Text>
-          )}
-
-          <TextInput
-            label="Account ID"
-            value={selectedAccountId}
-            disabled
-            required
-          />
-          <TextInput id="name" label="Name" required />
-          <TextInput id="title" label="Title" required />
-          <TextInput id="role" label="Role" required />
-          <TextInput id="email" label="Email" required />
-        </Form>
-        <UpdateRegion accountId={selectedAccountId as string} />
-      </Stack>
-    </Stack>
+    <Form
+      id="createUserForm"
+      onSubmit={() => {
+        createUser();
+      }}
+      resetOnSubmit
+    >
+      <Title order={3}>Add users to company</Title>
+      {userCount > 0 && (
+        <Text>
+          Found {userCount} existing user(s). Add more users, or add a
+          deployment region to finish onboarding.
+        </Text>
+      )}
+      {userCount == 0 && (
+        <Text>This company has no users. Add one to get started.</Text>
+      )}
+      <TextInput label="Account ID" value={accountId} disabled required />
+      <TextInput id="name" label="Name" required />
+      <TextInput id="title" label="Title" required />
+      <TextInput id="role" label="Role" required />
+      <TextInput id="email" label="Email" required />
+    </Form>
   );
 };
 
@@ -164,7 +162,6 @@ const UpdateRegion = ({ accountId }) => {
       onSubmit={() => {
         updateRegion();
       }}
-      width="1/2"
       resetOnSubmit
     >
       <Title order={3}>Choose deployment region</Title>
@@ -173,5 +170,20 @@ const UpdateRegion = ({ accountId }) => {
     </Form>
   );
 };
+
+const newAccountsCols = [
+  {
+    label: "ID",
+    accessor: "id",
+  },
+  {
+    label: "Company Name",
+    accessor: "company_name",
+  },
+  {
+    label: "Signup Date",
+    accessor: "signup_date",
+  },
+];
 
 export default CustomerDashboard;
