@@ -116,6 +116,7 @@ const CreateUser = ({ accountId }) => {
       onSubmit={() => {
         createUser();
       }}
+      width="1/2"
       resetOnSubmit
     >
       <Title order={3}>Add users to company</Title>
@@ -162,6 +163,7 @@ const UpdateRegion = ({ accountId }) => {
       onSubmit={() => {
         updateRegion();
       }}
+      width="1/2"
       resetOnSubmit
     >
       <Title order={3}>Choose deployment region</Title>
