@@ -1,1 +1,6 @@
-update accounts set country=:region where id=:account_id;
+UPDATE
+    accounts
+SET
+    country = :region
+WHERE
+    id = :account_id;

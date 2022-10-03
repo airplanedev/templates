@@ -33,10 +33,10 @@ const CreateAccount = () => {
       ...createAccountValues,
     },
     onSuccess: () => {
-      alert(`Created Account!`);
+      alert(`Created account!`);
     },
     onError: (error) => {
-      alert(`Failed creating account issue with error: ${error.message}`);
+      alert(`Failed creating account with error: ${error.message}`);
     },
   });
 
@@ -119,7 +119,7 @@ const CreateUser = ({ accountId }) => {
       width="1/2"
       resetOnSubmit
     >
-      <Title order={3}>Add users to company</Title>
+      <Title order={4}>Add users to company</Title>
       {userCount > 0 && (
         <Text>
           Found {userCount} existing user(s). Add more users, or add a
@@ -166,7 +166,7 @@ const UpdateRegion = ({ accountId }) => {
       width="1/2"
       resetOnSubmit
     >
-      <Title order={3}>Choose deployment region</Title>
+      <Title order={4}>Choose deployment region</Title>
       <TextInput label="Account ID" value={accountId} disabled required />
       <Select id="region" label="Region" data={["USA", "EU", "CA"]} />
     </Form>
