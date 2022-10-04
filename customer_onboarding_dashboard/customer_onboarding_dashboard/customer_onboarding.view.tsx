@@ -82,9 +82,13 @@ const UpdateAccounts = ({ selectedAccountId }) => {
   return (
     <Stack>
       <Title order={3}>Finish onboarding</Title>
-      <Stack direction="row" grow>
+      <Stack direction="row">
+      <Stack.Item width="1/2">
         <CreateUser accountId={selectedAccountId as string} />
+        </Stack.Item>
+        <Stack.Item width="1/2">
         <UpdateRegion accountId={selectedAccountId as string} />
+        </Stack.Item>
       </Stack>
     </Stack>
   );
@@ -116,7 +120,6 @@ const CreateUser = ({ accountId }) => {
       onSubmit={() => {
         createUser();
       }}
-      width="1/2"
       resetOnSubmit
     >
       <Title order={4}>Add users to company</Title>
@@ -163,7 +166,6 @@ const UpdateRegion = ({ accountId }) => {
       onSubmit={() => {
         updateRegion();
       }}
-      width="1/2"
       resetOnSubmit
     >
       <Title order={4}>Choose deployment region</Title>
