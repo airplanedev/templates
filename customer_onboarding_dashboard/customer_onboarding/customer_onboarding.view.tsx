@@ -66,7 +66,7 @@ const ExistingAccounts = () => {
       <Table
         id="accounts"
         showFilter={false}
-        task="demo_list_account"
+        task="demo_list_new_accounts"
         rowSelection="single"
         columns={newAccountsCols}
         hiddenColumns={["country", "user_id"]}
@@ -110,7 +110,7 @@ const CreateUser = ({ accountId }) => {
     },
   });
 
-  const { output } = useTaskQuery({ slug: "demo_list_account" });
+  const { output } = useTaskQuery({ slug: "demo_list_new_accounts" });
   const userCount = output?.Q1.filter(
     (x) => x.id == accountId && x.user_id
   ).length;
