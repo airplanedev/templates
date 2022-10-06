@@ -41,6 +41,7 @@ const CreateAccount = () => {
   });
 
   return (
+    <Stack.Item width="1/2"  >
     <Form
       id="createAccountForm"
       onSubmit={() => {
@@ -50,6 +51,7 @@ const CreateAccount = () => {
     >
       <TextInput id="company_name" label="Account name" />
     </Form>
+    </Stack.Item>
   );
 };
 
