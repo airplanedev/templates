@@ -3,7 +3,6 @@ import {
   Select,
   SelectState,
   Stack,
-  Table,
   Title,
   useComponentState,
 } from "@airplane/views";
@@ -38,11 +37,17 @@ const TeamDashboard = () => {
         />
       </Stack>
       <Stack direction="row" spacing="xl">
-        <Table
+        <Chart
           title="Top products"
+          type="bar"
           task="demo_list_top_products"
-          columns={topProductsCols}
           width={{ xs: "100%", lg: "50%" }}
+          outputTransform={(o) => o.Q1}
+          xAxis="product_name"
+          datasets={["cnt"]}
+          xAxisTitle="Product"
+          yAxisTitle="Orders"
+          legendPosition="hidden"
         />
         <Chart
           title="Orders per week"
@@ -74,14 +79,20 @@ const TeamDashboard = () => {
 
       {!!selection && (
         <Stack direction="row" spacing="xl">
-          <Table
+          <Chart
             title="Top products"
+            type="bar"
             task={{
               slug: "demo_list_top_products",
               params: { customer_id: selection },
             }}
-            columns={topProductsCols}
             width={{ xs: "100%", lg: "50%" }}
+            outputTransform={(o) => o.Q1}
+            xAxis="product_name"
+            datasets={["cnt"]}
+            xAxisTitle="Product"
+            yAxisTitle="Orders"
+            legendPosition="hidden"
           />
           <Chart
             title="Orders per week"
@@ -101,11 +112,5 @@ const TeamDashboard = () => {
     </Stack>
   );
 };
-
-const topProductsCols = [
-  { accessor: "product_id", label: "Product ID" },
-  { accessor: "product_name", label: "Product name" },
-  { accessor: "cnt", label: "Number of orders" },
-];
 
 export default TeamDashboard;
