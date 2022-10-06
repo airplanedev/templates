@@ -151,9 +151,7 @@ const UpdateRegion = ({ accountId }) => {
       account_id: accountId,
     },
     onSuccess: () => {
-      alert(
-        `Added updating account region!`
-      );
+      alert(`Added updating account region!`);
     },
     onError: (error) => {
       alert(`Failed updating account region: ${error}`);
@@ -170,7 +168,7 @@ const UpdateRegion = ({ accountId }) => {
     >
       <Title order={4}>Choose deployment region</Title>
       <TextInput label="Account ID" value={accountId} disabled required />
-      <Select id="region" label="Region" data={["USA", "EU", "CA"]} />
+      <Select id="region" label="Region" data={["USA", "EU", "CA"]} required />
     </Form>
   );
 };
