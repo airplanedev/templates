@@ -83,11 +83,11 @@ const UpdateAccounts = ({ selectedAccountId }) => {
     <Stack>
       <Title order={3}>Finish onboarding</Title>
       <Stack direction="row">
-      <Stack.Item width="1/2">
-        <CreateUser accountId={selectedAccountId as string} />
+        <Stack.Item width="1/2">
+          <CreateUser accountId={selectedAccountId as string} />
         </Stack.Item>
         <Stack.Item width="1/2">
-        <UpdateRegion accountId={selectedAccountId as string} />
+          <UpdateRegion accountId={selectedAccountId as string} />
         </Stack.Item>
       </Stack>
     </Stack>
@@ -152,7 +152,7 @@ const UpdateRegion = ({ accountId }) => {
     },
     onSuccess: () => {
       alert(
-        `Added updating account region! Successfully onboarded account ${accountId}.`
+        `Added updating account region!`
       );
     },
     onError: (error) => {
@@ -181,11 +181,11 @@ const newAccountsCols = [
     accessor: "id",
   },
   {
-    label: "Company Name",
+    label: "Company name",
     accessor: "company_name",
   },
   {
-    label: "Signup Date",
+    label: "Signup date",
     accessor: "signup_date",
   },
 ];

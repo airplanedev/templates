@@ -1,23 +1,23 @@
 name: "Create user"
 slug: demo_create_user
 parameters:
-- name: account_id
+- name: Account ID
   slug: account_id
   type: integer
-- name: email
+- name: Email
   slug: email
   type: shorttext
-- name: name
+- name: Name
   slug: name
   type: shorttext
-- name: title
+- name: Title
   slug: title
   type: shorttext
-- name: role
+- name: Role
   slug: role
   type: shorttext
 sql:
-  resource: "demo_db"
+  resource: "[Demo DB]"
   entrypoint: create_user.sql
   queryArgs:
     account_id: "{{params.account_id}}"
