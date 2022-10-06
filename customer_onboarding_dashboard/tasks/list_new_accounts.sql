@@ -3,7 +3,7 @@ SELECT
     a.company_name,
     a.country,
     a.signup_date,
-    users.id as user_id
+    users.id AS user_id
 FROM
     accounts a
     LEFT JOIN users ON a.id = users.account_id
@@ -12,3 +12,4 @@ WHERE
     OR a.country = 'unknown'
 ORDER BY
     a.id;
+

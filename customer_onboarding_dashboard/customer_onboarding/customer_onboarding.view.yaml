@@ -5,7 +5,7 @@ slug: demo_customer_onboarding_dashboard
 name: Customer onboarding dashboard
 
 # A human-readable description for your view.
-# description: "My Airplane view"
+description: "Create and onboard new accounts."
 
 # The path to the .view.tsx file containing the logic for this view. This
 # can be absolute or relative to the location of the definition file.

@@ -1,17 +1,15 @@
-INSERT INTO
-    accounts ("id", "company_name", "signup_date", "country")
-VALUES
-(
-        (
-            select
+INSERT INTO accounts ("id", "company_name", "signup_date", "country")
+    VALUES ((
+            SELECT
                 count(1)
-            from
-                accounts
-        ),
-        :company_name,
-        now(),
-        'unknown'
-    ) returning id,
+            FROM
+                accounts),
+            :company_name,
+            NOW(),
+            'unknown')
+RETURNING
+    id,
     company_name,
     signup_date,
     country;
+
