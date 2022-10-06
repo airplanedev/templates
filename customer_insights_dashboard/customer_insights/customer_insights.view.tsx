@@ -1,4 +1,5 @@
 import {
+  Chart,
   Select,
   SelectState,
   Stack,
@@ -15,17 +16,25 @@ const TeamDashboard = () => {
     <Stack spacing="md">
       <Title>Global stats</Title>
       <Stack direction="row" spacing="xl">
-        <Table
+        <Chart
           title="Unique customers per week"
+          type="line"
           task="demo_get_customers_per_week"
-          columns={countPerWeekCols}
-          width={{ xs: "100%", lg: "auto" }}
+          width={{ xs: "100%", lg: "50%" }}
+          outputTransform={(o) => o.Q1}
+          xAxisTitle="Week"
+          yAxisTitle="Customers"
+          legendPosition="hidden"
         />
-        <Table
+        <Chart
           title="Unique products per week"
+          type="line"
           task="demo_get_products_per_week"
-          columns={countPerWeekCols}
-          width={{ xs: "100%", lg: "auto" }}
+          width={{ xs: "100%", lg: "50%" }}
+          outputTransform={(o) => o.Q1}
+          xAxisTitle="Week"
+          yAxisTitle="Products"
+          legendPosition="hidden"
         />
       </Stack>
       <Stack direction="row" spacing="xl">
@@ -33,13 +42,17 @@ const TeamDashboard = () => {
           title="Top products"
           task="demo_list_top_products"
           columns={topProductsCols}
-          width={{ xs: "100%", lg: "auto" }}
+          width={{ xs: "100%", lg: "50%" }}
         />
-        <Table
+        <Chart
           title="Orders per week"
+          type="line"
           task="demo_get_orders_per_week"
-          columns={countPerWeekCols}
-          width={{ xs: "100%", lg: "auto" }}
+          width={{ xs: "100%", lg: "50%" }}
+          outputTransform={(o) => o.Q1}
+          xAxisTitle="Week"
+          yAxisTitle="Orders"
+          legendPosition="hidden"
         />
       </Stack>
 
@@ -68,27 +81,26 @@ const TeamDashboard = () => {
               params: { customer_id: selection },
             }}
             columns={topProductsCols}
-            width={{ xs: "100%", lg: "auto" }}
+            width={{ xs: "100%", lg: "50%" }}
           />
-          <Table
+          <Chart
             title="Orders per week"
+            type="scatter"
             task={{
               slug: "demo_get_orders_per_week",
               params: { customer_id: selection },
             }}
-            columns={countPerWeekCols}
-            width={{ xs: "100%", lg: "auto" }}
+            width={{ xs: "100%", lg: "50%" }}
+            outputTransform={(o) => o.Q1}
+            xAxisTitle="Week"
+            yAxisTitle="Orders"
+            legendPosition="hidden"
           />
         </Stack>
       )}
     </Stack>
   );
 };
-
-const countPerWeekCols = [
-  { accessor: "cnt", label: "Count" },
-  { accessor: "week", type: "date", label: "Week" },
-];
 
 const topProductsCols = [
   { accessor: "product_id", label: "Product ID" },
