@@ -1,8 +1,8 @@
 # Used by Airplane to identify your view. Do not change.
-slug: demo_customer_onboarding_dashboard
+slug: demo_customer_onboarding
 
 # A human-readable name for your view.
-name: Customer onboarding dashboard
+name: Customer onboarding
 
 # A human-readable description for your view.
 description: "Create and onboard new accounts."
