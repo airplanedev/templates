@@ -9,6 +9,8 @@ import {
   useTaskMutation,
   Text,
   useTaskQuery,
+  showNotification,
+  Button,
 } from "@airplane/views";
 
 const CustomerDashboard = () => {
@@ -33,24 +35,27 @@ const CreateAccount = () => {
       ...createAccountValues,
     },
     onSuccess: () => {
-      alert(`Created account!`);
+      showNotification({ message: "Created account!", type: "success" });
     },
     onError: (error) => {
-      alert(`Failed creating account with error: ${error.message}`);
+      showNotification({
+        message: `Failed creating account with error: ${error.message}`,
+        type: "error",
+      });
     },
   });
 
   return (
-    <Stack.Item width="1/2"  >
-    <Form
-      id="createAccountForm"
-      onSubmit={() => {
-        createAccount();
-      }}
-      resetOnSubmit
-    >
-      <TextInput id="company_name" label="Account name" />
-    </Form>
+    <Stack.Item width="1/2">
+      <Form
+        id="createAccountForm"
+        onSubmit={() => {
+          createAccount();
+        }}
+        resetOnSubmit
+      >
+        <TextInput id="company_name" label="Account name" required />
+      </Form>
     </Stack.Item>
   );
 };
@@ -105,10 +110,16 @@ const CreateUser = ({ accountId }) => {
       account_id: accountId,
     },
     onSuccess: (output) => {
-      alert(`Added user to account! ${JSON.stringify(output)}`);
+      showNotification({
+        message: `Added user to account! ${JSON.stringify(output)}`,
+        type: "success",
+      });
     },
     onError: (error) => {
-      alert(`Failed adding user with error:  ${JSON.stringify(error)}`);
+      showNotification({
+        message: `Failed adding user with error:  ${JSON.stringify(error)}`,
+        type: "error",
+      });
     },
   });
 
@@ -154,10 +165,16 @@ const UpdateRegion = ({ accountId }) => {
       account_id: accountId,
     },
     onSuccess: () => {
-      alert(`Added updating account region!`);
+      showNotification({
+        message: `Added updating account region!`,
+        type: "success",
+      });
     },
     onError: (error) => {
-      alert(`Failed updating account region: ${error}`);
+      showNotification({
+        message: `Failed updating account region: ${error}`,
+        type: "error",
+      });
     },
   });
 
