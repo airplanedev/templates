@@ -14,46 +14,53 @@ const TeamDashboard = () => {
   return (
     <Stack spacing="md">
       <Title>Global stats</Title>
-      <Stack direction="row" spacing="xl" grow>
+      <Stack direction="row" spacing="xl">
         <Table
           title="Unique customers per week"
           task="demo_get_customers_per_week"
           columns={countPerWeekCols}
+          width={{ xs: "100%", lg: "auto" }}
         />
         <Table
           title="Unique products per week"
           task="demo_get_products_per_week"
           columns={countPerWeekCols}
+          width={{ xs: "100%", lg: "auto" }}
         />
       </Stack>
-      <Stack direction="row" spacing="xl" grow>
+      <Stack direction="row" spacing="xl">
         <Table
           title="Top products"
           task="demo_list_top_products"
           columns={topProductsCols}
+          width={{ xs: "100%", lg: "auto" }}
         />
         <Table
           title="Orders per week"
           task="demo_get_orders_per_week"
           columns={countPerWeekCols}
+          width={{ xs: "100%", lg: "auto" }}
         />
       </Stack>
 
       <Title>Customer details</Title>
-      <Select
-        id="select"
-        sx={{ width: "300px" }}
-        task="demo_list_customers"
-        placeholder="Select customer"
-        outputTransform={(customers) =>
-          customers["Q1"].map((c) => ({
-            label: c.contact_name,
-            value: c.customer_id,
-          }))
-        }
-      />
+      <Stack direction="row">
+        <Select
+          id="select"
+          task="demo_list_customers"
+          placeholder="Select customer"
+          outputTransform={(customers) =>
+            customers["Q1"].map((c) => ({
+              label: c.contact_name,
+              value: c.customer_id,
+            }))
+          }
+          width={{ xs: "100%", sm: "30%" }}
+        />
+      </Stack>
+
       {!!selection && (
-        <Stack direction="row" spacing="xl" grow>
+        <Stack direction="row" spacing="xl">
           <Table
             title="Top products"
             task={{
@@ -61,6 +68,7 @@ const TeamDashboard = () => {
               params: { customer_id: selection },
             }}
             columns={topProductsCols}
+            width={{ xs: "100%", lg: "auto" }}
           />
           <Table
             title="Orders per week"
@@ -69,6 +77,7 @@ const TeamDashboard = () => {
               params: { customer_id: selection },
             }}
             columns={countPerWeekCols}
+            width={{ xs: "100%", lg: "auto" }}
           />
         </Stack>
       )}

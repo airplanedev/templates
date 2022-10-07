@@ -1,0 +1,21 @@
+# Full reference: https://docs.airplane.dev/tasks/task-definition
+
+slug: demo_update_customer_contact_name
+name: Update customer contact name
+description: "SQL task that updates a contact name for a customer."
+parameters:
+  - slug: customer_id
+    name: Customer ID
+    type: shorttext
+    required: true
+  - slug: contact_name
+    name: New contact name
+    type: shorttext
+    required: true
+sql:
+  # Replace with your own DB name
+  resource: "[Demo DB]"
+  entrypoint: update_customer_contact_name.sql
+  queryArgs:
+    customer_id: "{{params.customer_id}}"
+    contact_name: "{{params.contact_name}}"

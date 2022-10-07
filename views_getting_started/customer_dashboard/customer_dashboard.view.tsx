@@ -4,7 +4,7 @@ import {
   Title,
   useComponentState,
   Card,
-  Markdown,
+  Text,
   Button,
 } from "@airplane/views";
 

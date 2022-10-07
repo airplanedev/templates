@@ -1,0 +1,16 @@
+# Full reference: https://docs.airplane.dev/tasks/task-definition
+
+slug: demo_list_customer_orders
+name: List customer orders
+description: "SQL task that shows all orders for a given customer."
+parameters:
+  - slug: customer_id
+    name: Customer ID
+    type: shorttext
+    required: true
+sql:
+  # Replace with your own DB name
+  resource: "[Demo DB]"
+  entrypoint: list_customer_orders.sql
+  queryArgs:
+    customer_id: "{{params.customer_id}}"

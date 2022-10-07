@@ -1,0 +1,26 @@
+# Full reference: https://docs.airplane.dev/tasks/task-definition
+
+slug: demo_database_issues_alert
+name: Database issues alert
+description: "Sends a Slack message if any database issues are detected"
+parameters:
+  - slug: slack_channel
+    name: Slack channel
+    type: shorttext
+    description: The slack channel to send an alert to. If not set, logs a message instead.
+    required: false
+
+node:
+  entrypoint: database_issues_alert.ts
+  nodeVersion: "18"
+
+schedules:
+  daily_database_check:
+    cron: 0 0 * * *
+    name: Daily database check
+    description: Runs a database check every day at midnight UTC
+    # paramValues:
+      # slack_channel: INSERT_SLACK_CHANNEL_HERE
+
+resources:
+  db: demo_db

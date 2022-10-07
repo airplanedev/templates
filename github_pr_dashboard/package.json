@@ -1,18 +1,17 @@
 {
-  "name": "support_ticket_dashboard",
+  "name": "github_pr_dashboard",
   "version": "1.0.0",
   "license": "MIT",
   "dependencies": {
     "@airplane/views": "^1.6.0",
-    "@linear/sdk": "1.22.0",
-    "intercom-client": "3.1.5",
+    "airplane": "^0.2.1",
+    "octokit": "2.0.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@types/node": "^18.7.16",
-    "@types/react": "^18.0.17",
+    "@types/react": "^18.0.20",
     "@types/react-dom": "^18.0.6",
-    "typescript": "^4.7.4"
+    "typescript": "^4.8.3"
   }
 }

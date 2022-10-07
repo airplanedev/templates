@@ -9,7 +9,8 @@
     "module": "ESNext",
     "moduleResolution": "node",
     "isolatedModules": true,
-    "noEmit": true
+    "noEmit": true,
+    "jsx": "react-jsx"
   },
   "exclude": ["node_modules"]
 }
