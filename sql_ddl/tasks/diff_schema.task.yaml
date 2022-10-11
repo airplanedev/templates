@@ -1,0 +1,14 @@
+# Full reference: https://docs.airplane.dev/tasks/task-definition
+slug: demo_diff_schema
+name: Diff Database Schema
+description: "Produces a diff in the form of `ALTER TABLE` commands between a SQL database's existing schema and a desired schema."
+parameters:
+- slug: schema
+  name: Desired SQL Schema
+  type: sql
+  description: The full desired SQL schema (e.g. `CREATE TABLE/INDEX` commands).
+  required: true
+shell:
+  entrypoint: ./diff_schema.sh
+resources:
+  db: demo_db

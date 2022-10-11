@@ -1,0 +1,13 @@
+resources:
+  # TODO: remove me once shell + resource attachments work again
+  - id: res-db
+    kind: postgres
+    slug: demo_db
+    name: "[Demo DB]"
+    username: d1jq9ndetctmyqqxajesk7v0wxav
+    password: password
+    host: localhost
+    port: "5432"
+    database: d1jq9ndetctmyqqxajesk7v0wxav
+    ssl: disable
+    dsn: "postgres://d1jq9ndetctmyqqxajesk7v0wxav:password@host.docker.internal:5432/d1jq9ndetctmyqqxajesk7v0wxav?sslmode=disable"

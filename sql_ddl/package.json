@@ -1,0 +1,11 @@
+{
+  "name": "sql_ddl",
+  "version": "1.0.0",
+  "license": "MIT",
+  "dependencies": {
+    "airplane": "^0.2.9"
+  },
+  "devDependencies": {
+    "@types/node": "^18.8.3"
+  }
+}
