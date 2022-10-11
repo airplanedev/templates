@@ -1,0 +1,31 @@
+# Full reference: https://docs.airplane.dev/tasks/task-definition
+
+slug: demo_api_cloudflare
+name: Create Cloudflare DNS records
+description: "Create a DNS record in your Cloudflare zone"
+parameters:
+  - slug: subdomain
+    name: Subdomain
+    type: shorttext
+    description: The fully qualified subdomain record (e.g. foo.example.com)
+    regex: "^[a-z0-9]+\.[a-z0-9]+\.[a-z]+$"
+  - slug: target
+    name: Target
+    type: shorttext
+    description: IP address to point `subdomain` to
+
+node:
+  entrypoint: api_cloudflare.ts
+  nodeVersion: "18"
+  envVars:
+    # Replace YOUR_ZONE_ID with your Cloudflare Zone ID:
+    # https://developers.cloudflare.com/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/
+    CLOUDFLARE_ZONE_ID:
+      value: YOUR_ZONE_ID
+    # Create cloudflare_api_token as an Airplane config var before deploying this task.
+    # Create Cloudflare API keys at https://dash.cloudflare.com/profile/api-tokens
+    CLOUDFLARE_API_TOKEN:
+      config: cloudflare_api_token
+
+# Turn on to require all executions to go through approvals.
+requireRequests: true

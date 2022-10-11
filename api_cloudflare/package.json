@@ -1,0 +1,11 @@
+{
+  "name": "api_cloudflare",
+  "version": "1.0.0",
+  "description": "Create a DNS record in your Cloudflare zone",
+  "main": "api_cloudflare.ts",
+  "license": "MIT",
+  "dependencies": {
+    "airplane": "^0.2.9",
+    "axios": "^1.1.2"
+  }
+}
