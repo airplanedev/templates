@@ -1,0 +1,5 @@
+name: "List new accounts"
+slug: demo_list_new_accounts
+sql:
+  resource: "[Demo DB]"
+  entrypoint: list_new_accounts.sql
