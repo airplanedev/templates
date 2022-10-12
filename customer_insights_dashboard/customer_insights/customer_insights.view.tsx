@@ -13,7 +13,7 @@ const TeamDashboard = () => {
   const selection = selectState.value;
   return (
     <Stack spacing="md">
-      <Title>Global stats</Title>
+      <Title>Customer insights dashboard</Title>
       <Stack direction="row" spacing="xl">
         <Chart
           title="Unique customers per week"
@@ -61,7 +61,7 @@ const TeamDashboard = () => {
         />
       </Stack>
 
-      <Title>Customer details</Title>
+      <Title order={2}>Customer details</Title>
       <Stack direction="row">
         <Select
           id="select"
