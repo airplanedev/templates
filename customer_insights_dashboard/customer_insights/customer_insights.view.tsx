@@ -14,7 +14,7 @@ const TeamDashboard = () => {
   return (
     <Stack>
       <Title>Customer insights dashboard</Title>
-      <Stack spacing="xl" grow>
+      <Stack direction="row" spacing="xl" grow>
         <Chart
           title="Unique customers per week"
           type="line"
