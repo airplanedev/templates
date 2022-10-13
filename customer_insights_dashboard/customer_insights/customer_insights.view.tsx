@@ -12,14 +12,13 @@ const TeamDashboard = () => {
   const selectState = useComponentState<SelectState>("select");
   const selection = selectState.value;
   return (
-    <Stack spacing="md">
+    <Stack>
       <Title>Customer insights dashboard</Title>
-      <Stack direction="row" spacing="xl">
+      <Stack spacing="xl" grow>
         <Chart
           title="Unique customers per week"
           type="line"
           task="demo_get_customers_per_week"
-          width={{ xs: "100%", lg: "50%" }}
           outputTransform={(o) => o.Q1}
           xAxisTitle="Week"
           yAxisTitle="Customers"
@@ -29,19 +28,15 @@ const TeamDashboard = () => {
           title="Unique products per week"
           type="line"
           task="demo_get_products_per_week"
-          width={{ xs: "100%", lg: "50%" }}
           outputTransform={(o) => o.Q1}
           xAxisTitle="Week"
           yAxisTitle="Products"
           legendPosition="hidden"
         />
-      </Stack>
-      <Stack direction="row" spacing="xl">
         <Chart
           title="Top products"
           type="bar"
           task="demo_list_top_products"
-          width={{ xs: "100%", lg: "50%" }}
           outputTransform={(o) => o.Q1}
           xAxis="product_name"
           datasets={["cnt"]}
@@ -53,7 +48,6 @@ const TeamDashboard = () => {
           title="Orders per week"
           type="line"
           task="demo_get_orders_per_week"
-          width={{ xs: "100%", lg: "50%" }}
           outputTransform={(o) => o.Q1}
           xAxisTitle="Week"
           yAxisTitle="Orders"
@@ -73,12 +67,11 @@ const TeamDashboard = () => {
               value: c.customer_id,
             }))
           }
-          width={{ xs: "100%", sm: "30%" }}
         />
       </Stack>
 
       {!!selection && (
-        <Stack direction="row" spacing="xl">
+        <Stack direction="row" spacing="xl" grow>
           <Chart
             title="Top products"
             type="bar"
@@ -86,7 +79,6 @@ const TeamDashboard = () => {
               slug: "demo_list_top_products",
               params: { customer_id: selection },
             }}
-            width={{ xs: "100%", lg: "50%" }}
             outputTransform={(o) => o.Q1}
             xAxis="product_name"
             datasets={["cnt"]}
@@ -101,7 +93,6 @@ const TeamDashboard = () => {
               slug: "demo_get_orders_per_week",
               params: { customer_id: selection },
             }}
-            width={{ xs: "100%", lg: "50%" }}
             outputTransform={(o) => o.Q1}
             xAxisTitle="Week"
             yAxisTitle="Orders"
