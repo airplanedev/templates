@@ -5,6 +5,6 @@ Simple task that demonstrates how to load a website in Python using [selenium](h
 ## Next steps
 
 - Navigate to the python_selenium_example directory: `cd python_selenium_example`
-- Run your task locally: `airplane dev selenium_example.task.yaml`
+- Run your task locally: `airplane dev`
 - Make any changes to the `selenium_example.py` script
-- Deploy your task: `airplane deploy . --yes`
+- Deploy your task: `airplane deploy --yes`

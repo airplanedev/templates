@@ -6,14 +6,11 @@
 - Develop your template locally: `airplane dev`
 - To use your own WorkOS API Key:
   - Get your Intercom auth token by following this guide: https://workos.com/docs/reference/api-keys
-  - Create a config variable in Airplane for `WORKOS_API_KEY`: https://docs.airplane.dev/platform/configs
+  - Create a local config variable in Airplane for `WORKOS_API_KEY`: https://docs.airplane.dev/dev-lifecycle/dev-config-file#add-a-config-variable
   - Uncomment `WORKOS_API_KEY` environment variable in `impersonate.task.yaml`
   - Remove mock data in `impersonate.ts`
-  - Add config variables to your dev config file in order to develop tasks locally: https://docs.airplane.dev/dev-lifecycle/dev-config-file#environment-variables
-  - Re-deploy tasks: `airplane deploy tasks --yes`
 - Optionally, you can rewrite `generateSignInLink` to use your authentication provider of choice
-- Deploy tasks: `airplane deploy tasks --yes`
-- Deploy your view: `airplane deploy .`
+- Deploy your tasks and view: `airplane deploy --yes`
 
 ## Resources
 
