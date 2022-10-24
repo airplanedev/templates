@@ -36,7 +36,7 @@ const Dashboard = () => {
           }}
           rowSelection="single"
           showFilter={false}
-          hiddenColumns={["address", "city", "region", "postal_code"]}
+          hiddenColumns={["address", "city", "postal_code"]}
         />
         {selectedCustomer && (
           <CustomerCard
@@ -54,16 +54,6 @@ const Dashboard = () => {
               params: { customer_id: selectedCustomer.customer_id },
             }}
             columns={ordersCols}
-            hiddenColumns={[
-              "customer_id",
-              "employee_id",
-              "required_date",
-              "ship_via",
-              "ship_name",
-              "ship_city",
-              "ship_region",
-              "ship_country",
-            ]}
             rowActions={[
               {
                 slug: "demo_update_ship_address",
