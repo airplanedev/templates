@@ -5,7 +5,7 @@ name: Upgrade customer opportunity stage
 parameters:
   - slug: customer_id
     name: Customer ID
-    type: integer
+    type: shorttext
     required: true
   - slug: opportunity_stage
     name: Opportunity name
