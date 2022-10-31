@@ -1,0 +1,17 @@
+# Full reference: https://docs.airplane.dev/tasks/task-definition
+
+slug: demo_customers_touch_points
+name: Customers touch points
+description: "List all customer touch points"
+parameters:
+  - slug: customer_id
+    name: Customer ID
+    type: integer
+    required: true
+sql:
+  # Replace with your own DB name
+  resource: "[Demo DB]"
+  entrypoint: customer_touch_points.sql
+  queryArgs:
+    customer_id: "{{params.customer_id}}"
+

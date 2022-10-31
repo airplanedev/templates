@@ -18,6 +18,9 @@ import { useState } from "react";
 
 const CustomerRelationshipDashboard = () => {
   const [stageButtonIndex, setStageButtonIndex] = useState(0);
+  const customersTableState = useComponentState("customers");
+  const selectedCustomer: CustomerRowType = customersTableState.selectedRow;
+
   return (
     <Stack>
       <Stack direction="row" justify="space-between">
@@ -54,7 +57,7 @@ const CustomerRelationshipDashboard = () => {
         task={{
           slug: "demo_customers_list",
           params: {
-            stage: stageFilterButtons[stageButtonIndex].key,
+            opportunity_stage: stageFilterButtons[stageButtonIndex].key,
           },
         }}
         hiddenColumns={[
@@ -68,28 +71,28 @@ const CustomerRelationshipDashboard = () => {
         ]}
         rowSelection="single"
         rowActions={({ row }: { row: CustomerRowType }) => {
-          console.log("ACTION BUTTONS", row.opportunity_stage);
           const nextStage = getNextStage(row.opportunity_stage);
           return (
             <Stack direction="row">
               <Button
                 preset="secondary"
                 task={{
-                  slug: "demo_update_customer",
+                  slug: "demo_upgrade_customer_stage",
                   params: {
-                    stage: nextStage,
+                    opportunity_stage: nextStage,
                     customer_id: row.customer_id,
                   },
                   refetchTasks: {
                     slug: "demo_customers_list",
                     params: {
-                      stage: row.opportunity_stage,
+                      opportunity_stage: row.opportunity_stage,
                     },
                   },
                 }}
                 disabled={row.opportunity_stage == "customer"}
                 confirm={{
                   title: `Do you want to upgrade this customer's stage to ${nextStage}?`,
+                  body: `This customer will be listed under ${nextStage} category`,
                   confirmText: "Yes",
                   cancelText: "Cancel",
                 }}
@@ -102,6 +105,21 @@ const CustomerRelationshipDashboard = () => {
           );
         }}
       ></Table>
+      {selectedCustomer && (
+        <Table
+          title="Customer touch points"
+          // columns={customersCols}
+          defaultPageSize={5}
+          task={{
+            slug: "demo_customers_touch_points",
+            params: {
+              customer_id: selectedCustomer.customer_id,
+            },
+          }}
+          hiddenColumns={[]}
+          rowSelection="single"
+        ></Table>
+      )}
     </Stack>
   );
 };

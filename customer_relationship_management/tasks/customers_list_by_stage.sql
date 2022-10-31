@@ -13,7 +13,7 @@ SELECT
 FROM
   customers
 WHERE
-  opportunity_stage = :stage
+  opportunity_stage = :opportunity_stage
 ORDER BY
   customer_id;
 

@@ -1,17 +1,20 @@
 # Full reference: https://docs.airplane.dev/tasks/task-definition
 
-slug: demo_customers_list
-name: List customers
-description: "List all customers at a stage"
+slug: demo_upgrade_customer_stage
+name: Upgrade customer opportunity stage
 parameters:
+  - slug: customer_id
+    name: Customer ID
+    type: integer
+    required: true
   - slug: opportunity_stage
-    name: Opportunity stage
+    name: Opportunity name
     type: shorttext
     required: false
 sql:
   # Replace with your own DB name
   resource: "[Demo DB]"
-  entrypoint: customers_list_by_stage.sql
+  entrypoint: upgrade_customer_stage.sql
   queryArgs:
+    customer_id: "{{params.customer_id}}"
     opportunity_stage: "{{params.opportunity_stage}}"
-
