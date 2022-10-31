@@ -53,7 +53,7 @@ const CustomerRelationshipDashboard = () => {
         columns={customersCols}
         defaultPageSize={5}
         task={{
-          slug: "demo_customers_list",
+          slug: "demo_customers_list_by_stage",
           params: {
             opportunity_stage: stageFilterButtons[stageButtonIndex].key,
           },
@@ -82,7 +82,7 @@ const CustomerRelationshipDashboard = () => {
                     customer_id: row.customer_id,
                   },
                   refetchTasks: {
-                    slug: "demo_customers_list",
+                    slug: "demo_customers_list_by_stage",
                     params: {
                       opportunity_stage: row.opportunity_stage,
                     },
@@ -112,7 +112,7 @@ const CustomerRelationshipDashboard = () => {
                     customer_id: row.customer_id,
                   },
                   refetchTasks: {
-                    slug: "demo_customers_list",
+                    slug: "demo_customers_list_by_stage",
                     params: {
                       opportunity_stage: row.opportunity_stage,
                     },
@@ -253,7 +253,6 @@ const getNextStage = (currentStage: string) => {
       return "customer";
     case "customer":
       return "customer";
-
     default:
       break;
   }

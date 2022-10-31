@@ -1,6 +1,6 @@
 # Full reference: https://docs.airplane.dev/tasks/task-definition
 
-slug: demo_customers_list
+slug: demo_customers_list_by_stage
 name: List customers
 description: "List all customers at a stage"
 parameters:
