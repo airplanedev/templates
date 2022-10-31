@@ -1,0 +1,22 @@
+# Full reference: https://docs.airplane.dev/tasks/task-definition
+
+slug: demo_create_touch_point
+name: Create touch point
+description: "Create and attach touch point for a customer"
+parameters:
+  - slug: customer_id
+    name: Customer ID
+    type: integer
+    required: true
+  - slug: touch_point_type
+    name: Touch point type
+    type: shorttext
+    required: true
+sql:
+  # Replace with your own DB name
+  resource: "[Demo DB]"
+  entrypoint: create_touch_point.sql
+  queryArgs:
+    customer_id: "{{params.customer_id}}"
+    touch_point_type: "{{params.touch_point_type}}"
+

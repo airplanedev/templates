@@ -6,7 +6,7 @@ description: "List all customer touch points"
 parameters:
   - slug: customer_id
     name: Customer ID
-    type: integer
+    type: shorttext
     required: true
 sql:
   # Replace with your own DB name
