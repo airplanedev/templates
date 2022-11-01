@@ -124,7 +124,7 @@ const CustomerRelationshipDashboard = () => {
             </Stack>
           );
         }}
-      ></Table>
+      />
       {selectedCustomer && (
         <>
           <CreatePointType selectedCustomer={selectedCustomer} />
@@ -139,7 +139,7 @@ const CustomerRelationshipDashboard = () => {
               },
             }}
             hiddenColumns={["customer_id"]}
-          ></Table>
+          />
         </>
       )}
     </Stack>
@@ -158,9 +158,7 @@ const CreatePointType = ({
   return (
     <>
       <Stack direction="row">
-        <Button onClick={dialogState.open}>
-          Add touch point
-        </Button>
+        <Button onClick={dialogState.open}>Add touch point</Button>
       </Stack>
 
       <Dialog
