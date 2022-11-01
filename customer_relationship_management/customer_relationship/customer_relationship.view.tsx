@@ -53,7 +53,7 @@ const CustomerRelationshipDashboard = () => {
         columns={customersCols}
         defaultPageSize={5}
         task={{
-          slug: "demo_customers_list_by_stage",
+          slug: "demo_list_customers_by_stage",
           params: {
             opportunity_stage: stageFilterButtons[stageButtonIndex].key,
           },
@@ -82,7 +82,7 @@ const CustomerRelationshipDashboard = () => {
                     customer_id: row.customer_id,
                   },
                   refetchTasks: {
-                    slug: "demo_customers_list_by_stage",
+                    slug: "demo_list_customers_by_stage",
                     params: {
                       opportunity_stage: row.opportunity_stage,
                     },
@@ -112,7 +112,7 @@ const CustomerRelationshipDashboard = () => {
                     customer_id: row.customer_id,
                   },
                   refetchTasks: {
-                    slug: "demo_customers_list_by_stage",
+                    slug: "demo_list_customers_by_stage",
                     params: {
                       opportunity_stage: row.opportunity_stage,
                     },
@@ -133,13 +133,12 @@ const CustomerRelationshipDashboard = () => {
             columns={touchPointsCols}
             defaultPageSize={5}
             task={{
-              slug: "demo_customers_touch_points",
+              slug: "demo_list_customer_touch_points",
               params: {
                 customer_id: selectedCustomer.customer_id,
               },
             }}
             hiddenColumns={["customer_id"]}
-            rowSelection="single"
           ></Table>
         </>
       )}
@@ -182,14 +181,14 @@ const CreatePointType = ({
               <Button
                 onClick={() => setLoading(true)}
                 task={{
-                  slug: "demo_create_touch_point",
+                  slug: "demo_create_touch_point_for_customer",
                   params: {
                     customer_id: selectedCustomer.customer_id,
                     touch_point_type: touchPointState.value,
                   },
                   refetchTasks: [
                     {
-                      slug: "demo_customers_touch_points",
+                      slug: "demo_list_customer_touch_points",
                       params: {
                         customer_id: selectedCustomer.customer_id,
                       },
