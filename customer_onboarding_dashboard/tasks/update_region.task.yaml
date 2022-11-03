@@ -1,0 +1,15 @@
+name: "Update region"
+slug: demo_update_region
+parameters:
+- name: Account ID
+  slug: account_id
+  type: integer
+- name: Region
+  slug: region
+  type: shorttext
+sql:
+  resource: "[Demo DB]"
+  entrypoint: update_region.sql
+  queryArgs:
+    account_id: "{{params.account_id}}"
+    region: "{{params.region}}"

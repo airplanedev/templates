@@ -1,0 +1,11 @@
+name: "Create account"
+slug: demo_create_account
+parameters:
+- name: Company name
+  slug: company_name
+  type: shorttext
+sql:
+  resource: "[Demo DB]"
+  entrypoint: create_account.sql
+  queryArgs:
+    company_name: "{{params.company_name}}"

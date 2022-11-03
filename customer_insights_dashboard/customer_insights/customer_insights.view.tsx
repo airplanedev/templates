@@ -1,8 +1,8 @@
 import {
+  Chart,
   Select,
   SelectState,
   Stack,
-  Table,
   Title,
   useComponentState,
 } from "@airplane/views";
@@ -13,37 +13,55 @@ const TeamDashboard = () => {
   const selection = selectState.value;
   return (
     <Stack spacing="md">
-      <Title>Global stats</Title>
+      <Title>Customer insights dashboard</Title>
       <Stack direction="row" spacing="xl">
-        <Table
+        <Chart
           title="Unique customers per week"
+          type="line"
           task="demo_get_customers_per_week"
-          columns={countPerWeekCols}
-          width={{ xs: "100%", lg: "auto" }}
+          width={{ xs: "100%", lg: "50%" }}
+          outputTransform={(o) => o.Q1}
+          xAxisTitle="Week"
+          yAxisTitle="Customers"
+          legendPosition="hidden"
         />
-        <Table
+        <Chart
           title="Unique products per week"
+          type="line"
           task="demo_get_products_per_week"
-          columns={countPerWeekCols}
-          width={{ xs: "100%", lg: "auto" }}
+          width={{ xs: "100%", lg: "50%" }}
+          outputTransform={(o) => o.Q1}
+          xAxisTitle="Week"
+          yAxisTitle="Products"
+          legendPosition="hidden"
         />
       </Stack>
       <Stack direction="row" spacing="xl">
-        <Table
+        <Chart
           title="Top products"
+          type="bar"
           task="demo_list_top_products"
-          columns={topProductsCols}
-          width={{ xs: "100%", lg: "auto" }}
+          width={{ xs: "100%", lg: "50%" }}
+          outputTransform={(o) => o.Q1}
+          xAxis="product_name"
+          datasets={["cnt"]}
+          xAxisTitle="Product"
+          yAxisTitle="Orders"
+          legendPosition="hidden"
         />
-        <Table
+        <Chart
           title="Orders per week"
+          type="line"
           task="demo_get_orders_per_week"
-          columns={countPerWeekCols}
-          width={{ xs: "100%", lg: "auto" }}
+          width={{ xs: "100%", lg: "50%" }}
+          outputTransform={(o) => o.Q1}
+          xAxisTitle="Week"
+          yAxisTitle="Orders"
+          legendPosition="hidden"
         />
       </Stack>
 
-      <Title>Customer details</Title>
+      <Title order={2}>Customer details</Title>
       <Stack direction="row">
         <Select
           id="select"
@@ -61,39 +79,38 @@ const TeamDashboard = () => {
 
       {!!selection && (
         <Stack direction="row" spacing="xl">
-          <Table
+          <Chart
             title="Top products"
+            type="bar"
             task={{
               slug: "demo_list_top_products",
               params: { customer_id: selection },
             }}
-            columns={topProductsCols}
-            width={{ xs: "100%", lg: "auto" }}
+            width={{ xs: "100%", lg: "50%" }}
+            outputTransform={(o) => o.Q1}
+            xAxis="product_name"
+            datasets={["cnt"]}
+            xAxisTitle="Product"
+            yAxisTitle="Orders"
+            legendPosition="hidden"
           />
-          <Table
+          <Chart
             title="Orders per week"
+            type="scatter"
             task={{
               slug: "demo_get_orders_per_week",
               params: { customer_id: selection },
             }}
-            columns={countPerWeekCols}
-            width={{ xs: "100%", lg: "auto" }}
+            width={{ xs: "100%", lg: "50%" }}
+            outputTransform={(o) => o.Q1}
+            xAxisTitle="Week"
+            yAxisTitle="Orders"
+            legendPosition="hidden"
           />
         </Stack>
       )}
     </Stack>
   );
 };
-
-const countPerWeekCols = [
-  { accessor: "cnt", label: "Count" },
-  { accessor: "week", type: "date", label: "Week" },
-];
-
-const topProductsCols = [
-  { accessor: "product_id", label: "Product ID" },
-  { accessor: "product_name", label: "Product name" },
-  { accessor: "cnt", label: "Number of orders" },
-];
 
 export default TeamDashboard;
