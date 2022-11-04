@@ -23,4 +23,4 @@ schedules:
       # slack_channel: INSERT_SLACK_CHANNEL_HERE
 
 resources:
-  db: "[Demo DB]"
+  db: "demo_db"

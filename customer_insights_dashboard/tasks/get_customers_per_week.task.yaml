@@ -4,7 +4,7 @@ slug: demo_get_customers_per_week
 name: Get customers per week
 description: Get the number of unique customers in each week
 
-# Replace [Demo DB] below with your own database resource
+# Replace demo_db below with your own database resource
 sql:
-  resource: "[Demo DB]"
+  resource: "demo_db"
   entrypoint: get_customers_per_week.sql

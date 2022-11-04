@@ -5,6 +5,6 @@
   "main": "alert_on_database_issues.ts",
   "license": "MIT",
   "dependencies": {
-    "airplane": "^0.2.0-35"
+    "airplane": "^0.2.15"
   }
 }

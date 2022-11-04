@@ -17,7 +17,7 @@ parameters:
   slug: role
   type: shorttext
 sql:
-  resource: "[Demo DB]"
+  resource: "demo_db"
   entrypoint: create_user.sql
   queryArgs:
     account_id: "{{params.account_id}}"

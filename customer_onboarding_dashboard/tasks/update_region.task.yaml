@@ -8,7 +8,7 @@ parameters:
   slug: region
   type: shorttext
 sql:
-  resource: "[Demo DB]"
+  resource: "demo_db"
   entrypoint: update_region.sql
   queryArgs:
     account_id: "{{params.account_id}}"

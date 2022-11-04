@@ -4,7 +4,7 @@ slug: demo_list_customers
 name: List customers
 description: List all customers
 
-# Replace [Demo DB] below with your own database resource
+# Replace demo_db below with your own database resource
 sql:
-  resource: "[Demo DB]"
+  resource: "demo_db"
   entrypoint: list_customers.sql

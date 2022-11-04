@@ -1,5 +1,5 @@
 name: "List new accounts"
 slug: demo_list_new_accounts
 sql:
-  resource: "[Demo DB]"
+  resource: "demo_db"
   entrypoint: list_new_accounts.sql

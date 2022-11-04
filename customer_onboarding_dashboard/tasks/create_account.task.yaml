@@ -5,7 +5,7 @@ parameters:
   slug: company_name
   type: shorttext
 sql:
-  resource: "[Demo DB]"
+  resource: "demo_db"
   entrypoint: create_account.sql
   queryArgs:
     company_name: "{{params.company_name}}"

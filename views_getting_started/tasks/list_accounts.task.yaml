@@ -5,5 +5,5 @@ name: "[DEMO] List Accounts"
 description: List all team accounts
 
 sql:
-  resource: "[Demo DB]"
+  resource: "demo_db"
   entrypoint: list_accounts.sql

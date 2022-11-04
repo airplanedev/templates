@@ -9,9 +9,9 @@ parameters:
   type: shorttext
   required: false
 
-# Replace [Demo DB] below with your own database resource
+# Replace demo_db below with your own database resource
 sql:
-  resource: "[Demo DB]"
+  resource: "demo_db"
   entrypoint: get_orders_per_week.sql
 
   queryArgs:

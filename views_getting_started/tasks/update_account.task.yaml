@@ -13,7 +13,7 @@ parameters:
     type: shorttext
 
 sql:
-  resource: "[Demo DB]"
+  resource: "demo_db"
   entrypoint: update_account.sql
   queryArgs:
     id: "{{params.id}}"

@@ -10,7 +10,7 @@ parameters:
     type: integer
 
 sql:
-  resource: "[Demo DB]"
+  resource: "demo_db"
   entrypoint: list_account_users.sql
   queryArgs:
     account_id: "{{params.account_id}}"
