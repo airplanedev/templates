@@ -1,0 +1,26 @@
+# Full reference: https://docs.airplane.dev/tasks/task-definition
+
+slug: demo_create_feature
+name: Create feature
+parameters:
+  - slug: feature_name
+    name: Feature name
+    type: shorttext
+    required: true
+  - slug: feature_description
+    name: Feature description
+    type: longtext
+    required: false
+  - slug: is_enabled
+    name: Is enabled
+    type: boolean
+    description: Boolean field indicating whether a feature is enabled or not
+    required: true
+sql:
+  # Replace with your own DB name
+  resource: "[Demo DB]"
+  entrypoint: create_feature.sql
+  queryArgs:
+    feature_name: "{{params.feature_name}}"
+    feature_description: "{{params.feature_description}}"
+    is_enabled: "{{params.is_enabled}}"

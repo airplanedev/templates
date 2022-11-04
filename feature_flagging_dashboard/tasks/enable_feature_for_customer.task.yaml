@@ -1,0 +1,20 @@
+# Full reference: https://docs.airplane.dev/tasks/task-definition
+
+slug: demo_enable_feature_for_customer
+name: Enable feature for customer
+parameters:
+  - slug: feature_id
+    name: Feature ID
+    type: integer
+    required: true
+  - slug: customer_id
+    name: Customer ID
+    type: shorttext
+    required: true
+sql:
+  # Replace with your own DB name
+  resource: "[Demo DB]"
+  entrypoint: enable_feature_for_customer.sql
+  queryArgs:
+    feature_id: "{{params.feature_id}}"
+    customer_id: "{{params.customer_id}}"

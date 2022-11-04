@@ -1,7 +1,6 @@
 import {
   Button,
   Dialog,
-  Markdown,
   Stack,
   Table,
   Text,
@@ -69,13 +68,14 @@ const ImpersonationDialogPane = ({ user }: { user: User }) => {
   const reasonState = useComponentState();
   return (
     <>
-      <Markdown>{`
+      <Text>
+        {`
 #### ${user.name}
 - **Email**: ${user.email}
 - **Role**: ${user.role}
 - **Title**: ${user.title}
-- **ID**: ${user.id}
-          `}</Markdown>
+- **ID**: ${user.id}`}
+      </Text>
       <Stack>
         <TextInput id={reasonState.id} label="Reason (e.g. Intercom URL)" />
         <Button

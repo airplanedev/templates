@@ -1,0 +1,8 @@
+# Full reference: https://docs.airplane.dev/tasks/task-definition
+
+slug: demo_list_features
+name: List features
+sql:
+  # Replace with your own DB name
+  resource: "[Demo DB]"
+  entrypoint: list_features.sql

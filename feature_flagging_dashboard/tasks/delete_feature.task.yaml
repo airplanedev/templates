@@ -1,0 +1,15 @@
+# Full reference: https://docs.airplane.dev/tasks/task-definition
+
+slug: demo_delete_feature
+name: Delete feature
+parameters:
+  - slug: feature_id
+    name: Feature ID
+    type: integer
+    required: true
+sql:
+  # Replace with your own DB name
+  resource: "[Demo DB]"
+  entrypoint: delete_feature.sql
+  queryArgs:
+    feature_id: "{{params.feature_id}}"

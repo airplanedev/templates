@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "dependencies": {
-    "@airplane/views": "^1.7.0",
+    "@airplane/views": "^1.8.4",
     "@workos-inc/node": "~2.12.0",
     "airplane": "^0.2.0",
     "react": "^18.2.0",
