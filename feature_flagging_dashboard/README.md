@@ -1,4 +1,4 @@
-# Template: Feature Flagging Dashboard
+# Template: Feature flagging dashboard
 
 ## Next steps
 

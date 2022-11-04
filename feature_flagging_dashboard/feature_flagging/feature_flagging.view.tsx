@@ -75,8 +75,7 @@ const FeaturesDashboard = () => {
                     },
                   }}
                   confirm={{
-                    title: "Do you want to delete this feature?",
-                    body: "You would be able to add it again if you want to",
+                    title: "Are you sure you want to delete this feature?",
                     confirmText: "Yes",
                     cancelText: "Cancel",
                   }}
@@ -202,8 +201,7 @@ const CustomerFeaturesTable = ({
                   },
                 }}
                 confirm={{
-                  title: "Do you want to delete this customer?",
-                  body: "You would be able to add them again if you want to",
+                  title: "Are you sure you want to disable the feature for this customer?",
                   confirmText: "Yes",
                   cancelText: "Cancel",
                 }}
