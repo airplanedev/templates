@@ -4,9 +4,8 @@ export default airplane.workflow(
 	{
 		slug: "demo_update_sql_schema",
 		name: "Update SQL schema",
-		nodeVersion: "18",
 		description: `Updates a SQL database to the desired SQL schema by diffing its existing schema with the desired schema and producing a set of SQL commands to run.`,
-		resources: ["demo_db"],
+		resources: {"db": "demo_db"},
 		parameters: {
 			"schema": {
 				type: "sql",
@@ -17,11 +16,8 @@ export default airplane.workflow(
 		}
 	},
 	async (params) => {
-		const diffRun = await airplane.execute<string>("demo_diff_schema", {
-			schema: params.schema,
-		})
-		
-		console.log(diffRun.output)
+		const alterCommands = await diffSchema(params.schema)
+		console.log(alterCommands)
 
 		const data = [
 			{ id: 1, name: "Gabriel Davis", role: "Dentist" },
@@ -36,8 +32,13 @@ export default airplane.workflow(
 			return u1.name.localeCompare(u2.name);
 		});
 
-		const results = await airplane.sql.query("demo_db", `SELECT 1;`)
+		const results = await airplane.sql.query("db", `SELECT 1;`)
 
 		return { data, results };
 	}
 )
+
+const diffSchema = async (schema: string): Promise<string> => {
+	const run = await airplane.execute<string>("demo_diff_schema", { schema })
+	return run.output
+}
