@@ -1,19 +1,26 @@
 SELECT
-  customer_id,
-  company_name,
-  contact_name,
-  contact_title,
-  country,
-  phone,
-  fax,
-  address,
-  city,
-  opportunity_stage,
-  postal_code
+  cus.customer_id,
+  cus.company_name,
+  cus.contact_name,
+  cus.contact_title,
+  cus.country,
+  cus.phone,
+  cus.fax,
+  cus.address,
+  cus.city,
+  cus.opportunity_stage,
+  cus.postal_code,
+  (
+    SELECT
+      Count(*)
+    FROM
+      touch_points
+    WHERE
+      customer_id = cus.customer_id
+  ) as touch_points
 FROM
-  customers
+  customers as cus
 WHERE
   opportunity_stage = :opportunity_stage
 ORDER BY
   customer_id;
-
