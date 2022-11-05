@@ -11,6 +11,7 @@ import {
   Divider,
   Column,
   showNotification,
+  Form,
 } from "@airplane/views";
 
 import { useState } from "react";
@@ -24,6 +25,7 @@ const CustomerRelationshipDashboard = () => {
     <Stack>
       <Stack direction="row" justify="space-between">
         <Title>CRM</Title>
+        <CreateLeadButton stageButtonIndex={stageButtonIndex} />
       </Stack>
       <Stack direction="row" justify="start" align="center">
         <Title order={5}>Stage</Title>
@@ -38,6 +40,7 @@ const CustomerRelationshipDashboard = () => {
               }
               size="sm"
               onClick={() => {
+                customersTableState.clearSelection();
                 setStageButtonIndex(index);
               }}
             >
@@ -175,14 +178,7 @@ const CustomerRelationshipDashboard = () => {
                   <Title order={5}>{selectedCustomer.contact_name}</Title>
                   <Text color="primary">{selectedCustomer.contact_title}</Text>
                   <Text color="gray">
-                    {(
-                      selectedCustomer.contact_name +
-                      "@" +
-                      selectedCustomer.contact_name +
-                      ".com"
-                    )
-                      .replaceAll(" ", "_")
-                      .toLowerCase()}
+                    {convertNameToEmail(selectedCustomer.contact_name)}
                   </Text>
                   <Text color="gray">{selectedCustomer.phone}</Text>
                   <Text color="gray">{selectedCustomer.country}</Text>
@@ -190,13 +186,25 @@ const CustomerRelationshipDashboard = () => {
                 <Stack sx={{ height: "100%" }} justify="space-between">
                   <Stack>
                     <Button
-                      onClick={() => copyTextToCipboard(selectedCustomer.phone)}
+                      onClick={() =>
+                        copyTextToCipboard({
+                          label: "Email",
+                          text: convertNameToEmail(
+                            selectedCustomer.contact_name
+                          ),
+                        })
+                      }
                       preset="tertiary"
                     >
                       Copy email
                     </Button>
                     <Button
-                      onClick={() => copyTextToCipboard(selectedCustomer.phone)}
+                      onClick={() =>
+                        copyTextToCipboard({
+                          label: "Phone number",
+                          text: selectedCustomer.phone,
+                        })
+                      }
                       preset="tertiary"
                     >
                       Copy phone
@@ -229,6 +237,109 @@ const CustomerRelationshipDashboard = () => {
         </>
       )}
     </Stack>
+  );
+};
+
+const CreateLeadButton = ({
+  stageButtonIndex,
+}: {
+  stageButtonIndex: number;
+}) => {
+  const [loading, setLoading] = useState(false);
+  const dialogState = useComponentState();
+  const companyNameState = useComponentState();
+  const contactNameState = useComponentState();
+  const contactTitleState = useComponentState();
+  const countryState = useComponentState();
+  const phoneState = useComponentState();
+
+  return (
+    <>
+      <Button onClick={dialogState.open}>Create lead</Button>
+
+      <Dialog
+        id={dialogState.id}
+        title="Create lead"
+        onClose={dialogState.close}
+      >
+        <Stack>
+          <Stack direction="row">
+            <TextInput
+              id={companyNameState.id}
+              label="Company name"
+              required
+              disabled={loading}
+            />
+            <TextInput
+              id={contactNameState.id}
+              label="Contact name"
+              required
+              disabled={loading}
+            />
+          </Stack>
+
+          <Stack direction="row">
+            <TextInput
+              id={contactTitleState.id}
+              label="Company title"
+              required
+              disabled={loading}
+            />
+            <TextInput
+              id={countryState.id}
+              label="Country"
+              required
+              disabled={loading}
+            />
+          </Stack>
+
+          <TextInput
+            id={phoneState.id}
+            label="Phone number"
+            required
+            disabled={loading}
+          />
+
+          <Stack direction="row" justify="end">
+            <Button
+              type="submit"
+              onClick={() => setLoading(true)}
+              task={{
+                slug: "demo_create_lead",
+                params: {
+                  customer_id: companyNameState.value
+                    ?.replaceAll(" ", "_")
+                    .slice(0, 5)
+                    .toUpperCase(),
+                  company_name: companyNameState.value,
+                  contact_name: contactNameState.value,
+                  contact_title: contactTitleState.value,
+                  country: countryState.value,
+                  phone: phoneState.value,
+                },
+                refetchTasks: {
+                  slug: "demo_list_customers_by_stage",
+                  params: {
+                    opportunity_stage: stageFilterButtons[stageButtonIndex].key,
+                  },
+                },
+                onSuccess: () => {
+                  dialogState.close();
+                  setLoading(false);
+                },
+                onError: (error) => {
+                  dialogState.close();
+                  setLoading(false);
+                },
+              }}
+              loading={loading}
+            >
+              Submit
+            </Button>
+          </Stack>
+        </Stack>
+      </Dialog>
+    </>
   );
 };
 
@@ -279,6 +390,12 @@ const CreatePointType = ({
                         customer_id: selectedCustomer.customer_id,
                       },
                     },
+                    {
+                      slug: "demo_list_customers_by_stage",
+                      params: {
+                        opportunity_stage: selectedCustomer.opportunity_stage,
+                      },
+                    },
                   ],
                   onSuccess: () => {
                     dialogState.close();
@@ -303,6 +420,7 @@ const CreatePointType = ({
 
 interface CustomerRowType {
   customer_id: string;
+  company_name: string;
   contact_name: string;
   contact_title: string;
   address: string;
@@ -324,9 +442,6 @@ const customersCols: Column[] = [
   { accessor: "country", label: "Country", canEdit: true },
   { accessor: "phone", label: "Phone number", canEdit: true },
   { accessor: "opportunity_stage", label: "Stage" },
-  // { accessor: "_convert", label: "Conversions" },
-  // { accessor: "_edit", label: "Edit" },
-  // { accessor: "_churn", label: "Churn" },
 ];
 
 const stageFilterButtons = [
@@ -335,9 +450,19 @@ const stageFilterButtons = [
   { title: "Customers", key: "customer" },
 ];
 
-const copyTextToCipboard = (text: string) => {
+const copyTextToCipboard = ({
+  text,
+  label,
+}: {
+  text: string;
+  label?: string;
+}) => {
   navigator.clipboard.writeText(text);
-  showNotification({ message: "Text copied", type: "success" });
+  showNotification({ message: `${label || "Text"} copied`, type: "success" });
+};
+
+const convertNameToEmail = (name: string) => {
+  return (name + "@" + name + ".com").replaceAll(" ", "_").toLowerCase();
 };
 
 const getNextStage = (currentStage: string) => {
