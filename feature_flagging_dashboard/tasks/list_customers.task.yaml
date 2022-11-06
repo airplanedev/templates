@@ -5,5 +5,5 @@ name: List customers
 description: "List all active customers"
 sql:
   # Replace with your own DB name
-  resource: "[Demo DB]"
+  resource: "demo_db"
   entrypoint: list_customers.sql

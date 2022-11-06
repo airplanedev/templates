@@ -13,7 +13,7 @@ parameters:
     required: true
 sql:
   # Replace with your own DB name
-  resource: "[Demo DB]"
+  resource: "demo_db"
   entrypoint: enable_feature_for_customer.sql
   queryArgs:
     feature_id: "{{params.feature_id}}"

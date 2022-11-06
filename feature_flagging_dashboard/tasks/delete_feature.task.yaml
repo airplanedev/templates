@@ -9,7 +9,7 @@ parameters:
     required: true
 sql:
   # Replace with your own DB name
-  resource: "[Demo DB]"
+  resource: "demo_db"
   entrypoint: delete_feature.sql
   queryArgs:
     feature_id: "{{params.feature_id}}"

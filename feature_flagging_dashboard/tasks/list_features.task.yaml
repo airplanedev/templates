@@ -4,5 +4,5 @@ slug: demo_list_features
 name: List features
 sql:
   # Replace with your own DB name
-  resource: "[Demo DB]"
+  resource: "demo_db"
   entrypoint: list_features.sql
