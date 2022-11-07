@@ -12,6 +12,7 @@ import {
   Column,
   showNotification,
   Form,
+  Textarea,
 } from "@airplane/views";
 
 import { useState } from "react";
@@ -63,6 +64,7 @@ const CustomerRelationshipDashboard = () => {
         }}
         hiddenColumns={[
           "customer_id",
+          "country",
           "contaact_title",
           "postal_code",
           "city",
@@ -76,61 +78,39 @@ const CustomerRelationshipDashboard = () => {
           ({ row }: { row: CustomerRowType }) => {
             const nextStage = getNextStage(row.opportunity_stage);
             return (
-              <Stack direction="row">
-                <Button
-                  preset="secondary"
-                  task={{
-                    slug: "demo_update_customer_stage",
-                    params: {
-                      opportunity_stage: nextStage,
-                      customer_id: row.customer_id,
-                    },
-                    refetchTasks: {
-                      slug: "demo_list_customers_by_stage",
-                      params: {
-                        opportunity_stage: row.opportunity_stage,
-                      },
-                    },
-                  }}
-                  disabled={row.opportunity_stage == "customer"}
-                  confirm={{
-                    title: `Do you want to upgrade this customer's stage to ${nextStage}?`,
-                    body: `This customer will be listed under ${nextStage} category`,
-                    confirmText: "Yes",
-                    cancelText: "Cancel",
-                  }}
-                >
-                  {row.opportunity_stage == "customer"
-                    ? "Convert to customer"
-                    : `Convert to ${nextStage}`}
-                </Button>
-              </Stack>
-            );
-          },
-
-          ({ row }: { row: CustomerRowType }) => {
-            return (
-              <Button
-                preset="secondary"
-                task={{
-                  slug: "demo_edit_customer",
-                  params: {
-                    contact_name: row.contact_name,
-                    contact_title: row.contact_title,
-                    country: row.country,
-                    phone: row.phone,
-                    customer_id: row.customer_id,
-                  },
-                  refetchTasks: {
-                    slug: "demo_list_customers_by_stage",
-                    params: {
-                      opportunity_stage: row.opportunity_stage,
-                    },
-                  },
-                }}
-              >
-                Edit
-              </Button>
+              <>
+                {row.opportunity_stage != "customer" && (
+                  <Stack direction="row">
+                    <Button
+                      preset="secondary"
+                      task={{
+                        slug: "demo_update_customer_stage",
+                        params: {
+                          opportunity_stage: nextStage,
+                          customer_id: row.customer_id,
+                        },
+                        refetchTasks: {
+                          slug: "demo_list_customers_by_stage",
+                          params: {
+                            opportunity_stage: row.opportunity_stage,
+                          },
+                        },
+                      }}
+                      disabled={row.opportunity_stage == "customer"}
+                      confirm={{
+                        title: `Do you want to upgrade this customer's stage to ${nextStage}?`,
+                        body: `This customer will be listed under ${nextStage} category`,
+                        confirmText: "Yes",
+                        cancelText: "Cancel",
+                      }}
+                    >
+                      {row.opportunity_stage == "customer"
+                        ? "Convert to customer"
+                        : `Convert to ${nextStage}`}
+                    </Button>
+                  </Stack>
+                )}
+              </>
             );
           },
 
@@ -171,7 +151,7 @@ const CustomerRelationshipDashboard = () => {
       />
       {selectedCustomer && (
         <>
-          <Stack direction="row" grow>
+          <Stack direction="row" grow align="start">
             <Card>
               <Stack direction="row" justify="space-between">
                 <Stack sx={{ gap: "2px" }}>
@@ -181,7 +161,9 @@ const CustomerRelationshipDashboard = () => {
                     {convertNameToEmail(selectedCustomer.contact_name)}
                   </Text>
                   <Text color="gray">{selectedCustomer.phone}</Text>
-                  <Text color="gray">{selectedCustomer.country}</Text>
+                  <Text color="gray">
+                    {selectedCustomer.address}, {selectedCustomer.country}.
+                  </Text>
                 </Stack>
                 <Stack sx={{ height: "100%" }} justify="space-between">
                   <Stack>
@@ -252,6 +234,7 @@ const CreateLeadButton = ({
   const contactTitleState = useComponentState();
   const countryState = useComponentState();
   const phoneState = useComponentState();
+  const addressState = useComponentState();
 
   return (
     <>
@@ -300,6 +283,13 @@ const CreateLeadButton = ({
             disabled={loading}
           />
 
+          <Textarea
+            id={addressState.id}
+            label="Address"
+            required
+            disabled={loading}
+          />
+
           <Stack direction="row" justify="end">
             <Button
               type="submit"
@@ -316,6 +306,7 @@ const CreateLeadButton = ({
                   contact_title: contactTitleState.value,
                   country: countryState.value,
                   phone: phoneState.value,
+                  address: addressState.value,
                 },
                 refetchTasks: {
                   slug: "demo_list_customers_by_stage",
@@ -442,6 +433,36 @@ const customersCols: Column[] = [
   { accessor: "country", label: "Country", canEdit: true },
   { accessor: "phone", label: "Phone number", canEdit: true },
   { accessor: "opportunity_stage", label: "Stage" },
+  {
+    accessor: "update",
+    label: "Update",
+    component: (row) => {
+      return (
+        <Button
+          preset="secondary"
+          task={{
+            slug: "demo_edit_customer",
+            params: {
+              contact_name: row.contact_name,
+              contact_title: row.contact_title,
+              country: row.country,
+              phone: row.phone,
+              customer_id: row.customer_id,
+            },
+            refetchTasks: {
+              slug: "demo_list_customers_by_stage",
+              params: {
+                opportunity_stage: row.opportunity_stage,
+              },
+            },
+          }}
+        >
+          Update
+        </Button>
+      );
+    },
+  },
+  // { accessor: "update", label: "Convert" },
 ];
 
 const stageFilterButtons = [

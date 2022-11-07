@@ -6,6 +6,7 @@ INSERT INTO
     "contact_title",
     "country",
     "phone",
+    "address",
     "opportunity_stage"
   )
 VALUES
@@ -16,5 +17,7 @@ VALUES
     :contact_title,
     :country,
     :phone,
+    :address,
     'lead'
   );
+

@@ -27,6 +27,10 @@ parameters:
     name: Phone
     type: shorttext
     required: true
+  - slug: address
+    name: Address
+    type: longtext
+    required: true
 sql:
   # Replace with your own DB name
   resource: "[Demo DB]"
@@ -38,3 +42,4 @@ sql:
     contact_title: "{{params.contact_title}}"
     country: "{{params.country}}"
     phone: "{{params.phone}}"
+    address: "{{params.address}}"
