@@ -7,4 +7,4 @@ description: List all customers
 # Replace demo_db below with your own database resource
 sql:
   resource: "demo_db"
-  entrypoint: list_customers_customer_insight.sql
+  entrypoint: list_customers_customer_insights.sql
