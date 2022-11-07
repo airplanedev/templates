@@ -1,6 +1,6 @@
 # Full reference: https://docs.airplane.dev/tasks/task-definition
 
-slug: demo_list_customers_feature_flagging_for_feature
+slug: demo_list_customers_for_feature
 name: List customers for feature
 description: "Lists all customers with a particular feature enabled."
 parameters:

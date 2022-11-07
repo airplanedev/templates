@@ -1,6 +1,6 @@
 # Full reference: https://docs.airplane.dev/tasks/task-definition
 
-slug: demo_list_customers_customer_insight
+slug: demo_list_customers_customer_insights
 name: List customers
 description: List all customers
 

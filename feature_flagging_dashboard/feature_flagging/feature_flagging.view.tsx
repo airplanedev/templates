@@ -177,7 +177,7 @@ const CustomerFeaturesTable = ({
           columns={featureCustomersCols}
           defaultPageSize={5}
           task={{
-            slug: "demo_list_customers_feature_flagging_for_feature",
+            slug: "demo_list_customers_for_feature",
             params: {
               feature_id: selectedFeature.feature_id,
             },
@@ -197,7 +197,7 @@ const CustomerFeaturesTable = ({
                     customer_id: row.customer_id,
                   },
                   refetchTasks: {
-                    slug: "demo_list_customers_feature_flagging_for_feature",
+                    slug: "demo_list_customers_for_feature",
                   },
                 }}
                 confirm={{
@@ -252,7 +252,7 @@ const AddCustomerToFeature = ({
                 customer_id: customerSelectState.value,
               },
               refetchTasks: {
-                slug: "demo_list_customers_feature_flagging_for_feature",
+                slug: "demo_list_customers_for_feature",
               },
               onSuccess: () => {
                 setLoading(false);

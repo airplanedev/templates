@@ -65,7 +65,7 @@ const TeamDashboard = () => {
       <Stack direction="row">
         <Select
           id="select"
-          task="demo_list_customers_customer_insight"
+          task="demo_list_customers_customer_insights"
           placeholder="Select customer"
           outputTransform={(customers) =>
             customers["Q1"].map((c) => ({
