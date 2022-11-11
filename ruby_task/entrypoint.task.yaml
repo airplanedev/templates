@@ -1,0 +1,4 @@
+name: Ruby task
+slug: ruby_task
+shell:
+  entrypoint: entrypoint.sh
