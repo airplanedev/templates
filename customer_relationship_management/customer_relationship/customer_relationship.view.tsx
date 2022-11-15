@@ -98,7 +98,6 @@ const CustomerRelationshipDashboard = () => {
         rowSelection="single"
         rowActions={[
           ({ row }: { row: CustomerRowType }) => {
-            const nextStage = getNextStage(row.opportunity_stage);
             return (
               <>
                 {row.opportunity_stage != "customer" && (
@@ -134,7 +133,12 @@ const CustomerRelationshipDashboard = () => {
       {selectedCustomer && (
         <>
           <Stack direction="row" grow align="start">
-            <CustomerCard selectedCustomer={selectedCustomer} />
+            <CustomerCard
+              selectedCustomer={selectedCustomer}
+              onDelete={() => {
+                customersTableState.selectedRow = null;
+              }}
+            />
             <TouchPoints selectedCustomer={selectedCustomer} />
           </Stack>
         </>
@@ -163,14 +167,12 @@ const TouchPoints = ({
         term = term.charAt(0).toUpperCase() + term.slice(1);
         result.push({
           term: term,
-          description: dayjs(touchPoint.created_at).format('MMM D, YYYY'),
+          description: dayjs(touchPoint.created_at).format("MMM D, YYYY"),
         });
       });
     }
     return result;
   }, [output]);
-
-  console.log("DESC", descriptionData);
 
   return (
     <>
@@ -192,8 +194,10 @@ const TouchPoints = ({
 
 const CustomerCard = ({
   selectedCustomer,
+  onDelete,
 }: {
   selectedCustomer: CustomerRowType;
+  onDelete: () => void;
 }) => {
   const nextStage = getNextStage(selectedCustomer.opportunity_stage);
   const previousStage = getPrevStage(selectedCustomer.opportunity_stage);
@@ -266,10 +270,12 @@ const CustomerCard = ({
               color="red"
               preset="secondary"
               task={{
-                slug: "demo_update_customer_stage",
+                slug: "demo_delete_customer",
                 params: {
-                  opportunity_stage: previousStage,
                   customer_id: selectedCustomer.customer_id,
+                },
+                onSuccess: () => {
+                  onDelete();
                 },
                 refetchTasks: {
                   slug: "demo_list_customers_by_stage",

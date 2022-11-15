@@ -1,0 +1,16 @@
+# Full reference: https://docs.airplane.dev/tasks/task-definition
+
+slug: demo_delete_customer
+name: Delete customer
+parameters:
+  - slug: customer_id
+    name: Customer ID
+    type: shorttext
+    required: true
+
+sql:
+  # Replace with your own DB name
+  resource: "[Demo DB]"
+  entrypoint: delete_customer.sql
+  queryArgs:
+    customer_id: "{{params.customer_id}}"
