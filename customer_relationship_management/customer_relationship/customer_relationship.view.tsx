@@ -20,6 +20,8 @@ import {
   DateTimePicker,
 } from "@airplane/views";
 
+import { XCircleIcon } from "@airplane/views/icons";
+
 import { useMemo, useState } from "react";
 
 import md5 from "md5";
@@ -176,7 +178,11 @@ const TouchPoints = ({
         term = term.charAt(0).toUpperCase() + term.slice(1);
         result.push({
           term: term,
-          description: touchPoint.created_at,
+          description: (
+            <Stack direction="row" justify="space-between" align="start">
+              <Text>{touchPoint.created_at}</Text> <XCircleIcon />{" "}
+            </Stack>
+          ),
         });
       });
     }
@@ -515,7 +521,7 @@ const CreatePointType = ({
                   params: {
                     customer_id: selectedCustomer.customer_id,
                     touch_point_type: touchPointState.value,
-                    created_at: dateState.value?.toISOString()
+                    created_at: dateState.value?.toISOString(),
                   },
                   refetchTasks: [
                     {
