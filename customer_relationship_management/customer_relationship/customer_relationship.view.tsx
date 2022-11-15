@@ -13,14 +13,18 @@ import {
   showNotification,
   Form,
   Textarea,
+  Select,
+  Tooltip,
+  DescriptionList,
+  useTaskQuery,
 } from "@airplane/views";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 const CustomerRelationshipDashboard = () => {
   const [stageButtonIndex, setStageButtonIndex] = useState(0);
   const customersTableState = useComponentState("customers");
-  const selectedCustomer: CustomerRowType = customersTableState.selectedRow;
+  let selectedCustomer: CustomerRowType = customersTableState.selectedRow;
 
   return (
     <Stack>
@@ -56,10 +60,26 @@ const CustomerRelationshipDashboard = () => {
         title="Customers"
         columns={customersCols}
         defaultPageSize={5}
+        defaultSelectedRows={[
+          {
+            company_name: "Lyft",
+            customer_id: "",
+            country: "",
+            contact_name: "",
+            contact_title: "",
+            address: "",
+            opportunity_stage: "lead",
+            phone: "",
+            touch_points: 0,
+          },
+        ]}
         task={{
           slug: "demo_list_customers_by_stage",
           params: {
             opportunity_stage: stageFilterButtons[stageButtonIndex].key,
+          },
+          onSuccess: (data) => {
+            customersTableState.selectedRow = data.Q1[0];
           },
         }}
         hiddenColumns={[
@@ -84,9 +104,12 @@ const CustomerRelationshipDashboard = () => {
                     <Button
                       preset="secondary"
                       task={{
-                        slug: "demo_update_customer_stage",
+                        slug: "demo_edit_customer",
                         params: {
-                          opportunity_stage: nextStage,
+                          contact_name: row.contact_name,
+                          contact_title: row.contact_title,
+                          country: row.country,
+                          phone: row.phone,
                           customer_id: row.customer_id,
                         },
                         refetchTasks: {
@@ -96,55 +119,12 @@ const CustomerRelationshipDashboard = () => {
                           },
                         },
                       }}
-                      disabled={row.opportunity_stage == "customer"}
-                      confirm={{
-                        title: `Do you want to upgrade this customer's stage to ${nextStage}?`,
-                        body: `This customer will be listed under ${nextStage} category`,
-                        confirmText: "Yes",
-                        cancelText: "Cancel",
-                      }}
                     >
-                      {row.opportunity_stage == "customer"
-                        ? "Convert to customer"
-                        : `Convert to ${nextStage}`}
+                      Update
                     </Button>
                   </Stack>
                 )}
               </>
-            );
-          },
-
-          ({ row }: { row: CustomerRowType }) => {
-            const previousStage = getPrevStage(row.opportunity_stage);
-            return (
-              <Stack direction="row">
-                <Button
-                  color="red"
-                  preset="secondary"
-                  task={{
-                    slug: "demo_update_customer_stage",
-                    params: {
-                      opportunity_stage: previousStage,
-                      customer_id: row.customer_id,
-                    },
-                    refetchTasks: {
-                      slug: "demo_list_customers_by_stage",
-                      params: {
-                        opportunity_stage: row.opportunity_stage,
-                      },
-                    },
-                  }}
-                  disabled={row.opportunity_stage == "lead"}
-                  confirm={{
-                    title: `Do you want to churn this customer's stage to ${previousStage}?`,
-                    body: `This customer will be listed under ${previousStage} category`,
-                    confirmText: "Yes",
-                    cancelText: "Cancel",
-                  }}
-                >
-                  Churn
-                </Button>
-              </Stack>
             );
           },
         ]}
@@ -152,73 +132,158 @@ const CustomerRelationshipDashboard = () => {
       {selectedCustomer && (
         <>
           <Stack direction="row" grow align="start">
-            <Card>
-              <Stack direction="row" justify="space-between">
-                <Stack sx={{ gap: "2px" }}>
-                  <Title order={5}>{selectedCustomer.contact_name}</Title>
-                  <Text color="primary">{selectedCustomer.contact_title}</Text>
-                  <Text color="gray">
-                    {convertNameToEmail(selectedCustomer.contact_name)}
-                  </Text>
-                  <Text color="gray">{selectedCustomer.phone}</Text>
-                  <Text color="gray">
-                    {selectedCustomer.address}, {selectedCustomer.country}.
-                  </Text>
-                </Stack>
-                <Stack sx={{ height: "100%" }} justify="space-between">
-                  <Stack>
-                    <Button
-                      onClick={() =>
-                        copyTextToCipboard({
-                          label: "Email",
-                          text: convertNameToEmail(
-                            selectedCustomer.contact_name
-                          ),
-                        })
-                      }
-                      preset="tertiary"
-                    >
-                      Copy email
-                    </Button>
-                    <Button
-                      onClick={() =>
-                        copyTextToCipboard({
-                          label: "Phone number",
-                          text: selectedCustomer.phone,
-                        })
-                      }
-                      preset="tertiary"
-                    >
-                      Copy phone
-                    </Button>
-                  </Stack>
-                  <Stack direction="row">
-                    <Text color="gray">
-                      <b>{selectedCustomer.touch_points}</b> touch points
-                    </Text>
-                  </Stack>
-                </Stack>
-              </Stack>
-              <Stack align="end">
-                <CreatePointType selectedCustomer={selectedCustomer} />
-              </Stack>
-            </Card>
-            <Table
-              title="Customer touch points"
-              columns={touchPointsCols}
-              defaultPageSize={5}
-              task={{
-                slug: "demo_list_customer_touch_points",
-                params: {
-                  customer_id: selectedCustomer.customer_id,
-                },
-              }}
-              hiddenColumns={["customer_id"]}
-            />
+            <CustomerCard selectedCustomer={selectedCustomer} />
+            <TouchPoints selectedCustomer={selectedCustomer} />
           </Stack>
         </>
       )}
     </Stack>
+  );
+};
+
+const TouchPoints = ({
+  selectedCustomer,
+}: {
+  selectedCustomer: CustomerRowType;
+}) => {
+  const { output, loading, error } = useTaskQuery({
+    slug: "demo_list_customer_touch_points",
+    params: {
+      customer_id: selectedCustomer.customer_id,
+    },
+  });
+
+  const descriptiondata = useMemo(() => {
+    let result: any[] = [];
+    if (output != null) {
+      output.Q1.map((touchPoint) => {
+        let term = touchPoint.touch_point_type;
+        term = term.charAt(0).toUpperCase() + term.slice(1);
+        result.push({
+          term: term,
+          description: touchPoint.created_at,
+        });
+      });
+    }
+    return result;
+  }, [output]);
+
+  return (
+    <>
+      <Title>Customer touch points</Title>
+      <DescriptionList items={descriptiondata} />
+    </>
+  );
+};
+
+const CustomerCard = ({
+  selectedCustomer,
+}: {
+  selectedCustomer: CustomerRowType;
+}) => {
+  const nextStage = getNextStage(selectedCustomer.opportunity_stage);
+  const previousStage = getPrevStage(selectedCustomer.opportunity_stage);
+  return (
+    <Card>
+      <Stack direction="row" justify="space-between">
+        <Stack sx={{ gap: "2px" }}>
+          <Title order={5}>{selectedCustomer.contact_name}</Title>
+          <Text color="primary">{selectedCustomer.contact_title}</Text>
+          <Text
+            color="gray"
+            onClick={() => {
+              copyTextToCipboard({
+                label: "Email",
+                text: convertNameToEmail(selectedCustomer.contact_name),
+              });
+            }}
+          >
+            <Tooltip label="Click to copy email">
+              {convertNameToEmail(selectedCustomer.contact_name)}
+            </Tooltip>
+          </Text>
+          <Text
+            color="gray"
+            onClick={() =>
+              copyTextToCipboard({
+                label: "Phone number",
+                text: selectedCustomer.phone,
+              })
+            }
+          >
+            <Tooltip label="Click to copy phone number">
+              {selectedCustomer.phone}
+            </Tooltip>
+          </Text>
+          <Text color="gray">
+            {selectedCustomer.address}, {selectedCustomer.country}.
+          </Text>
+        </Stack>
+        <Stack sx={{ height: "100%" }} justify="space-between">
+          <Stack>
+            <Button
+              preset="secondary"
+              task={{
+                slug: "demo_update_customer_stage",
+                params: {
+                  opportunity_stage: nextStage,
+                  customer_id: selectedCustomer.customer_id,
+                },
+                refetchTasks: {
+                  slug: "demo_list_customers_by_stage",
+                  params: {
+                    opportunity_stage: selectedCustomer.opportunity_stage,
+                  },
+                },
+              }}
+              disabled={selectedCustomer.opportunity_stage == "customer"}
+              confirm={{
+                title: `Do you want to upgrade this customer's stage to ${nextStage}?`,
+                body: `This customer will be listed under ${nextStage} category`,
+                confirmText: "Yes",
+                cancelText: "Cancel",
+              }}
+            >
+              {selectedCustomer.opportunity_stage == "customer"
+                ? "Convert to customer"
+                : `Convert to ${nextStage}`}
+            </Button>
+            <Button
+              color="red"
+              preset="secondary"
+              task={{
+                slug: "demo_update_customer_stage",
+                params: {
+                  opportunity_stage: previousStage,
+                  customer_id: selectedCustomer.customer_id,
+                },
+                refetchTasks: {
+                  slug: "demo_list_customers_by_stage",
+                  params: {
+                    opportunity_stage: selectedCustomer.opportunity_stage,
+                  },
+                },
+              }}
+              disabled={selectedCustomer.opportunity_stage == "lead"}
+              confirm={{
+                title: `Do you want to churn this customer's stage to ${previousStage}?`,
+                body: `This customer will be listed under ${previousStage} category`,
+                confirmText: "Yes",
+                cancelText: "Cancel",
+              }}
+            >
+              Churn
+            </Button>
+          </Stack>
+        </Stack>
+      </Stack>
+      <Stack direction="row" align="center" justify="end">
+        <Text color="gray">
+          <b>{selectedCustomer.touch_points}</b> touch points
+        </Text>
+        <CreatePointType selectedCustomer={selectedCustomer} />
+      </Stack>
+    </Card>
   );
 };
 
@@ -235,6 +300,7 @@ const CreateLeadButton = ({
   const countryState = useComponentState();
   const phoneState = useComponentState();
   const addressState = useComponentState();
+  const stageState = useComponentState();
 
   return (
     <>
@@ -275,7 +341,25 @@ const CreateLeadButton = ({
               disabled={loading}
             />
           </Stack>
-
+          <Select
+            id={stageState.id}
+            label="Select a stage"
+            defaultValue={"lead"}
+            data={[
+              {
+                value: "lead",
+                label: "Lead",
+              },
+              {
+                value: "oppurtunity",
+                label: "Oppurtunity",
+              },
+              {
+                value: "customer",
+                label: "Customer",
+              },
+            ]}
+          />
           <TextInput
             id={phoneState.id}
             label="Phone number"
@@ -307,6 +391,7 @@ const CreateLeadButton = ({
                   country: countryState.value,
                   phone: phoneState.value,
                   address: addressState.value,
+                  opportunity_stage: stageState.value,
                 },
                 refetchTasks: {
                   slug: "demo_list_customers_by_stage",
@@ -433,36 +518,6 @@ const customersCols: Column[] = [
   { accessor: "country", label: "Country", canEdit: true },
   { accessor: "phone", label: "Phone number", canEdit: true },
   { accessor: "opportunity_stage", label: "Stage" },
-  {
-    accessor: "update",
-    label: "Update",
-    component: (row) => {
-      return (
-        <Button
-          preset="secondary"
-          task={{
-            slug: "demo_edit_customer",
-            params: {
-              contact_name: row.contact_name,
-              contact_title: row.contact_title,
-              country: row.country,
-              phone: row.phone,
-              customer_id: row.customer_id,
-            },
-            refetchTasks: {
-              slug: "demo_list_customers_by_stage",
-              params: {
-                opportunity_stage: row.opportunity_stage,
-              },
-            },
-          }}
-        >
-          Update
-        </Button>
-      );
-    },
-  },
-  // { accessor: "update", label: "Convert" },
 ];
 
 const stageFilterButtons = [

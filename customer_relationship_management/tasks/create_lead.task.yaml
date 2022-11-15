@@ -31,6 +31,10 @@ parameters:
     name: Address
     type: longtext
     required: true
+  - slug: opportunity_stage
+    name: Opportunity name
+    type: shorttext
+    required: true
 sql:
   # Replace with your own DB name
   resource: "[Demo DB]"
@@ -43,3 +47,4 @@ sql:
     country: "{{params.country}}"
     phone: "{{params.phone}}"
     address: "{{params.address}}"
+    opportunity_stage: "{{params.opportunity_stage}}"

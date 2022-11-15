@@ -18,6 +18,6 @@ VALUES
     :country,
     :phone,
     :address,
-    'lead'
+    :opportunity_stage
   );
 
