@@ -11,15 +11,17 @@ import {
   Divider,
   Column,
   showNotification,
-  Form,
   Textarea,
   Select,
   Tooltip,
   DescriptionList,
   useTaskQuery,
+  Loader,
 } from "@airplane/views";
 
 import { useMemo, useState } from "react";
+
+import dayjs from "dayjs";
 
 const CustomerRelationshipDashboard = () => {
   const [stageButtonIndex, setStageButtonIndex] = useState(0);
@@ -153,7 +155,7 @@ const TouchPoints = ({
     },
   });
 
-  const descriptiondata = useMemo(() => {
+  const descriptionData = useMemo(() => {
     let result: any[] = [];
     if (output != null) {
       output.Q1.map((touchPoint) => {
@@ -161,17 +163,29 @@ const TouchPoints = ({
         term = term.charAt(0).toUpperCase() + term.slice(1);
         result.push({
           term: term,
-          description: touchPoint.created_at,
+          description: dayjs(touchPoint.created_at).format('MMM D, YYYY'),
         });
       });
     }
     return result;
   }, [output]);
 
+  console.log("DESC", descriptionData);
+
   return (
     <>
-      <Title>Customer touch points</Title>
-      <DescriptionList items={descriptiondata} />
+      <Title order={5}>Customer touch points</Title>
+      {loading ? (
+        <Stack sx={{ padding: "10px 0" }}>
+          <Loader size="sm" />
+        </Stack>
+      ) : descriptionData.length == 0 ? (
+        <Text sx={{ padding: "10px 0" }}>
+          There are no touch points yet for this customer
+        </Text>
+      ) : (
+        <DescriptionList items={descriptionData} />
+      )}
     </>
   );
 };
@@ -264,15 +278,14 @@ const CustomerCard = ({
                   },
                 },
               }}
-              disabled={selectedCustomer.opportunity_stage == "lead"}
               confirm={{
-                title: `Do you want to churn this customer's stage to ${previousStage}?`,
-                body: `This customer will be listed under ${previousStage} category`,
+                title: `Do you want to delete this customer?`,
+                body: `You can create another entry at any time`,
                 confirmText: "Yes",
                 cancelText: "Cancel",
               }}
             >
-              Churn
+              Delete
             </Button>
           </Stack>
         </Stack>
