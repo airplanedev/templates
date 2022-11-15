@@ -4,7 +4,7 @@ VALUES
   (
     :customer_id,
     :touch_point_type,
-    NOW()
+    :created_at
   ) RETURNING customer_id,
   touch_point_type,
   created_at;

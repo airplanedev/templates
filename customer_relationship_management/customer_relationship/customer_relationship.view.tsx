@@ -17,16 +17,18 @@ import {
   DescriptionList,
   useTaskQuery,
   Loader,
+  DateTimePicker,
 } from "@airplane/views";
 
 import { useMemo, useState } from "react";
 
-import dayjs from "dayjs";
+import md5 from "md5";
 
 const CustomerRelationshipDashboard = () => {
   const [stageButtonIndex, setStageButtonIndex] = useState(0);
   const customersTableState = useComponentState("customers");
   let selectedCustomer: CustomerRowType = customersTableState.selectedRow;
+  const [cusomersHashMap, setCustomersHashMap] = useState({});
 
   return (
     <Stack>
@@ -62,19 +64,6 @@ const CustomerRelationshipDashboard = () => {
         title="Customers"
         columns={customersCols}
         defaultPageSize={5}
-        defaultSelectedRows={[
-          {
-            company_name: "Lyft",
-            customer_id: "",
-            country: "",
-            contact_name: "",
-            contact_title: "",
-            address: "",
-            opportunity_stage: "lead",
-            phone: "",
-            touch_points: 0,
-          },
-        ]}
         task={{
           slug: "demo_list_customers_by_stage",
           params: {
@@ -82,6 +71,15 @@ const CustomerRelationshipDashboard = () => {
           },
           onSuccess: (data) => {
             customersTableState.selectedRow = data.Q1[0];
+            //make a hash of customer data with customer_id as key for dynamically disabling update action
+            let object = {};
+            data.Q1.map((customer: CustomerRowType) => {
+              object = {
+                ...object,
+                [customer.customer_id]: md5(JSON.stringify(customer)),
+              };
+            });
+            setCustomersHashMap(object);
           },
         }}
         hiddenColumns={[
@@ -98,33 +96,44 @@ const CustomerRelationshipDashboard = () => {
         rowSelection="single"
         rowActions={[
           ({ row }: { row: CustomerRowType }) => {
+            const initialHash = cusomersHashMap[row.customer_id];
+            const currentHash = md5(JSON.stringify(row));
             return (
               <>
-                {row.opportunity_stage != "customer" && (
-                  <Stack direction="row">
-                    <Button
-                      preset="secondary"
-                      task={{
-                        slug: "demo_edit_customer",
+                <Stack direction="row">
+                  <Button
+                    preset="secondary"
+                    disabled={initialHash == currentHash}
+                    task={{
+                      slug: "demo_edit_customer",
+                      params: {
+                        contact_name: row.contact_name,
+                        contact_title: row.contact_title,
+                        country: row.country,
+                        phone: row.phone,
+                        customer_id: row.customer_id,
+                      },
+                      refetchTasks: {
+                        slug: "demo_list_customers_by_stage",
                         params: {
-                          contact_name: row.contact_name,
-                          contact_title: row.contact_title,
-                          country: row.country,
-                          phone: row.phone,
-                          customer_id: row.customer_id,
+                          opportunity_stage: row.opportunity_stage,
                         },
-                        refetchTasks: {
-                          slug: "demo_list_customers_by_stage",
-                          params: {
-                            opportunity_stage: row.opportunity_stage,
-                          },
-                        },
-                      }}
-                    >
-                      Update
-                    </Button>
-                  </Stack>
-                )}
+                      },
+                      // onSuccess: () => {
+                      //   let prevMap = {
+                      //     ...cusomersHashMap,
+                      //     [row.customer_id]: currentHash,
+                      //   };
+                      //   console.log("HASHHH", currentHash, prevMap);
+                      //   setTimeout(() => {
+                      //     setCustomersHashMap(prevMap);
+                      //   }, 10000);
+                      // },
+                    }}
+                  >
+                    Update
+                  </Button>
+                </Stack>
               </>
             );
           },
@@ -167,7 +176,7 @@ const TouchPoints = ({
         term = term.charAt(0).toUpperCase() + term.slice(1);
         result.push({
           term: term,
-          description: dayjs(touchPoint.created_at).format("MMM D, YYYY"),
+          description: touchPoint.created_at,
         });
       });
     }
@@ -186,7 +195,9 @@ const TouchPoints = ({
           There are no touch points yet for this customer
         </Text>
       ) : (
-        <DescriptionList items={descriptionData} />
+        <Stack sx={{ maxHeight: "250px", overflow: "scroll" }}>
+          <DescriptionList items={descriptionData} />
+        </Stack>
       )}
     </>
   );
@@ -446,6 +457,7 @@ const CreatePointType = ({
   const [loading, setLoading] = useState(false);
   const dialogState = useComponentState();
   const touchPointState = useComponentState();
+  const dateState = useComponentState();
 
   return (
     <>
@@ -462,11 +474,37 @@ const CreatePointType = ({
       >
         <Card>
           <Stack>
-            <TextInput
+            <Select
               id={touchPointState.id}
-              label="Touch point type"
-              required
+              label="Select a point type"
               disabled={loading}
+              required
+              defaultValue={"email"}
+              data={[
+                {
+                  value: "email",
+                  label: "Email",
+                },
+                {
+                  value: "phone",
+                  label: "Phone",
+                },
+                {
+                  value: "video",
+                  label: "Video",
+                },
+                {
+                  value: "in person",
+                  label: "In person",
+                },
+              ]}
+            />
+
+            <DateTimePicker
+              id={dateState.id}
+              label="Date"
+              defaultValue={new Date()}
+              required
             />
 
             <Stack direction="row" justify="end">
@@ -477,6 +515,7 @@ const CreatePointType = ({
                   params: {
                     customer_id: selectedCustomer.customer_id,
                     touch_point_type: touchPointState.value,
+                    created_at: dateState.value?.toISOString()
                   },
                   refetchTasks: [
                     {
@@ -524,11 +563,6 @@ interface CustomerRowType {
   phone: string;
   touch_points: number;
 }
-
-const touchPointsCols: Column[] = [
-  { accessor: "touch_point_type", label: "Touch point type" },
-  { accessor: "created_at", label: "Date created", type: "date" },
-];
 
 const customersCols: Column[] = [
   { accessor: "company_name", label: "Company name", canEdit: true },

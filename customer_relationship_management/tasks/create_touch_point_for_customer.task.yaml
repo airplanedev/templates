@@ -12,6 +12,10 @@ parameters:
     name: Touch point type
     type: shorttext
     required: true
+  - slug: created_at
+    name: Created at
+    type: datetime
+    required: true
 sql:
   # Replace with your own DB name
   resource: "[Demo DB]"
@@ -19,4 +23,5 @@ sql:
   queryArgs:
     customer_id: "{{params.customer_id}}"
     touch_point_type: "{{params.touch_point_type}}"
+    created_at: "{{params.created_at}}"
 
