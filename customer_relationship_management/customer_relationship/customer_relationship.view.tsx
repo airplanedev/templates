@@ -30,7 +30,6 @@ const CustomerRelationshipDashboard = () => {
   const [stageButtonIndex, setStageButtonIndex] = useState(0);
   const customersTableState = useComponentState("customers");
   let selectedCustomer: CustomerRowType = customersTableState.selectedRow;
-  const [cusomersHashMap, setCustomersHashMap] = useState({});
 
   return (
     <Stack>
@@ -73,15 +72,6 @@ const CustomerRelationshipDashboard = () => {
           },
           onSuccess: (data) => {
             customersTableState.selectedRow = data.Q1[0];
-            //make a hash of customer data with customer_id as key for dynamically disabling update action
-            let object = {};
-            data.Q1.map((customer: CustomerRowType) => {
-              object = {
-                ...object,
-                [customer.customer_id]: md5(JSON.stringify(customer)),
-              };
-            });
-            setCustomersHashMap(object);
           },
         }}
         hiddenColumns={[
@@ -98,7 +88,9 @@ const CustomerRelationshipDashboard = () => {
         rowSelection="single"
         rowActions={[
           ({ row }: { row: CustomerRowType }) => {
-            const initialHash = cusomersHashMap[row.customer_id];
+            const [initialHash, setInitialHash] = useState(
+              md5(JSON.stringify(row))
+            );
             const currentHash = md5(JSON.stringify(row));
             return (
               <>
@@ -121,16 +113,9 @@ const CustomerRelationshipDashboard = () => {
                           opportunity_stage: row.opportunity_stage,
                         },
                       },
-                      // onSuccess: () => {
-                      //   let prevMap = {
-                      //     ...cusomersHashMap,
-                      //     [row.customer_id]: currentHash,
-                      //   };
-                      //   console.log("HASHHH", currentHash, prevMap);
-                      //   setTimeout(() => {
-                      //     setCustomersHashMap(prevMap);
-                      //   }, 10000);
-                      // },
+                      onSuccess: () => {
+                        setInitialHash(md5(JSON.stringify(row)));
+                      },
                     }}
                   >
                     Update
@@ -179,8 +164,29 @@ const TouchPoints = ({
         result.push({
           term: term,
           description: (
-            <Stack direction="row" justify="space-between" align="start">
-              <Text>{touchPoint.created_at}</Text> <XCircleIcon />{" "}
+            <Stack direction="row" align="center">
+              <Text sx={{ width: "210px" }}>{touchPoint.created_at}</Text>{" "}
+              <Button
+                variant="subtle"
+                task={{
+                  slug: "demo_delete_touch_point_for_customer",
+                  params: {
+                    customer_id: touchPoint.customer_id,
+                    touch_point_type: touchPoint.touch_point_type,
+                  },
+                  refetchTasks: {
+                    slug: "demo_list_customer_touch_points",
+                  },
+                }}
+                confirm={{
+                  title: `Do you want to delete this touch point?`,
+                  body: `You can add as many touch points as you need later`,
+                  confirmText: "Yes",
+                  cancelText: "Cancel",
+                }}
+              >
+                <XCircleIcon color="red" />
+              </Button>
             </Stack>
           ),
         });

@@ -1,0 +1,21 @@
+# Full reference: https://docs.airplane.dev/tasks/task-definition
+
+slug: demo_delete_touch_point_for_customer
+name: Delete touch point for customer
+parameters:
+  - slug: customer_id
+    name: Customer ID
+    type: shorttext
+    required: true
+  - slug: touch_point_type
+    name: Touch point
+    type: shorttext
+    required: true
+
+sql:
+  # Replace with your own DB name
+  resource: "[Demo DB]"
+  entrypoint: delete_touch_point_for_customer.sql
+  queryArgs:
+    customer_id: "{{params.customer_id}}"
+    touch_point_type: "{{params.touch_point_type}}"
