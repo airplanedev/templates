@@ -4,13 +4,6 @@ import os
 import json
 import re
 import databaseci
-from databaseci.tempdb import temporary_local_db
-
-# slug: schema
-#   name: Desired SQL Schema
-#   type: sql
-#   description: The full desired SQL schema (e.g. `CREATE TABLE/INDEX` commands).
-#   required: false
 
 
 @airplane.task(
@@ -23,32 +16,25 @@ def diff_schemas(schema: Annotated[airplane.SQL, airplane.ParamConfig(
     description="The full desired SQL schema (e.g. `CREATE TABLE/INDEX` commands)."
 )] = ""):
     dsn = get_dsn()
-    db = databaseci.db(dsn)
+    # db = databaseci.db(dsn)
+    db = databaseci.db("postgres://admin@localhost:5432/test")
 
-    # TODO: boot postgres as a background process
+    db_name = databaseci.tempdb.random_name(
+        "airplane_schema_diff").replace("-", "_")
 
-    with temporary_local_db() as desired_db:
-        desired_db.q(schema)
-        commands = db.schemadiff_as_sql(desired_db)
-        return commands
-
-# #!/bin/bash
-
-# # TODO: add Dockerfile that installs migra and jq
-# # python: psycopg2
-# env
-
-# export DATABASE_RESOURCE_KIND=`echo $AIRPLANE_RESOURCES | jq .db.kind`
-# # Confirm it is postgres, else error.
-
-# export DATABASE_RESOURCE_DSN_RAW=`echo $AIRPLANE_RESOURCES | jq .db.dsn`
-# # Maps `postgres://` -> `postgresql://` which is the format that SQLAlchemy expects.
-# export DATABASE_RESOURCE_DSN=`echo $DATABASE_RESOURCE_DSN_RAW | sed -i 's/postgres:/postgresql:/'`
-
-# echo "Diffing against desired schema:"
-# echo $PARAM_SCHEMA
-
-# migra $DATABASE_RESOURCE_DSN $DATABASE_RESOURCE_DSN $PARAM_SCHEMA
+    try:
+        print(f"Creating temporary DB ({db_name})...")
+        temp_db = db.create_db(db_name)
+        print(f"Created temporary DB ({db_name})")
+        print("Applying desired schema to temporary DB...")
+        temp_db.q(schema)
+        print("Applied desired schema")
+        return db.schemadiff_as_sql(temp_db).strip()
+    finally:
+        print(f"Dropping temporary DB ({db_name})...")
+        # TODO: drop database; requires postgreSQL 13 to use force
+        # db.drop_db(db_name, yes_really_drop=True)
+        print(f"Dropped temporary DB ({db_name})")
 
 
 def get_dsn():

@@ -8,6 +8,7 @@ export default airplane.workflow(
 		resources: {"db": "demo_db"},
 		parameters: {
 			"schema": {
+				// TODO: use files instead of strings -- schema is very large
 				type: "sql",
 				required: true,
 				name: "Desired SQL schema",
@@ -17,24 +18,19 @@ export default airplane.workflow(
 	},
 	async (params) => {
 		const alterCommands = await diffSchema(params.schema)
-		console.log(alterCommands)
 
-		const data = [
-			{ id: 1, name: "Gabriel Davis", role: "Dentist" },
-			{ id: 2, name: "Carolyn Garcia", role: "Sales" },
-			{ id: 3, name: "Frances Hernandez", role: "Astronaut" },
-			{ id: 4, name: "Melissa Rodriguez", role: "Engineer" },
-			{ id: 5, name: "Jacob Hall", role: "Engineer" },
-			{ id: 6, name: "Andrea Lopez", role: "Astronaut" },
-		];
+		// There are no changes to be made.
+		if (!alterCommands) {
+			await airplane.display.text("No schema changes were found.")
+			return
+		}
 
-		data.sort((u1, u2) => {
-			return u1.name.localeCompare(u2.name);
-		});
+		await airplane.prompt.confirm({
+			confirmText: "Apply",
+			description: "**Please review the following SQL commands.** If they are correct, click apply.\n\n```sql\n" + alterCommands + "\n```"
+		})
 
-		const results = await airplane.sql.query("db", `SELECT 1;`)
-
-		return { data, results };
+		// TODO: apply!
 	}
 )
 
