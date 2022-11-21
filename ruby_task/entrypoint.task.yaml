@@ -1,4 +1,17 @@
 name: Ruby task
 slug: ruby_task
+parameters:
+  - name: Admin
+    slug: admin
+    type: shorttext
+    description: Please provide your name
 shell:
   entrypoint: entrypoint.sh
+  envVars:
+    # You can setup your environment variables from values like so
+    ENVIRONMENT:
+      value: production
+    # You can setup your environment variables from config variable like so
+    PLATFORM:
+      config: DEPLOY_PLATFORM
+    
