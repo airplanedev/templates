@@ -1,4 +1,8 @@
 require "awesome_print"
+require "json"
 
-data = [ false, 42, %w(forty two), { :now => Time.now, :class => Time.now.class, :distance => 42e42 } ]
-ap data
+raw_data = File.read('example.json')
+
+parsed_json = JSON.parse(raw_data)
+
+ap parsed_json

@@ -2,12 +2,14 @@ GEM
   remote: http://rubygems.org/
   specs:
     awesome_print (1.9.2)
+    json (2.6.2)
 
 PLATFORMS
-  ruby
+  x86_64-darwin-20
 
 DEPENDENCIES
   awesome_print
+  json
 
 BUNDLED WITH
-   1.17.2
+   2.2.3
