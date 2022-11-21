@@ -1,1 +1,4 @@
-puts '[{"id": 1, "name": "Gabriel Davis", "role": "Dentist"}, {"id": 2, "name": "Carolyn Garcia", "role": "Sales"}]';
+require "awesome_print"
+
+data = [ false, 42, %w(forty two), { :now => Time.now, :class => Time.now.class, :distance => 42e42 } ]
+ap data
