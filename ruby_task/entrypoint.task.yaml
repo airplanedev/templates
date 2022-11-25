@@ -1,12 +1,17 @@
 name: Ruby task
 slug: ruby_task
+description: Provide JSON data and have it pretty printed with this Ruby task
 parameters:
   - name: Admin
     slug: admin
     type: shorttext
     description: Please provide your name
+  - name: JSON data
+    slug: json_data
+    type: longtext
+    description: Please provide the JSON data you want to pretty print
 shell:
-  entrypoint: entrypoint.sh
+  entrypoint: task.rb
   envVars:
     # You can setup your environment variables from values like so
     ENVIRONMENT:
