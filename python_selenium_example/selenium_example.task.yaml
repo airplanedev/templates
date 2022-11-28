@@ -2,6 +2,13 @@
 
 slug: demo_python_selenium_example
 name: Python selenium example
-description: Starts up Firefox with selenium and requests a webpage.
+description: Loads a webpage with Firefox and returns all links on the page.
+parameters:
+  - slug: url
+    name: URL
+    type: shorttext
+    description: URL to fetch.
+    required: true
+    default: "https://airplane.dev"
 python:
   entrypoint: selenium_example.py
