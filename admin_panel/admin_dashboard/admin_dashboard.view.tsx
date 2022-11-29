@@ -89,31 +89,31 @@ const CustomerCard = ({ selectedCustomer, searchKeyword }) => {
         defaultPageSize={5}
       />
       <Dialog id={id} title="Update contact name" onClose={close}>
-        <Stack direction="row">
+        <Stack>
           <TextInput
-            width={8}
             id="contactNameInput"
             placeholder="Contact name"
             defaultValue={selectedCustomer.contact_name}
             key={selectedCustomer.customer_id}
           />
-          <Button
-            width={4}
-            task={{
-              slug: "demo_update_customer_contact_name",
-              params: {
-                customer_id: selectedCustomer.customer_id,
-                contact_name: contactName.value,
-              },
-              refetchTasks: {
-                slug: "demo_search_customers",
-                params: { search_keyword: searchKeyword.value },
-              },
-              onSuccess: close,
-            }}
-          >
-            Update
-          </Button>
+          <Stack direction="row" justify="end">
+            <Button
+              task={{
+                slug: "demo_update_customer_contact_name",
+                params: {
+                  customer_id: selectedCustomer.customer_id,
+                  contact_name: contactName.value,
+                },
+                refetchTasks: {
+                  slug: "demo_search_customers",
+                  params: { search_keyword: searchKeyword.value },
+                },
+                onSuccess: close,
+              }}
+            >
+              Update
+            </Button>
+          </Stack>
         </Stack>
       </Dialog>
     </Card>
