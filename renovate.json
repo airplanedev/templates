@@ -1,0 +1,8 @@
+{
+  "extends": ["config:base", "group:allNonMajor"],
+  "ignoreDeps": ["highlight.run"],
+  "labels": ["merge"],
+  "reviewers": ["team:views"],
+  "schedule": ["before 5am on Thursday"],
+  "timezone": "America/New_York"
+}
