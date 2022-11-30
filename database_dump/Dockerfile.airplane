@@ -1,0 +1,4 @@
+FROM spittet/node-postgresql
+
+WORKDIR /app
+

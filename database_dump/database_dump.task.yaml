@@ -2,13 +2,7 @@
 
 slug: database_dump
 name: Database dump
-description: "My Airplane task"
-
-parameters:
-  - slug: database_url
-    name: Database url
-    type: shorttext
-    required: true
+description: This task dumps a postgress database to file and uploads the backup to aws s3 storage.
 
 node:
   entrypoint: database_dump.ts
@@ -21,3 +15,20 @@ node:
       config: aws_secret
     AWS_BUCKET:
       config: aws_bucket
+    AWS_S3_REGION:
+      config: aws_bucket_region
+    DB_NAME:
+      config: db_name
+    DB_PASS:
+      config: db_pass
+    DB_HOST:
+      config: db_host
+    DB_USER:
+      config: db_user
+    DB_PORT:
+      config: db_port
+
+
+
+
+
