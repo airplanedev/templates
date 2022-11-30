@@ -2,7 +2,7 @@
 
 slug: database_dump
 name: Database dump
-# description: "My Airplane task"
+description: "My Airplane task"
 
 parameters:
   - slug: database_url
@@ -14,11 +14,10 @@ node:
   entrypoint: database_dump.ts
   nodeVersion: "14"
 
- 
-  # envVars:
-  #   ENV_VAR_FROM_CONFIG:
-  #     config: database_url
-  #   ENV_VAR_FROM_VALUE:
-  #     value: env_var_value
-
-
+  envVars:
+    AWS_KEY:
+      config: aws_key
+    AWS_SECRET:
+      config: aws_secret
+    AWS_BUCKET:
+      config: aws_bucket
