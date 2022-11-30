@@ -1,0 +1,24 @@
+# Full reference: https://docs.airplane.dev/tasks/task-definition
+
+slug: database_dump
+name: Database dump
+# description: "My Airplane task"
+
+parameters:
+  - slug: database_url
+    name: Database url
+    type: shorttext
+    required: true
+
+node:
+  entrypoint: database_dump.ts
+  nodeVersion: "14"
+
+ 
+  # envVars:
+  #   ENV_VAR_FROM_CONFIG:
+  #     config: database_url
+  #   ENV_VAR_FROM_VALUE:
+  #     value: env_var_value
+
+

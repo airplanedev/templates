@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "airplane": "^0.2.22"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.9"
+  }
+}
