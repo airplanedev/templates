@@ -132,8 +132,8 @@ const customersCols = [
 
 const ordersCols = [
   { accessor: "order_id", label: "Order ID" },
-  { accessor: "order_date", label: "Order date" },
-  { accessor: "shipped_date", label: "Shipped date" },
+  { accessor: "order_date", label: "Order date", type: "datetime" },
+  { accessor: "shipped_date", label: "Shipped date", type: "datetime" },
   { accessor: "freight", label: "Freight" },
   {
     accessor: "ship_address",
