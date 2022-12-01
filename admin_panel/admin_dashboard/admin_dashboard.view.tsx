@@ -7,7 +7,7 @@ import {
   TextInput,
   Card,
   useComponentState,
-  Divider,
+  Dialog,
 } from "@airplane/views";
 
 const Dashboard = () => {
@@ -22,10 +22,7 @@ const Dashboard = () => {
         Look up a customer, edit customer details, view orders for that
         customer, and edit order details.
       </Text>
-      <Stack direction="row" align="end">
-        <TextInput id="searchKeyword" label="Search for a customer" />
-      </Stack>
-      <Stack direction="row" align="center">
+      <Stack spacing="lg">
         <Table
           id="customers"
           title="Customers"
@@ -35,8 +32,8 @@ const Dashboard = () => {
             params: { search_keyword: searchKeyword.value },
           }}
           rowSelection="single"
-          showFilter={false}
           hiddenColumns={["address", "city", "postal_code"]}
+          defaultPageSize={5}
         />
         {selectedCustomer && (
           <CustomerCard
@@ -45,77 +42,80 @@ const Dashboard = () => {
           />
         )}
       </Stack>
-      {selectedCustomer && (
-        <Stack>
-          <Table
-            title={`Orders for ${selectedCustomer.company_name}`}
-            task={{
-              slug: "demo_list_customer_orders",
-              params: { customer_id: selectedCustomer.customer_id },
-            }}
-            columns={ordersCols}
-            rowActions={[
-              {
-                slug: "demo_update_ship_address",
-                label: "Update address",
-              },
-            ]}
-          />
-        </Stack>
-      )}
     </Stack>
   );
 };
 
 const CustomerCard = ({ selectedCustomer, searchKeyword }) => {
   const contactName = useComponentState("contactNameInput");
+  const { id, open, close } = useComponentState();
 
   return (
     <Card>
-      <Title order={3}>{selectedCustomer.company_name}</Title>
-      <Text>
-        {selectedCustomer.address}
-        <br />
-        {selectedCustomer.city}, {selectedCustomer.country},{" "}
-        {selectedCustomer.postal_code}
-      </Text>
-      <Stack>
-        <Divider />
-        <Title order={5}>Update point of contact</Title>
-        <Stack direction="row" grow>
+      <Stack direction="row" justify="space-between">
+        <div>
+          <Title order={3}>{selectedCustomer.company_name}</Title>
+          <Text>
+            {`${selectedCustomer.contact_name}, ${selectedCustomer.address} ${selectedCustomer.city}, 
+          ${selectedCustomer.country}, ${selectedCustomer.postal_code}`}
+          </Text>
+        </div>
+        <Stack direction="row" spacing="sm">
+          <Button preset="tertiary" onClick={open} size="xs">
+            Edit contact
+          </Button>
+          <Button
+            color="red"
+            onClick={() => alert("Add functionality here if you'd like!")}
+            size="xs"
+          >
+            Deactivate customer
+          </Button>
+        </Stack>
+      </Stack>
+      <Table
+        title={`Orders for ${selectedCustomer.company_name}`}
+        task={{
+          slug: "demo_list_customer_orders",
+          params: { customer_id: selectedCustomer.customer_id },
+        }}
+        columns={ordersCols}
+        rowActions={[
+          {
+            slug: "demo_update_ship_address",
+            label: "Update address",
+          },
+        ]}
+        defaultPageSize={5}
+      />
+      <Dialog id={id} title="Update contact name" onClose={close}>
+        <Stack>
           <TextInput
             id="contactNameInput"
             placeholder="Contact name"
             defaultValue={selectedCustomer.contact_name}
-            // Re-render this component whenever selectedCustomer.customer_id changes so that
-            // the defaultValue re-computes.
             key={selectedCustomer.customer_id}
           />
-          <Button
-            task={{
-              slug: "demo_update_customer_contact_name",
-              params: {
-                customer_id: selectedCustomer.customer_id,
-                contact_name: contactName.value,
-              },
-              refetchTasks: {
-                slug: "demo_search_customers",
-                params: { search_keyword: searchKeyword.value },
-              },
-            }}
-          >
-            Update
-          </Button>
+          <Stack direction="row" justify="end">
+            <Button
+              task={{
+                slug: "demo_update_customer_contact_name",
+                params: {
+                  customer_id: selectedCustomer.customer_id,
+                  contact_name: contactName.value,
+                },
+                refetchTasks: {
+                  slug: "demo_search_customers",
+                  params: { search_keyword: searchKeyword.value },
+                },
+                onSuccess: close,
+              }}
+            >
+              Update
+            </Button>
+          </Stack>
         </Stack>
-        <Divider />
-        <Title order={5}>Danger Zone</Title>
-        <Button
-          color="red"
-          onClick={() => alert("Add functionality here if you'd like!")}
-        >
-          Deactivate Customer
-        </Button>
-      </Stack>
+      </Dialog>
     </Card>
   );
 };
