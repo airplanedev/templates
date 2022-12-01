@@ -25,12 +25,14 @@ const UserImpersonation = () => {
   const dialogState = useComponentState();
   return (
     <Stack>
-      <Title>Impersonate a user</Title>
-      <Text>
-        🚨 Be cautious when impersonating users. Doing things inside a user's
-        account can lead to noticeable, irreversible changes! All impersonation
-        attempts are audited.
-      </Text>
+      <div>
+        <Title>Impersonate a user</Title>
+        <Text>
+          🚨 Be cautious when impersonating users. Doing things inside a user's
+          account can lead to noticeable, irreversible changes! All
+          impersonation attempts are audited.
+        </Text>
+      </div>
       <TextInput id={queryState.id} label="Search by ID, email, or team" />
       <Table<User>
         title="Users"
