@@ -1,5 +1,6 @@
 import {
   Button,
+  DescriptionList,
   Dialog,
   Stack,
   Table,
@@ -46,12 +47,14 @@ const UserImpersonation = () => {
         rowActions={[
           ({ row }) => (
             <Button
+              compact
               preset="secondary"
+              size="sm"
               onClick={() => {
                 setUser(row);
                 dialogState.open();
               }}
-              leftIcon={<EyeIcon />}
+              leftIcon={<EyeIcon size="sm" />}
             >
               Impersonate
             </Button>
@@ -69,15 +72,16 @@ const ImpersonationDialogPane = ({ user }: { user: User }) => {
   const [link, setLink] = useState("");
   const reasonState = useComponentState();
   return (
-    <>
-      <Text>
-        {`
-#### ${user.name}
-- **Email**: ${user.email}
-- **Role**: ${user.role}
-- **Title**: ${user.title}
-- **ID**: ${user.id}`}
-      </Text>
+    <Stack>
+      <DescriptionList
+        items={[
+          { term: "Name", description: user.name },
+          { term: "Email", description: user.email },
+          { term: "Role", description: user.role },
+          { term: "Title", description: user.title },
+          { term: "ID", description: user.id },
+        ]}
+      />
       <Stack>
         <TextInput id={reasonState.id} label="Reason (e.g. Intercom URL)" />
         <Button
@@ -105,7 +109,7 @@ const ImpersonationDialogPane = ({ user }: { user: User }) => {
           </>
         )}
       </Stack>
-    </>
+    </Stack>
   );
 };
 
