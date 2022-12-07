@@ -13,11 +13,12 @@ zip "$filename".zip "$location/$DB_NAME"
 # delete the initial dump dir
 rm -rf $location
 
+zipped_filepath="./$filename.zip"
 
 # upload the zipped file to aws s3 bucket
 RESPONSE=$(aws s3api put-object \
             --bucket $AWS_BUCKET \
-            --body "./$filename.zip" \
+            --body $zipped_filepath \
             --key $filename)
 
 if [ ! "$RESPONSE" ]
@@ -28,6 +29,6 @@ if [ ! "$RESPONSE" ]
 fi
 
 # delete the zipped file after successful upload
-rm -rf "./$filename".zip
+rm -rf $zipped_filepath
 
 
