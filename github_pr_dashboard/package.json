@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "license": "MIT",
   "dependencies": {
-    "@airplane/views": "1.11.0",
+    "@airplane/views": "1.11.2",
     "airplane": "^0.2.1",
-    "octokit": "2.0.7",
+    "octokit": "2.0.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
