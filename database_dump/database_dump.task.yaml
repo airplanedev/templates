@@ -1,6 +1,6 @@
 # Full reference: https://docs.airplane.dev/tasks/task-definition
 
-slug: database_dump
+slug: demo_database_dump
 name: Database dump
 description: This task dumps a mongoDB to file and uploads the backup to AWS s3 storage.
 

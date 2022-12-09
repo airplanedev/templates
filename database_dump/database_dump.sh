@@ -7,6 +7,8 @@ location="./$filename"
 
 mongodump --host=\"$DB_HOST\" --port=$DB_PORT --out=$location --db=$DB_NAME
 
+# psql
+
 # zip the generated dump
 zip "$filename".zip "$location/$DB_NAME"
 
