@@ -2,6 +2,7 @@
   "extends": ["config:base", "group:allNonMajor"],
   "ignoreDeps": ["highlight.run"],
   "labels": ["merge"],
+  "prBodyNotes": "If you are assigned as a reviewer, please help and promptly review this upgrade - [see docs](https://www.notion.so/airplanedev/Dependency-PRs-07a8a4f0570040a7965c2c1183fb87c8).",
   "reviewers": ["team:views"],
   "schedule": ["before 5am on Thursday"],
   "timezone": "America/New_York"
