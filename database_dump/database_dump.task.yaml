@@ -4,6 +4,9 @@ slug: demo_database_dump
 name: Database dump
 description: This task dumps a postgres or mongoDB database attached to this resource to file and uploads to AWS s3 storage.
 
+resources:
+  db: demo_db
+
 shell:
   entrypoint: database_dump.sh
 
@@ -16,4 +19,6 @@ shell:
       config: AWS_BUCKET
     AWS_REGION:
       config: AWS_REGION
+
+
   

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DB_KIND=$(jq -r '.kind' <<<"$AIRPLANE_RESOURCES")
+DB_KIND=$(jq -r '.db.kind' <<<"$AIRPLANE_RESOURCES")
 
 date_time=$(date "+%F-%H-%M-%S")
 filename="$DB_KIND""_""$date_time"
@@ -9,19 +9,19 @@ location="./$filename".backup
 
 if [ "$DB_KIND" == "postgres" ]; then
 
-  HOSTNAME=$(jq -r '.host' <<<"$AIRPLANE_RESOURCES")
-  USERNAME=$(jq -r '.username' <<<"$AIRPLANE_RESOURCES")
-  DATABASE=$(jq -r '.database' <<<"$AIRPLANE_RESOURCES")
-  PASSWORD=$(jq -r '.password' <<<"$AIRPLANE_RESOURCES")
+  HOSTNAME=$(jq -r '.db.host' <<<"$AIRPLANE_RESOURCES")
+  USERNAME=$(jq -r '.db.username' <<<"$AIRPLANE_RESOURCES")
+  DATABASE=$(jq -r '.db.database' <<<"$AIRPLANE_RESOURCES")
+  PASSWORD=$(jq -r '.db.password' <<<"$AIRPLANE_RESOURCES")
 
   export PGPASSWORD="$PASSWORD"
-  pg_dump -F t -h $HOSTNAME -U $USERNAME $DATABASE > $location
+  pg_dump -F t -h $HOSTNAME -U $USERNAME $DATABASE > $location || exit 1
   unset PGPASSWORD
 
 elif [ "$DB_KIND" == "mongodb" ]; then
 
-  URI=$(jq -r '.connectionString' <<<"$AIRPLANE_RESOURCES")
-  mongodump --uri=\"$URI\" --archive=$location
+  URI=$(jq -r '.db.connectionString' <<<"$AIRPLANE_RESOURCES")
+  mongodump --uri=\"$URI\" --archive=$location || exit 1
 
 else
   echo "Invalid DB type: This script only supports postgres or mongoDB"
@@ -44,6 +44,7 @@ RESPONSE=$(aws s3api put-object \
 
 if [ ! "$RESPONSE" ]; then
   echo "ERROR: AWS reports put-object operation failed."
+  rm -rf $zipped_filepath
   exit 1
 else
   echo "Database dump completed successfully"
