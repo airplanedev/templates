@@ -22,14 +22,14 @@ elif [ "$DB_KIND" == "mongodb" ]; then
 
   URI=$(jq -r '.connectionString' <<<"$AIRPLANE_RESOURCES")
   mongodump --uri=\"$URI\" --archive=$location
-# mongodump --uri=\"$DB_HOST\" --host=\"$DB_HOST\" --port=$DB_PORT --out=$location --db=$DB_NAME
 
 else
   echo "Invalid DB type: This script only supports postgres or mongoDB"
+  exit 1
 fi
 
 # zip the generated dump
-zip "$filename".zip "$location/$DB_NAME"
+zip "$filename".zip "$location"
 
 # delete the initial dump dir
 rm -rf $location
@@ -44,6 +44,7 @@ RESPONSE=$(aws s3api put-object \
 
 if [ ! "$RESPONSE" ]; then
   echo "ERROR: AWS reports put-object operation failed."
+  exit 1
 else
   echo "Database dump completed successfully"
 fi
