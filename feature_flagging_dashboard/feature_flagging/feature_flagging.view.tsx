@@ -11,6 +11,7 @@ import {
   Select,
   Dialog,
   Textarea,
+  Column,
 } from "@airplane/views";
 
 import { useState } from "react";
@@ -26,8 +27,6 @@ const FeaturesDashboard = () => {
 
         <CreateFeatureButton />
       </Stack>
-      <Text>Look up a feature and list customers subscribed to a feature</Text>
-
       <Stack direction="row" align="center" grow>
         <Table
           id="features"
@@ -105,9 +104,7 @@ const CreateFeatureButton = () => {
 
   return (
     <>
-      <Button onClick={dialogState.open} >
-        Add new feature
-      </Button>
+      <Button onClick={dialogState.open}>Add new feature</Button>
 
       <Dialog
         id={dialogState.id}
@@ -181,13 +178,12 @@ const CustomerFeaturesTable = ({
           columns={featureCustomersCols}
           defaultPageSize={5}
           task={{
-            slug: "demo_list_feature_customers",
+            slug: "demo_list_customers_for_feature",
             params: {
               feature_id: selectedFeature.feature_id,
             },
           }}
           hiddenColumns={["feature_id", "customer_id"]}
-          rowSelection="single"
           rowActions={({ row }: { row: CustomerFeatureRowType }) => {
             return (
               <Button
@@ -196,13 +192,13 @@ const CustomerFeaturesTable = ({
                 compact
                 size="sm"
                 task={{
-                  slug: "demo_delete_feature_customer",
+                  slug: "demo_disable_feature_for_customer",
                   params: {
                     feature_id: selectedFeature.feature_id,
                     customer_id: row.customer_id,
                   },
                   refetchTasks: {
-                    slug: "demo_list_feature_customers",
+                    slug: "demo_list_customers_for_feature",
                   },
                 }}
                 confirm={{
@@ -236,7 +232,7 @@ const AddCustomerToFeature = ({
         <Stack direction="row">
           <Select
             id={customerSelectState.id}
-            task="demo_customers_list"
+            task="demo_list_customers"
             outputTransform={(v) =>
               v.Q1.map((customer) => ({
                 label: customer.contact_name,
@@ -252,13 +248,13 @@ const AddCustomerToFeature = ({
             disabled={customerSelectState.value == null}
             onClick={() => setLoading(true)}
             task={{
-              slug: "demo_create_feature_customer",
+              slug: "demo_enable_feature_for_customer",
               params: {
                 feature_id: selectedFeature.feature_id,
                 customer_id: customerSelectState.value,
               },
               refetchTasks: {
-                slug: "demo_list_feature_customers",
+                slug: "demo_list_customers_for_feature",
               },
               onSuccess: () => {
                 setLoading(false);
@@ -294,19 +290,19 @@ interface CustomerFeatureRowType {
   country: string;
 }
 
-const featuresCols = [
-  { accessor: "feature_name", label: "Name", canEdit: "true" },
-  { accessor: "feature_description", label: "Description", canEdit: "true" },
-  { accessor: "updated_at", label: "Last updated", type: "date" },
+const featuresCols: Column[] = [
+  { accessor: "feature_name", label: "Name", canEdit: true },
+  { accessor: "feature_description", label: "Description", canEdit: true },
+  { accessor: "updated_at", label: "Last updated", type: "datetime" },
   {
     accessor: "is_enabled",
     label: "Is enabled",
-    canEdit: "true",
+    canEdit: true,
     type: "boolean",
   },
 ];
 
-const featureCustomersCols = [
+const featureCustomersCols: Column[] = [
   { accessor: "contact_name", label: "Contact name" },
   { accessor: "address", label: "Address" },
   { accessor: "country", label: "Country" },

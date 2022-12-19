@@ -1,9 +1,9 @@
 # Full reference: https://docs.airplane.dev/tasks/task-definition
 
-slug: demo_customers_list
+slug: demo_list_customers
 name: List customers
 description: "List all active customers"
 sql:
   # Replace with your own DB name
   resource: "[Demo DB]"
-  entrypoint: customers_list.sql
+  entrypoint: list_customers.sql

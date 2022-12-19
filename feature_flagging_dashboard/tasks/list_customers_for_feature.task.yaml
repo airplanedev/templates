@@ -1,7 +1,7 @@
 # Full reference: https://docs.airplane.dev/tasks/task-definition
 
-slug: demo_list_feature_customers
-name: List customers
+slug: demo_list_customers_for_feature
+name: List customers for feature
 description: "Lists all customers with a particular feature enabled."
 parameters:
   - slug: feature_id
@@ -11,6 +11,6 @@ parameters:
 sql:
   # Replace with your own DB name
   resource: "[Demo DB]"
-  entrypoint: list_feature_customers.sql
+  entrypoint: list_customers_for_feature.sql
   queryArgs:
     feature_id: "{{params.feature_id}}"
