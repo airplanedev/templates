@@ -9,6 +9,7 @@ import {
   Title,
   useComponentState,
 } from "@airplane/views";
+import airplane from "airplane";
 
 // Views documentation: https://docs.airplane.dev/views/getting-started
 const GitHubPRDashboard = () => {
@@ -106,4 +107,10 @@ const PR = ({ pr }) => {
   );
 };
 
-export default GitHubPRDashboard;
+export default airplane.view(
+  {
+    slug: "demo_github_pull_request_dashboard",
+    name: "GitHub pull request dashboard",
+  },
+  GitHubPRDashboard
+);

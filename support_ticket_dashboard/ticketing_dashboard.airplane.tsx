@@ -11,6 +11,7 @@ import {
   useTaskMutation,
 } from "@airplane/views";
 import { useEffect } from "react";
+import airplane from "airplane";
 
 // Replace with your Intercom App ID, which can be found from the URL of an
 // Intercom conversation
@@ -74,7 +75,7 @@ Open in Intercom: ${openInIntercomLink(selectedConvo.id)}
         rowSelection="single"
         columns={openConversationsCols}
         hiddenColumns={["id"]}
-        rowActions={(row) => {
+        rowActions={({ row }) => {
           return (
             <Button
               variant="subtle"
@@ -148,4 +149,10 @@ const openConversationsCols = [
   { label: "Contact email", accessor: "contactEmail" },
 ];
 
-export default TicketingDashboard;
+export default airplane.view(
+  {
+    slug: "demo_ticketing_dashboard",
+    name: "Ticketing dashboard",
+  },
+  TicketingDashboard
+);

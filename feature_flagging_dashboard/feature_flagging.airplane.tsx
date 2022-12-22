@@ -13,6 +13,7 @@ import {
   Textarea,
   Column,
 } from "@airplane/views";
+import airplane from "airplane";
 
 import { useState } from "react";
 
@@ -201,7 +202,8 @@ const CustomerFeaturesTable = ({
                   },
                 }}
                 confirm={{
-                  title: "Are you sure you want to disable the feature for this customer?",
+                  title:
+                    "Are you sure you want to disable the feature for this customer?",
                   confirmText: "Yes",
                   cancelText: "Cancel",
                 }}
@@ -306,4 +308,10 @@ const featureCustomersCols: Column[] = [
   { accessor: "country", label: "Country" },
 ];
 
-export default FeaturesDashboard;
+export default airplane.view(
+  {
+    slug: "demo_feature_flagging",
+    name: "Feature flagging dashboard",
+  },
+  FeaturesDashboard
+);

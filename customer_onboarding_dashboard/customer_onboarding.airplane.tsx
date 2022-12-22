@@ -12,6 +12,7 @@ import {
   showNotification,
   Button,
 } from "@airplane/views";
+import airplane from "airplane";
 
 const CustomerDashboard = () => {
   return (
@@ -208,4 +209,11 @@ const newAccountsCols = [
   },
 ];
 
-export default CustomerDashboard;
+export default airplane.view(
+  {
+    slug: "demo_customer_dashboard",
+    name: "Customer onboarding",
+    description: "Create and onboard new accounts",
+  },
+  CustomerDashboard
+);

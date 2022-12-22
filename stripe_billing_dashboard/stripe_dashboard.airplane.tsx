@@ -5,7 +5,9 @@ import {
   Title,
   TextInput,
   useComponentState,
+  Column,
 } from "@airplane/views";
+import airplane from "airplane";
 
 const Dashboard = () => {
   const searchKeyword = useComponentState("searchKeyword");
@@ -69,7 +71,7 @@ const Dashboard = () => {
   );
 };
 
-const stripeCustomersCols = [
+const stripeCustomersCols: Column[] = [
   {
     label: "Email",
     accessor: "email",
@@ -80,7 +82,7 @@ const stripeCustomersCols = [
   },
 ];
 
-const customerDetailsCols = [
+const customerDetailsCols: Column[] = [
   {
     label: "Customer ID",
     accessor: "id",
@@ -104,7 +106,7 @@ const customerDetailsCols = [
   },
 ];
 
-const customerChargesCols = [
+const customerChargesCols: Column[] = [
   {
     label: "Charge date",
     accessor: "created_at",
@@ -135,4 +137,12 @@ const customerChargesCols = [
   },
 ];
 
-export default Dashboard;
+export default airplane.view(
+  {
+    slug: "demo_stripe_dashboard",
+    name: "Stripe dashboard",
+    description:
+      "Stripe billing dashboard for looking up customers and refunding charges.",
+  },
+  Dashboard
+);

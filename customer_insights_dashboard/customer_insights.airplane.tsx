@@ -6,6 +6,7 @@ import {
   Title,
   useComponentState,
 } from "@airplane/views";
+import airplane from "airplane";
 
 // Views documentation: https://docs.airplane.dev/views/getting-started
 const TeamDashboard = () => {
@@ -113,4 +114,10 @@ const TeamDashboard = () => {
   );
 };
 
-export default TeamDashboard;
+export default airplane.view(
+  {
+    slug: "demo_customer_insights",
+    name: "Customer insights",
+  },
+  TeamDashboard
+);

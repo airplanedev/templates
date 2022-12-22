@@ -1,5 +1,6 @@
 import {
   Button,
+  Column,
   DescriptionList,
   Dialog,
   Stack,
@@ -10,6 +11,7 @@ import {
   useComponentState,
 } from "@airplane/views";
 import { EyeIcon } from "@airplane/views/icons";
+import airplane from "airplane";
 import { useState } from "react";
 
 type User = {
@@ -113,11 +115,17 @@ const ImpersonationDialogPane = ({ user }: { user: User }) => {
   );
 };
 
-const userCols = [
+const userCols: Column<User>[] = [
   { label: "Name", accessor: "name" },
   { label: "Email", accessor: "email" },
   { label: "Role", accessor: "role" },
   { label: "Title", accessor: "title" },
 ];
 
-export default UserImpersonation;
+export default airplane.view(
+  {
+    slug: "demo_user_impersonation",
+    name: "User impersonation",
+  },
+  UserImpersonation
+);

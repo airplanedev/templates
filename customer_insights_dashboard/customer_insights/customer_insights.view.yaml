@@ -1,3 +1,0 @@
-slug: demo_customer_insights
-name: Customer insights
-entrypoint: customer_insights.view.tsx

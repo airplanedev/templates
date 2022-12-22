@@ -7,6 +7,7 @@ import {
   Text,
   Button,
 } from "@airplane/views";
+import airplane from "airplane";
 
 // Views documentation: https://docs.airplane.dev/views/getting-started
 const CustomerDashboard = () => {
@@ -18,4 +19,10 @@ const CustomerDashboard = () => {
   );
 };
 
-export default CustomerDashboard;
+export default airplane.view(
+  {
+    slug: "demo_customer_dashboard_getting_started",
+    name: "[DEMO] Customer dashboard - getting started",
+  },
+  CustomerDashboard
+);

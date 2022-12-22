@@ -8,7 +8,9 @@ import {
   Card,
   useComponentState,
   Dialog,
+  Column,
 } from "@airplane/views";
+import airplane from "airplane";
 
 const Dashboard = () => {
   const searchKeyword = useComponentState("searchKeyword");
@@ -130,7 +132,7 @@ const customersCols = [
   { accessor: "fax", label: "Fax" },
 ];
 
-const ordersCols = [
+const ordersCols: Column[] = [
   { accessor: "order_id", label: "Order ID" },
   { accessor: "order_date", label: "Order date", type: "datetime" },
   { accessor: "shipped_date", label: "Shipped date", type: "datetime" },
@@ -143,4 +145,10 @@ const ordersCols = [
   { accessor: "ship_postal_code", label: "Postal code" },
 ];
 
-export default Dashboard;
+export default airplane.view(
+  {
+    slug: "demo_admin_dashboard",
+    name: "Admin dashboard",
+  },
+  Dashboard
+);
