@@ -1,11 +1,11 @@
-from typing import List, Dict, Any
+from typing import Dict, Any
 
 from selenium import webdriver
 from selenium.webdriver import FirefoxOptions
 from selenium.webdriver.common.by import By
 
 
-def main(params: Dict[str, Any]) -> List[str]:
+def main(params: Dict[str, Any]) -> Dict[str, Any]:
     opts = FirefoxOptions()
     opts.add_argument("--headless")
     with webdriver.Firefox(options=opts) as driver:
