@@ -1,5 +1,6 @@
 import {
   Button,
+  DescriptionList,
   Dialog,
   Stack,
   Table,
@@ -25,12 +26,14 @@ const UserImpersonation = () => {
   const dialogState = useComponentState();
   return (
     <Stack>
-      <Title>Impersonate a user</Title>
-      <Text>
-        🚨 Be cautious when impersonating users. Doing things inside a user's
-        account can lead to noticeable, irreversible changes! All impersonation
-        attempts are audited.
-      </Text>
+      <div>
+        <Title>Impersonate a user</Title>
+        <Text>
+          🚨 Be cautious when impersonating users. Doing things inside a user's
+          account can lead to noticeable, irreversible changes! All
+          impersonation attempts are audited.
+        </Text>
+      </div>
       <TextInput id={queryState.id} label="Search by ID, email, or team" />
       <Table<User>
         title="Users"
@@ -44,12 +47,14 @@ const UserImpersonation = () => {
         rowActions={[
           ({ row }) => (
             <Button
+              compact
               preset="secondary"
+              size="sm"
               onClick={() => {
                 setUser(row);
                 dialogState.open();
               }}
-              leftIcon={<EyeIcon />}
+              leftIcon={<EyeIcon size="sm" />}
             >
               Impersonate
             </Button>
@@ -67,15 +72,16 @@ const ImpersonationDialogPane = ({ user }: { user: User }) => {
   const [link, setLink] = useState("");
   const reasonState = useComponentState();
   return (
-    <>
-      <Text>
-        {`
-#### ${user.name}
-- **Email**: ${user.email}
-- **Role**: ${user.role}
-- **Title**: ${user.title}
-- **ID**: ${user.id}`}
-      </Text>
+    <Stack>
+      <DescriptionList
+        items={[
+          { term: "Name", description: user.name },
+          { term: "Email", description: user.email },
+          { term: "Role", description: user.role },
+          { term: "Title", description: user.title },
+          { term: "ID", description: user.id },
+        ]}
+      />
       <Stack>
         <TextInput id={reasonState.id} label="Reason (e.g. Intercom URL)" />
         <Button
@@ -103,7 +109,7 @@ const ImpersonationDialogPane = ({ user }: { user: User }) => {
           </>
         )}
       </Stack>
-    </>
+    </Stack>
   );
 };
 
