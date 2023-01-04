@@ -44,6 +44,7 @@ const CreateAccount = () => {
         type: "error",
       });
     },
+    refetchTasks: ["demo_list_new_accounts"],
   });
 
   return (
