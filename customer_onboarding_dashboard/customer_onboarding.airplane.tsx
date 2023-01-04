@@ -211,7 +211,7 @@ const newAccountsCols = [
 
 export default airplane.view(
   {
-    slug: "demo_customer_dashboard",
+    slug: "demo_customer_onboarding",
     name: "Customer onboarding",
     description: "Create and onboard new accounts",
   },
