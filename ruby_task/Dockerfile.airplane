@@ -1,0 +1,8 @@
+# Dockerfile.airplane
+FROM ruby:3.0.0
+
+WORKDIR /app
+# Apply your Gem dependencies
+COPY Gemfile /app/Gemfile
+COPY Gemfile.lock /app/Gemfile.lock
+RUN bundle install

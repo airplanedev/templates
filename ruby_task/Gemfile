@@ -1,0 +1,7 @@
+source 'http://rubygems.org'
+
+gem 'awesome_print'
+gem 'json'
+gem 'colorize'
+gem 'multi_string_replace', '~> 1.0', '>= 1.0.4'
+
