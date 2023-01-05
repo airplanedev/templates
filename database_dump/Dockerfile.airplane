@@ -1,0 +1,44 @@
+FROM ubuntu:22.04
+
+WORKDIR /app
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && \
+    apt-get install -y gnupg
+
+# install necessary packages
+RUN apt-get update && \
+    apt-get install -y zip && \
+    apt-get install -y jq
+
+
+# install AWS cli tools
+RUN apt-get update && \
+    apt-get install -y awscli
+
+# install postgresql client 
+RUN apt-get update && \
+    apt-get install -y postgresql-client
+
+
+RUN echo "deb http://security.ubuntu.com/ubuntu focal-security main" | tee /etc/apt/sources.list.d/focal-security.list
+RUN apt-get update && \
+    apt-get install -y libssl1.1
+
+# install widget to download mongodb tools
+RUN apt-get update && \
+    apt-get install -y wget
+
+# installing mongodb tools
+RUN wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | apt-key add -
+RUN echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/6.0 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-6.0.list
+RUN apt-get update && \
+    apt-get install -y mongodb-org
+
+
+
+
+
+
+
