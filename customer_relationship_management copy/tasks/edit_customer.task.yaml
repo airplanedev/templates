@@ -1,0 +1,35 @@
+# Full reference: https://docs.airplane.dev/tasks/task-definition
+
+slug: demo_edit_customer
+name: Edit customer
+parameters:
+  - slug: customer_id
+    name: Customer ID
+    type: shorttext
+    required: true
+  - slug: phone
+    name: Phone number
+    type: shorttext
+    required: false
+  - slug: contact_name
+    name: Contact name
+    type: shorttext
+    required: false
+  - slug: contact_title
+    name: Contact title
+    type: shorttext
+    required: false
+  - slug: country
+    name: Country
+    type: shorttext
+    required: false
+sql:
+  # Replace with your own DB name
+  resource: "[Demo DB]"
+  entrypoint: edit_customer.sql
+  queryArgs:
+    customer_id: "{{params.customer_id}}"
+    phone: "{{params.phone}}"
+    contact_name: "{{params.contact_name}}"
+    country: "{{params.country}}"
+    contact_title: "{{params.contact_title}}"

@@ -1,0 +1,20 @@
+# Full reference: https://docs.airplane.dev/tasks/task-definition
+
+slug: demo_update_customer_stage
+name: Update customer opportunity stage
+parameters:
+  - slug: customer_id
+    name: Customer ID
+    type: shorttext
+    required: true
+  - slug: opportunity_stage
+    name: Opportunity name
+    type: shorttext
+    required: false
+sql:
+  # Replace with your own DB name
+  resource: "[Demo DB]"
+  entrypoint: update_customer_stage.sql
+  queryArgs:
+    customer_id: "{{params.customer_id}}"
+    opportunity_stage: "{{params.opportunity_stage}}"

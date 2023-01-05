@@ -1,0 +1,50 @@
+# Full reference: https://docs.airplane.dev/tasks/task-definition
+
+slug: demo_create_lead
+name: Create a new lead
+parameters:
+  - slug: customer_id
+    name: Customer ID
+    type: shorttext
+    required: true
+  - slug: company_name
+    name: Company name
+    type: shorttext
+    required: true
+  - slug: contact_name
+    name: Contact name
+    type: shorttext
+    required: true
+  - slug: contact_title
+    name: Contact title
+    type: shorttext
+    required: true
+  - slug: country
+    name: Country
+    type: shorttext
+    required: true
+  - slug: phone
+    name: Phone
+    type: shorttext
+    required: true
+  - slug: address
+    name: Address
+    type: longtext
+    required: true
+  - slug: opportunity_stage
+    name: Opportunity name
+    type: shorttext
+    required: true
+sql:
+  # Replace with your own DB name
+  resource: "[Demo DB]"
+  entrypoint: create_lead.sql
+  queryArgs:
+    customer_id: "{{params.customer_id}}"
+    company_name: "{{params.company_name}}"
+    contact_name: "{{params.contact_name}}"
+    contact_title: "{{params.contact_title}}"
+    country: "{{params.country}}"
+    phone: "{{params.phone}}"
+    address: "{{params.address}}"
+    opportunity_stage: "{{params.opportunity_stage}}"
