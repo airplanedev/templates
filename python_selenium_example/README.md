@@ -5,6 +5,7 @@ Simple task that demonstrates how to load a website in Python using [selenium](h
 ## Next steps
 
 - Navigate to the python_selenium_example directory: `cd python_selenium_example`
+- Make sure you have `selenium` installed. An example `requirements.txt` is provided with the necessary `selenium` dependency and can be installed via `pip install -r requirements.txt`.
 - Run your task locally: `airplane dev`
 
   > You need to have Firefox and `geckodriver` installed to run locally.
