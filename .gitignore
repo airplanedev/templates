@@ -16,3 +16,6 @@ package-lock.json
 # Editors
 .idea/
 .vscode
+
+# Python
+__pycache__
