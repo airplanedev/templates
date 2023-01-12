@@ -4,8 +4,8 @@
   "license": "MIT",
   "dependencies": {
     "@airplane/views": "1.13.1",
-    "airplane": "0.2.27",
-    "octokit": "2.0.10",
+    "airplane": "0.2.29",
+    "octokit": "2.0.11",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
